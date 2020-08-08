@@ -1,0 +1,9 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" android:fillViewport="true" android:layout_height="match_parent" android:layout_width="match_parent">
+    <LinearLayout android:layout_height="match_parent" android:layout_width="match_parent" android:orientation="vertical">
+        <TextView android:id="@+id/intro_text" android:layout_height="wrap_content" android:layout_weight="1" android:layout_width="wrap_content" android:padding="20dp" android:text="The beta Dangerous NFC app will protect your xNT tag from accidental or malicious attack by doing the following:\n\n1. Check the OTP (one time programmable) bytes in memory page 03 known as the CC or Capability Container to ensure they correctly match the latest NFC Type 2 spec.\n\n2. Set lock bytes in memory page 02 to 0F 00, locking the CC in page 03 and disabling all locking bits. We also disable all dynamic lock bytes, ensuring your tag will never be accidentally or maliciously locked read-only.\n\n3. Allow you to set a 32 bit password for the tag, update AUTH0 to ensure the configuration bytes are password protected. DO NOT FORGET YOUR PASSWORD!"></TextView>
+        <LinearLayout android:gravity="center" android:layout_height="wrap_content" android:layout_width="fill_parent" android:orientation="vertical">
+            <Button android:id="@+id/select_password" android:layout_centerHorizontal="true" android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="Select Password" android:onClick="requestPassword"></Button>
+            <TextView android:id="@+id/scan_tag_now" android:layout_centerHorizontal="true" android:layout_height="wrap_content" android:layout_width="wrap_content" android:paddingTop="30dp" android:paddingBottom="60dp" android:text="PASSWORD SET\nSCAN TAG NOW" android:visibility="invisible"></TextView>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

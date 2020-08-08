@@ -1,0 +1,2 @@
+include ':NearField'
+project(":NearField").projectDir = file("$rootDir/../NearField")

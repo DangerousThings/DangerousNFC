@@ -1,0 +1,34 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.0.0-alpha9'
+    }
+}
+
+apply plugin: 'android'
+
+repositories {
+    jcenter()
+}
+dependencies {
+    compile project(':NearField')
+    compile 'org.apache.commons:commons-lang3:3.4'
+    compile 'commons-codec:commons-codec:1.3'
+    provided files('libs/XposedBridgeApi-20150213.jar')
+}
+
+android {
+    compileSdkVersion 'android-23'
+    buildToolsVersion '23.0.2'
+
+    defaultConfig {
+        minSdkVersion 10
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+}
