@@ -1,4 +1,4 @@
-package com.dangerousthings.nfc;
+package com.dangerousthings.nfc.utilities;
 
 public class HexUtils
 {
