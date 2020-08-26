@@ -15,8 +15,8 @@ public class FlexNT implements IImplant
     }
 
     @Override
-    public Image getImplantImage()
+    public int getImplantImage()
     {
-        return null;
+        return R.drawable.flexnt;
     }
 }

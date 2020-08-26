@@ -13,8 +13,8 @@ public class VivokeySpark2 implements IImplant
     }
 
     @Override
-    public Image getImplantImage()
+    public int getImplantImage()
     {
-        return null;
+        return 0;
     }
 }

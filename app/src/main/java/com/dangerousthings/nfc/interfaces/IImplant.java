@@ -8,7 +8,7 @@ public interface IImplant
     String getImplantType();
 
     //implant image resource getter/setter
-    Image getImplantImage();
+    int getImplantImage();
 
     //TODO: add declarations of read write methods that will allow for unique tag requirements for both
     /*

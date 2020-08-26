@@ -5,4 +5,6 @@
     <string name="ntag216">NTAG 216</string>
     <string name="desfire_ev1_8k">DesFire Ev1 8K</string>
     <string name="implant_cannot_identify">Cannot Identify Implant</string>
+    <string name="new_tag_detected">New Tag Detected</string>
+    <string name="implant_image">Implant Image</string>
 </resources>

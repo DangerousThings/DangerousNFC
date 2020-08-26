@@ -1,6 +1,8 @@
 package com.dangerousthings.nfc;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -14,6 +16,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dangerousthings.nfc.controls.RecyclerDialog;
 import com.dangerousthings.nfc.interfaces.IImplant;
 import com.dangerousthings.nfc.utilities.FingerprintUtils;
 import com.dangerousthings.nfc.utilities.HexUtils;
@@ -64,7 +67,6 @@ public class MainActivity extends AppCompatActivity
         _tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
         if(_tag != null)
         {
-            mTextViewScannedDevice.setText(HexUtils.bytesToHex(_tag.getId()));
             FingerprintUtils.TagType tagType = FingerprintUtils.fingerprintNfcTag(_tag);
 
             List<IImplant> list = FingerprintUtils.getImplantListFromType(tagType);
@@ -74,6 +76,12 @@ public class MainActivity extends AppCompatActivity
                 toast.show();
                 return;
             }
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            RecyclerDialog recyclerDialog = new RecyclerDialog(list);
+            fragmentTransaction.replace(R.id.frame_recycler_dialog, recyclerDialog);
+            fragmentTransaction.commit();
         }
     }
 

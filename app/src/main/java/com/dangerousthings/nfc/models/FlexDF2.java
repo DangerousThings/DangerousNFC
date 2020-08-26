@@ -2,6 +2,7 @@ package com.dangerousthings.nfc.models;
 
 import android.media.Image;
 
+import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.interfaces.IImplant;
 
 public class FlexDF2 implements IImplant
@@ -13,8 +14,8 @@ public class FlexDF2 implements IImplant
     }
 
     @Override
-    public Image getImplantImage()
+    public int getImplantImage()
     {
-        return null;
+        return R.drawable.flex;
     }
 }
