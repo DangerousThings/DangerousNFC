@@ -2,4 +2,7 @@
 <resources>
     <string name="app_name">Dangerous NFC</string>
     <string name="scanned_device">Scanned Device:</string>
+    <string name="ntag216">NTAG 216</string>
+    <string name="desfire_ev1_8k">DesFire Ev1 8K</string>
+    <string name="implant_cannot_identify">Cannot Identify Implant</string>
 </resources>

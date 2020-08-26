@@ -7,13 +7,19 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
+import android.nfc.tech.IsoDep;
+import android.nfc.tech.Ndef;
 import android.nfc.tech.NfcA;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.dangerousthings.nfc.interfaces.IImplant;
+import com.dangerousthings.nfc.utilities.FingerprintUtils;
 import com.dangerousthings.nfc.utilities.HexUtils;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity
@@ -25,6 +31,7 @@ public class MainActivity extends AppCompatActivity
 
     //Fingerprinting contexts
     Tag _tag;
+    Ndef _ndef;
 
     //Page objects
     TextView mTextViewScannedDevice;
@@ -48,14 +55,6 @@ public class MainActivity extends AppCompatActivity
         IntentFilter ndef = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
         IntentFilter tech = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
         IntentFilter tag = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
-        try
-        {
-            ndef.addDataType("text/plain");
-        }
-        catch(IntentFilter.MalformedMimeTypeException e)
-        {
-            throw new RuntimeException("fail", e);
-        }
 
         _intentFilterArray = new IntentFilter[] {ndef, tech, tag};
     }
@@ -63,8 +62,19 @@ public class MainActivity extends AppCompatActivity
     private void handleNfcActionDiscovered(Intent intent)
     {
         _tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-        assert _tag != null;
-        mTextViewScannedDevice.setText(HexUtils.bytesToHex(_tag.getId()));
+        if(_tag != null)
+        {
+            mTextViewScannedDevice.setText(HexUtils.bytesToHex(_tag.getId()));
+            FingerprintUtils.TagType tagType = FingerprintUtils.fingerprintNfcTag(_tag);
+
+            List<IImplant> list = FingerprintUtils.getImplantListFromType(tagType);
+            if(list.size() == 0)
+            {
+                Toast toast = Toast.makeText(this, R.string.implant_cannot_identify, Toast.LENGTH_LONG);
+                toast.show();
+                return;
+            }
+        }
     }
 
     @Override
