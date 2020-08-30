@@ -1,20 +1,12 @@
 package com.dangerousthings.nfc.models;
 
-import android.media.Image;
+import com.dangerousthings.nfc.R;
 
-import com.dangerousthings.nfc.interfaces.IImplant;
-
-public class XSLX implements IImplant
+public class XSLX extends Implant
 {
-    @Override
-    public String getImplantType()
+    public XSLX()
     {
-        return "xSLX";
-    }
-
-    @Override
-    public int getImplantImage()
-    {
-        return 0;
+        setImplantType("xSLX");
+        setImplantImage(R.drawable.glass);
     }
 }

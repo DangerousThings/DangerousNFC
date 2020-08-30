@@ -9,19 +9,16 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
-import android.nfc.tech.IsoDep;
 import android.nfc.tech.Ndef;
-import android.nfc.tech.NfcA;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dangerousthings.nfc.controls.RecyclerDialog;
-import com.dangerousthings.nfc.interfaces.IImplant;
+import com.dangerousthings.nfc.fragments.ImplantSelectionRecycler;
+import com.dangerousthings.nfc.enums.TagType;
+import com.dangerousthings.nfc.models.Implant;
 import com.dangerousthings.nfc.utilities.FingerprintUtils;
-import com.dangerousthings.nfc.utilities.HexUtils;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -67,9 +64,9 @@ public class MainActivity extends AppCompatActivity
         _tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
         if(_tag != null)
         {
-            FingerprintUtils.TagType tagType = FingerprintUtils.fingerprintNfcTag(_tag);
+            TagType tagType = FingerprintUtils.fingerprintNfcTag(_tag);
 
-            List<IImplant> list = FingerprintUtils.getImplantListFromType(tagType);
+            List<Implant> list = FingerprintUtils.getImplantListFromType(tagType);
             if(list.size() == 0)
             {
                 Toast toast = Toast.makeText(this, R.string.implant_cannot_identify, Toast.LENGTH_LONG);
@@ -79,7 +76,9 @@ public class MainActivity extends AppCompatActivity
 
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            RecyclerDialog recyclerDialog = new RecyclerDialog(list);
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            fragmentTransaction.addToBackStack(null);
+            ImplantSelectionRecycler recyclerDialog = new ImplantSelectionRecycler(list);
             fragmentTransaction.replace(R.id.frame_recycler_dialog, recyclerDialog);
             fragmentTransaction.commit();
         }

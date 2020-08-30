@@ -1,20 +1,12 @@
 package com.dangerousthings.nfc.models;
 
-import android.media.Image;
+import com.dangerousthings.nfc.R;
 
-import com.dangerousthings.nfc.interfaces.IImplant;
-
-public class VivokeyApexMax implements IImplant
+public class VivokeyApexMax extends Implant
 {
-    @Override
-    public String getImplantType()
+    public VivokeyApexMax()
     {
-        return "Vivokey Apex Max";
-    }
-
-    @Override
-    public int getImplantImage()
-    {
-        return 0;
+        setImplantType("Vivokey Apex Max");
+        setImplantImage(R.drawable.glass);
     }
 }

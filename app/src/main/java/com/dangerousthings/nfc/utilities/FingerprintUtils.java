@@ -1,16 +1,15 @@
 package com.dangerousthings.nfc.utilities;
 
 import android.nfc.Tag;
-import android.nfc.tech.IsoDep;
 import android.nfc.tech.Ndef;
 
 import com.dangerousthings.nfc.enums.TagType;
-import com.dangerousthings.nfc.interfaces.IImplant;
 import com.dangerousthings.nfc.models.FlexDF;
 import com.dangerousthings.nfc.models.FlexDF2;
 import com.dangerousthings.nfc.models.FlexNExT;
 import com.dangerousthings.nfc.models.FlexNT;
 import com.dangerousthings.nfc.models.GenericNTAG216;
+import com.dangerousthings.nfc.models.Implant;
 import com.dangerousthings.nfc.models.NExT;
 import com.dangerousthings.nfc.models.XDF2;
 import com.dangerousthings.nfc.models.XNT;
@@ -37,9 +36,9 @@ public class FingerprintUtils
         return null;
     }
 
-    public static List<IImplant> getImplantListFromType(TagType tagType)
+    public static List<Implant> getImplantListFromType(TagType tagType)
     {
-        List<IImplant> implantList = new ArrayList<>();
+        List<Implant> implantList = new ArrayList<>();
         switch(tagType)
         {
             case Ntag216:

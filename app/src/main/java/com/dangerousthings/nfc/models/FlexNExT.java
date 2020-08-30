@@ -1,21 +1,12 @@
 package com.dangerousthings.nfc.models;
 
-import android.media.Image;
-
 import com.dangerousthings.nfc.R;
-import com.dangerousthings.nfc.interfaces.IImplant;
 
-public class FlexNExT implements IImplant
+public class FlexNExT extends Implant
 {
-    @Override
-    public String getImplantType()
+    public FlexNExT()
     {
-        return "flexNExT";
-    }
-
-    @Override
-    public int getImplantImage()
-    {
-        return R.drawable.flexnext;
+        setImplantType("flexNExT");
+        setImplantImage(R.drawable.flexnext);
     }
 }

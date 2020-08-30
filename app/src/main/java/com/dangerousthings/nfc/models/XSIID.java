@@ -1,20 +1,12 @@
 package com.dangerousthings.nfc.models;
 
-import android.media.Image;
+import com.dangerousthings.nfc.R;
 
-import com.dangerousthings.nfc.interfaces.IImplant;
-
-public class XSIID implements IImplant
+public class XSIID extends Implant
 {
-    @Override
-    public String getImplantType()
+    public XSIID()
     {
-        return "xSIID";
-    }
-
-    @Override
-    public int getImplantImage()
-    {
-        return 0;
+        setImplantType("xSIID");
+        setImplantImage(R.drawable.glass);
     }
 }

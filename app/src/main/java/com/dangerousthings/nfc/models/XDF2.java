@@ -1,21 +1,12 @@
 package com.dangerousthings.nfc.models;
 
-import android.media.Image;
-
 import com.dangerousthings.nfc.R;
-import com.dangerousthings.nfc.interfaces.IImplant;
 
-public class XDF2 implements IImplant
+public class XDF2 extends Implant
 {
-    @Override
-    public String getImplantType()
+    public XDF2()
     {
-        return "xDF2";
-    }
-
-    @Override
-    public int getImplantImage()
-    {
-        return R.drawable.glass;
+        setImplantType("xDF2");
+        setImplantImage(R.drawable.glass);
     }
 }

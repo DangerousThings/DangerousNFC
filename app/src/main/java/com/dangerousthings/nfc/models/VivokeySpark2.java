@@ -1,20 +1,12 @@
 package com.dangerousthings.nfc.models;
 
-import android.media.Image;
+import com.dangerousthings.nfc.R;
 
-import com.dangerousthings.nfc.interfaces.IImplant;
-
-public class VivokeySpark2 implements IImplant
+public class VivokeySpark2 extends Implant
 {
-    @Override
-    public String getImplantType()
+    public VivokeySpark2()
     {
-        return "Vivokey Spark 2";
-    }
-
-    @Override
-    public int getImplantImage()
-    {
-        return 0;
+        setImplantType("Vivokey Spark 2");
+        setImplantImage(R.drawable.glass);
     }
 }

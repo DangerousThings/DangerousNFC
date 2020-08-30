@@ -11,17 +11,17 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dangerousthings.nfc.R;
-import com.dangerousthings.nfc.interfaces.IImplant;
+import com.dangerousthings.nfc.models.Implant;
 
 import java.util.List;
 
 public class RecyclerDialogAdapter extends RecyclerView.Adapter<RecyclerDialogAdapter.ViewHolder>
 {
-    private List<IImplant> _data;
+    private List<Implant> _data;
     private LayoutInflater _inflater;
     private ItemClickListener _clickListener;
 
-    public RecyclerDialogAdapter(Context context, List<IImplant> data)
+    public RecyclerDialogAdapter(Context context, List<Implant> data)
     {
         _inflater = LayoutInflater.from(context);
         _data = data;
@@ -30,14 +30,14 @@ public class RecyclerDialogAdapter extends RecyclerView.Adapter<RecyclerDialogAd
     @Override
     public RecyclerDialogAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        View view = _inflater.inflate(R.layout.recycler_choose_implant_row, parent, false);
+        View view = _inflater.inflate(R.layout.recycler_select_implant_row, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerDialogAdapter.ViewHolder holder, int position)
     {
-        IImplant implant = _data.get(position);
+        Implant implant = _data.get(position);
         holder.mTextView.setText(implant.getImplantType());
         holder.mImageView.setImageResource(implant.getImplantImage());
     }
@@ -71,7 +71,7 @@ public class RecyclerDialogAdapter extends RecyclerView.Adapter<RecyclerDialogAd
         }
     }
 
-    public IImplant getItem(int id)
+    public Implant getItem(int id)
     {
         return _data.get(id);
     }

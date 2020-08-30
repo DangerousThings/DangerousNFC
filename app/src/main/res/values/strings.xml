@@ -7,4 +7,7 @@
     <string name="implant_cannot_identify">Cannot Identify Implant</string>
     <string name="new_tag_detected">New Tag Detected</string>
     <string name="implant_image">Implant Image</string>
+    <string name="select_implant_model_below">Select Implant Model Below</string>
+    <string name="cancel">Cancel</string>
+    <string name="select">Select</string>
 </resources>
