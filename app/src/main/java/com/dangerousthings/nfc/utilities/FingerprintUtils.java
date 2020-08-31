@@ -13,6 +13,7 @@ import com.dangerousthings.nfc.models.FlexNT;
 import com.dangerousthings.nfc.models.GenericNTAG216;
 import com.dangerousthings.nfc.models.Implant;
 import com.dangerousthings.nfc.models.NExT;
+import com.dangerousthings.nfc.models.VivokeyFlexOne;
 import com.dangerousthings.nfc.models.XDF2;
 import com.dangerousthings.nfc.models.XNT;
 
@@ -24,6 +25,7 @@ public class FingerprintUtils
 {
     private static final String GET_VERSION_RESULT_NTAG_216 = "00 04 04 02 01 00 13 03";
     private static final String GET_VERSION_RESULT_DESFIRE_EV1_8K = "AF 04 01 02 01 00 1A 05";
+    private static final String GET_VERSION_RESULT_VIVOKEY_FLEX_ONE = "67 00";
 
     private static final String NFC_TECH_ISODEP = "android.nfc.tech.IsoDep";
     private static final String NFC_TECH_NFCA = "android.nfc.tech.NfcA";
@@ -44,6 +46,8 @@ public class FingerprintUtils
                 return TagType.Ntag216;
             case GET_VERSION_RESULT_DESFIRE_EV1_8K:
                 return TagType.DesfireEv18k;
+            case GET_VERSION_RESULT_VIVOKEY_FLEX_ONE:
+                return TagType.SmartMX2;
             default:
                 return TagType.Unknown;
         }
@@ -97,6 +101,9 @@ public class FingerprintUtils
                 implantList.add(new FlexDF());
                 implantList.add(new FlexDF2());
                 implantList.add(new XDF2());
+                break;
+            case SmartMX2:
+                implantList.add(new VivokeyFlexOne());
                 break;
         }
         return implantList;
