@@ -9,5 +9,6 @@ public enum TagType
     Magic1k,
     IcodeSLX,
     SmartMX2,
-    SmartMX3
+    SmartMX3,
+    Unknown
 }

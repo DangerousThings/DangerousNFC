@@ -66,13 +66,14 @@ public class MainActivity extends AppCompatActivity
         {
             TagType tagType = FingerprintUtils.fingerprintNfcTag(_tag);
 
-            List<Implant> list = FingerprintUtils.getImplantListFromType(tagType);
-            if(list.size() == 0)
+            if(tagType == TagType.Unknown)
             {
                 Toast toast = Toast.makeText(this, R.string.implant_cannot_identify, Toast.LENGTH_LONG);
                 toast.show();
                 return;
             }
+
+            List<Implant> list = FingerprintUtils.getImplantListFromType(tagType);
 
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

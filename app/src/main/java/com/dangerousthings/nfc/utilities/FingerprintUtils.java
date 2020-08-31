@@ -22,35 +22,58 @@ import java.util.List;
 
 public class FingerprintUtils
 {
-    public static final int SIZE_NTAG_216 = 868;
-    public static final int SIZE_DESFIRE_EV1_8K = 7676;
+    private static final String GET_VERSION_RESULT_NTAG_216 = "00 04 04 02 01 00 13 03";
+    private static final String GET_VERSION_RESULT_DESFIRE_EV1_8K = "AF 04 01 02 01 00 1A 05";
+
+    private static final String NFC_TECH_ISODEP = "android.nfc.tech.IsoDep";
+    private static final String NFC_TECH_NFCA = "android.nfc.tech.NfcA";
 
     public static final String GET_VERSION = "60";
 
     public static TagType fingerprintNfcTag(Tag tag)
     {
-        Ndef ndef = Ndef.get(tag);
-        int capacity = ndef.getMaxSize();
-        switch(capacity)
+        //send GET_VERSION command
+        String get_version = sendNfcHexCommand(GET_VERSION, tag);
+        if(get_version == null)
         {
-            case SIZE_NTAG_216:
-                //send GET_VERSION command
-                byte[] get_version = sendNfcHexCommand(GET_VERSION, tag);
-                return TagType.Ntag216;
-            case SIZE_DESFIRE_EV1_8K:
-                return TagType.DesfireEv18k;
+            return TagType.Unknown;
         }
-        return null;
+        switch(get_version)
+        {
+            case GET_VERSION_RESULT_NTAG_216:
+                return TagType.Ntag216;
+            case GET_VERSION_RESULT_DESFIRE_EV1_8K:
+                return TagType.DesfireEv18k;
+            default:
+                return TagType.Unknown;
+        }
     }
 
-    private static byte[] sendNfcHexCommand(String command, Tag tag)
+    private static String sendNfcHexCommand(String command, Tag tag)
     {
-        NfcA nfcA = NfcA.get(tag);
+        String tech = tag.getTechList()[0];
         byte[] commandBytes = HexUtils.hexToBytes(command);
+        byte[] response = new byte[0];
+
         try
         {
-            nfcA.connect();
-            return nfcA.transceive(commandBytes);
+            if(tech.equals(NFC_TECH_NFCA))
+            {
+                NfcA nfcA = NfcA.get(tag);
+                nfcA.connect();
+                response = nfcA.transceive(commandBytes);
+            }
+            else if(tech.equals(NFC_TECH_ISODEP))
+            {
+                IsoDep isoDep = IsoDep.get(tag);
+                isoDep.connect();
+                response = isoDep.transceive(commandBytes);
+            }
+            if(response.length != 0)
+            {
+                return HexUtils.bytesToHex(response);
+            }
+            return null;
         }
         catch(IOException e)
         {
