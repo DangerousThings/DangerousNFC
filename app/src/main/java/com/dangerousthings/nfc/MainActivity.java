@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity
 
     //Fingerprinting contexts
     Tag _tag;
-    Ndef _ndef;
 
     //Page objects
     TextView mTextViewScannedDevice;
@@ -79,7 +78,7 @@ public class MainActivity extends AppCompatActivity
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             fragmentTransaction.addToBackStack(null);
-            ImplantSelectionRecycler recyclerDialog = new ImplantSelectionRecycler(list);
+            ImplantSelectionRecycler recyclerDialog = new ImplantSelectionRecycler(list, _tag);
             fragmentTransaction.replace(R.id.frame_recycler_dialog, recyclerDialog);
             fragmentTransaction.commit();
         }

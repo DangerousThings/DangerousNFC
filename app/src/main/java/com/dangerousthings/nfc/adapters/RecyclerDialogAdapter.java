@@ -50,7 +50,7 @@ public class RecyclerDialogAdapter extends RecyclerView.Adapter<RecyclerDialogAd
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        TextView mTextView;
+        public TextView mTextView;
         ImageView mImageView;
 
         public ViewHolder(@NonNull View itemView)

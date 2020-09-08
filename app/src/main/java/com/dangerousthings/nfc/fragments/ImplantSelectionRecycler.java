@@ -1,5 +1,6 @@
 package com.dangerousthings.nfc.fragments;
 
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.adapters.RecyclerDialogAdapter;
+import com.dangerousthings.nfc.databases.ImplantDatabase;
 import com.dangerousthings.nfc.models.Implant;
+import com.dangerousthings.nfc.utilities.HexUtils;
 
 import java.util.List;
 import java.util.Objects;
@@ -27,10 +30,13 @@ public class ImplantSelectionRecycler extends Fragment implements RecyclerDialog
     View _selectedRecyclerItem;
     Button mCancelButton;
     Button mSelectButton;
+    Tag _tag;
+    int _position = -1;
 
-    public ImplantSelectionRecycler(List<Implant> implantList)
+    public ImplantSelectionRecycler(List<Implant> implantList, Tag tag)
     {
         _implantList = implantList;
+        _tag = tag;
     }
 
     @Override
@@ -69,7 +75,16 @@ public class ImplantSelectionRecycler extends Fragment implements RecyclerDialog
             @Override
             public void onClick(View view)
             {
-                //save implant
+                if(_position != -1)
+                {
+                    Implant implant = _adapter.getItem(_position);
+                    byte[] uidBytes = _tag.getId();
+                    String hexString = HexUtils.bytesToHex(uidBytes);
+                    implant.setUid(hexString);
+                    ImplantDatabase implantDatabase = ImplantDatabase.getInstance(getActivity());
+                    implantDatabase.implantDao().insertImplant(implant);
+                    getActivity().onBackPressed();
+                }
             }
         });
     }
@@ -83,5 +98,6 @@ public class ImplantSelectionRecycler extends Fragment implements RecyclerDialog
         }
         view.setBackground(ContextCompat.getDrawable(Objects.requireNonNull(getContext()), R.drawable.green_rounded_background));
         _selectedRecyclerItem = view;
+        _position = position;
     }
 }
