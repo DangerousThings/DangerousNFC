@@ -22,7 +22,7 @@ import com.dangerousthings.nfc.utilities.HexUtils;
 import java.util.List;
 import java.util.Objects;
 
-public class ImplantSelectionRecycler extends Fragment implements RecyclerDialogAdapter.ItemClickListener
+public class NewImplantSelector extends Fragment implements RecyclerDialogAdapter.ItemClickListener
 {
     RecyclerDialogAdapter _adapter;
     RecyclerView mRecyclerView;
@@ -33,7 +33,7 @@ public class ImplantSelectionRecycler extends Fragment implements RecyclerDialog
     Tag _tag;
     int _position = -1;
 
-    public ImplantSelectionRecycler(List<Implant> implantList, Tag tag)
+    public NewImplantSelector(List<Implant> implantList, Tag tag)
     {
         _implantList = implantList;
         _tag = tag;
@@ -82,7 +82,14 @@ public class ImplantSelectionRecycler extends Fragment implements RecyclerDialog
                     String hexString = HexUtils.bytesToHex(uidBytes);
                     implant.setUid(hexString);
                     ImplantDatabase implantDatabase = ImplantDatabase.getInstance(getActivity());
-                    implantDatabase.implantDao().insertImplant(implant);
+                    try
+                    {
+                        implantDatabase.implantDao().insertImplant(implant);
+                    }
+                    catch(Exception e)
+                    {
+                        implantDatabase.implantDao().updateImplant(implant);
+                    }
                     getActivity().onBackPressed();
                 }
             }

@@ -10,7 +10,6 @@ import com.dangerousthings.nfc.models.FlexDF;
 import com.dangerousthings.nfc.models.FlexDF2;
 import com.dangerousthings.nfc.models.FlexNExT;
 import com.dangerousthings.nfc.models.FlexNT;
-import com.dangerousthings.nfc.models.GenericNTAG216;
 import com.dangerousthings.nfc.models.Implant;
 import com.dangerousthings.nfc.models.NExT;
 import com.dangerousthings.nfc.models.VivokeyFlexOne;
@@ -101,7 +100,6 @@ public class FingerprintUtils
                 implantList.add(new FlexNT());
                 implantList.add(new NExT());
                 implantList.add(new FlexNExT());
-                implantList.add(new GenericNTAG216());
                 break;
             case DesfireEv18k:
                 implantList.add(new FlexDF());

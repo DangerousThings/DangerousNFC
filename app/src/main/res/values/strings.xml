@@ -11,4 +11,5 @@
     <string name="cancel">Cancel</string>
     <string name="select">Select</string>
     <string name="scan_implant">Scan Implant</string>
+    <string name="saved_implants">Saved Implants</string>
 </resources>

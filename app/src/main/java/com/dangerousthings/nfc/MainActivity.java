@@ -9,12 +9,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
-import android.nfc.tech.Ndef;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
-import com.dangerousthings.nfc.fragments.ImplantSelectionRecycler;
+import com.dangerousthings.nfc.databases.ImplantDatabase;
+import com.dangerousthings.nfc.fragments.NewImplantSelector;
 import com.dangerousthings.nfc.enums.TagType;
 import com.dangerousthings.nfc.models.Implant;
 import com.dangerousthings.nfc.utilities.FingerprintUtils;
@@ -32,10 +33,30 @@ public class MainActivity extends AppCompatActivity
     //Fingerprinting contexts
     Tag _tag;
 
+    Button mSavedImplantButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mSavedImplantButton = findViewById(R.id.button_saved_implants);
+        mSavedImplantButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                ImplantDatabase implantDatabase = ImplantDatabase.getInstance(getApplicationContext());
+                List<Implant> implantList = implantDatabase.implantDao().getImplantList();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                fragmentTransaction.addToBackStack(null);
+                NewImplantSelector recyclerDialog = new NewImplantSelector(implantList, _tag);
+                fragmentTransaction.replace(R.id.frame_recycler_dialog, recyclerDialog);
+                fragmentTransaction.commit();
+            }
+        });
 
         nfcPrimer();
     }
@@ -73,7 +94,7 @@ public class MainActivity extends AppCompatActivity
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             fragmentTransaction.addToBackStack(null);
-            ImplantSelectionRecycler recyclerDialog = new ImplantSelectionRecycler(list);
+            NewImplantSelector recyclerDialog = new NewImplantSelector(list, _tag);
             fragmentTransaction.replace(R.id.frame_recycler_dialog, recyclerDialog);
             fragmentTransaction.commit();
         }
