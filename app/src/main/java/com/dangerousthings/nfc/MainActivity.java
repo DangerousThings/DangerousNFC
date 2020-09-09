@@ -32,15 +32,10 @@ public class MainActivity extends AppCompatActivity
     //Fingerprinting contexts
     Tag _tag;
 
-    //Page objects
-    TextView mTextViewScannedDevice;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mTextViewScannedDevice = findViewById(R.id.textview_scanned_device);
 
         nfcPrimer();
     }
@@ -78,7 +73,7 @@ public class MainActivity extends AppCompatActivity
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             fragmentTransaction.addToBackStack(null);
-            ImplantSelectionRecycler recyclerDialog = new ImplantSelectionRecycler(list, _tag);
+            ImplantSelectionRecycler recyclerDialog = new ImplantSelectionRecycler(list);
             fragmentTransaction.replace(R.id.frame_recycler_dialog, recyclerDialog);
             fragmentTransaction.commit();
         }

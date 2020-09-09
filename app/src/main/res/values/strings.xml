@@ -10,4 +10,5 @@
     <string name="select_implant_model_below">Select Implant Model Below</string>
     <string name="cancel">Cancel</string>
     <string name="select">Select</string>
+    <string name="scan_implant">Scan Implant</string>
 </resources>
