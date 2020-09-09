@@ -31,17 +31,11 @@ public class MainActivity extends AppCompatActivity
 
     //Fingerprinting contexts
     Tag _tag;
-    Ndef _ndef;
-
-    //Page objects
-    TextView mTextViewScannedDevice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mTextViewScannedDevice = findViewById(R.id.textview_scanned_device);
 
         nfcPrimer();
     }
