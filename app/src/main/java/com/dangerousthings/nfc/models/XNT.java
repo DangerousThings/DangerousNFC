@@ -2,7 +2,9 @@ package com.dangerousthings.nfc.models;
 
 import com.dangerousthings.nfc.R;
 
-public class XNT extends Implant
+import java.io.Serializable;
+
+public class XNT extends Implant implements Serializable
 {
     public XNT()
     {

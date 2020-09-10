@@ -23,6 +23,25 @@ public class Implant
         this.uid = uid;
     }
 
+    //Implant Name
+    @ColumnInfo(name = "implantName")
+    private String implantName;
+    public String getImplantName()
+    {
+        if(implantName == null)
+        {
+            return "Implant";
+        }
+        else
+        {
+            return implantName;
+        }
+    }
+    public void setImplantName(String value)
+    {
+        implantName = value;
+    }
+
     //Implant Type
     @ColumnInfo(name = "implantType")
     private String implantType;
@@ -36,7 +55,7 @@ public class Implant
     }
 
     //Implant Image
-    @Ignore
+    @ColumnInfo(name = "implantImage")
     private int implantImage;
     public int getImplantImage()
     {

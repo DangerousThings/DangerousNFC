@@ -3,6 +3,7 @@ package com.dangerousthings.nfc.fragments;
 import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import com.dangerousthings.nfc.models.Implant;
 import com.dangerousthings.nfc.pages.ImplantDetails;
 import com.dangerousthings.nfc.utilities.HexUtils;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -95,8 +97,13 @@ public class NewImplantSelector extends DialogFragment implements RecyclerDialog
                     {
                         implantDatabase.implantDao().updateImplant(implant);
                     }
-                    Intent implantDetailIntent = new Intent(getActivity(), ImplantDetails.class);
-                    getActivity().startActivity(implantDetailIntent);
+                    Intent implantDetailsIntent = new Intent(getActivity(), ImplantDetails.class);
+                    Bundle extras = new Bundle();
+                    //TODO: fix the serialization here. not working.
+                    extras.putSerializable(ImplantDetails.EXTRA_IMPLANT, (Serializable)implant);
+                    extras.putSerializable(ImplantDetails.EXTRA_IMPLANT_DETAIL_TYPE, ImplantDetails.ImplantDetailsType.displayDetails);
+                    implantDetailsIntent.putExtras(extras);
+                    getActivity().startActivity(implantDetailsIntent);
                     dismiss();
                 }
             }

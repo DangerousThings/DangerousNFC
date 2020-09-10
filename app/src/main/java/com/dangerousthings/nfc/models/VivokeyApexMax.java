@@ -2,7 +2,9 @@ package com.dangerousthings.nfc.models;
 
 import com.dangerousthings.nfc.R;
 
-public class VivokeyApexMax extends Implant
+import java.io.Serializable;
+
+public class VivokeyApexMax extends Implant implements Serializable
 {
     public VivokeyApexMax()
     {

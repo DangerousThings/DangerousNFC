@@ -2,7 +2,9 @@ package com.dangerousthings.nfc.models;
 
 import com.dangerousthings.nfc.R;
 
-public class FlexNExT extends Implant
+import java.io.Serializable;
+
+public class FlexNExT extends Implant implements Serializable
 {
     public FlexNExT()
     {

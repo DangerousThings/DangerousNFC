@@ -2,7 +2,9 @@ package com.dangerousthings.nfc.models;
 
 import com.dangerousthings.nfc.R;
 
-public class FlexNT extends Implant
+import java.io.Serializable;
+
+public class FlexNT extends Implant implements Serializable
 {
     public FlexNT()
     {

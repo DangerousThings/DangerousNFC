@@ -2,7 +2,9 @@ package com.dangerousthings.nfc.models;
 
 import com.dangerousthings.nfc.R;
 
-public class XDF2 extends Implant
+import java.io.Serializable;
+
+public class XDF2 extends Implant implements Serializable
 {
     public XDF2()
     {

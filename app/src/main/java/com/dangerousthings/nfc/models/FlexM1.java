@@ -2,7 +2,9 @@ package com.dangerousthings.nfc.models;
 
 import com.dangerousthings.nfc.R;
 
-public class FlexM1 extends Implant
+import java.io.Serializable;
+
+public class FlexM1 extends Implant implements Serializable
 {
     public FlexM1()
     {
