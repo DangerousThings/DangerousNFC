@@ -1,4 +1,4 @@
-package com.dangerousthings.nfc;
+package com.dangerousthings.nfc.pages;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -10,11 +10,14 @@ import android.content.IntentFilter;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.telecom.Call;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.databases.ImplantDatabase;
+import com.dangerousthings.nfc.fragments.DetailsToolbar;
 import com.dangerousthings.nfc.fragments.NewImplantSelector;
 import com.dangerousthings.nfc.enums.TagType;
 import com.dangerousthings.nfc.models.Implant;

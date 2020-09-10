@@ -1,5 +1,6 @@
 package com.dangerousthings.nfc.fragments;
 
+import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +10,10 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,12 +21,13 @@ import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.adapters.RecyclerDialogAdapter;
 import com.dangerousthings.nfc.databases.ImplantDatabase;
 import com.dangerousthings.nfc.models.Implant;
+import com.dangerousthings.nfc.pages.ImplantDetails;
 import com.dangerousthings.nfc.utilities.HexUtils;
 
 import java.util.List;
 import java.util.Objects;
 
-public class NewImplantSelector extends Fragment implements RecyclerDialogAdapter.ItemClickListener
+public class NewImplantSelector extends DialogFragment implements RecyclerDialogAdapter.ItemClickListener
 {
     RecyclerDialogAdapter _adapter;
     RecyclerView mRecyclerView;
@@ -90,7 +95,9 @@ public class NewImplantSelector extends Fragment implements RecyclerDialogAdapte
                     {
                         implantDatabase.implantDao().updateImplant(implant);
                     }
-                    getActivity().onBackPressed();
+                    Intent implantDetailIntent = new Intent(getActivity(), ImplantDetails.class);
+                    getActivity().startActivity(implantDetailIntent);
+                    dismiss();
                 }
             }
         });
