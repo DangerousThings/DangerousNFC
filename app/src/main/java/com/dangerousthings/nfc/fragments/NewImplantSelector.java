@@ -98,11 +98,9 @@ public class NewImplantSelector extends DialogFragment implements RecyclerDialog
                         implantDatabase.implantDao().updateImplant(implant);
                     }
                     Intent implantDetailsIntent = new Intent(getActivity(), ImplantDetails.class);
-                    Bundle extras = new Bundle();
-                    //TODO: fix the serialization here. not working.
-                    extras.putSerializable(ImplantDetails.EXTRA_IMPLANT, (Serializable)implant);
-                    extras.putSerializable(ImplantDetails.EXTRA_IMPLANT_DETAIL_TYPE, ImplantDetails.ImplantDetailsType.displayDetails);
-                    implantDetailsIntent.putExtras(extras);
+                    implantDetailsIntent.putExtra(ImplantDetails.EXTRA_IMPLANT_UID, hexString);
+                    //TODO: change to edit when done with display
+                    implantDetailsIntent.putExtra(ImplantDetails.EXTRA_IN_EDIT, false);
                     getActivity().startActivity(implantDetailsIntent);
                     dismiss();
                 }

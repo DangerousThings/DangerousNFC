@@ -40,6 +40,7 @@
         </FrameLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_marginStart="16dp"
@@ -75,6 +76,32 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textview_implant_name" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/textview_uid_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/white_rounded_background"
+            android:fontFamily="@font/ibmplexmono_semibold"
+            android:text="UID:"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frameLayout2" />
+
+        <TextView
+            android:id="@+id/textview_uid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/ibmplexmono_text"
+            android:textColor="@color/colorPrimary"
+            android:textSize="24sp"
+            app:layout_constraintStart_toEndOf="@+id/textview_uid_label"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

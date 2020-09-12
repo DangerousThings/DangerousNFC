@@ -16,6 +16,9 @@ public interface ImplantDao
     @Query("Select * from implant")
     List<Implant> getImplantList();
 
+    @Query("SELECT * FROM implant WHERE implantUid LIKE :search")
+    List<Implant> findImplantByUid(String search);
+
     @Insert
     void insertImplant(Implant implant);
 

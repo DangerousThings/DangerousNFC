@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 
 import com.dangerousthings.nfc.R;
+import com.dangerousthings.nfc.databases.ImplantDatabase;
 import com.dangerousthings.nfc.fragments.DetailsToolbar;
 import com.dangerousthings.nfc.fragments.DisplayImplantDetails;
 import com.dangerousthings.nfc.models.Implant;
@@ -15,27 +16,22 @@ import com.dangerousthings.nfc.models.Implant;
 public class ImplantDetails extends AppCompatActivity
 {
     Implant _implant;
-    ImplantDetailsType _type;
+    boolean _inEditMode;
 
-    public static final String EXTRA_IMPLANT = "implant";
-    public static final String EXTRA_IMPLANT_DETAIL_TYPE = "type";
-
-    public enum ImplantDetailsType
-    {
-        displayDetails,
-        editDetails
-    }
+    public static final String EXTRA_IMPLANT_UID = "implant_uid";
+    public static final String EXTRA_IN_EDIT = "display_type";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_implant_details);
 
-        Bundle extras = getIntent().getExtras();
-        _implant = (Implant)extras.getSerializable(EXTRA_IMPLANT);
-        _type = (ImplantDetailsType)extras.getSerializable(EXTRA_IMPLANT_DETAIL_TYPE);
+        String implantUid = getIntent().getStringExtra(EXTRA_IMPLANT_UID);
+        _inEditMode = getIntent().getBooleanExtra(EXTRA_IN_EDIT, false);
+        ImplantDatabase implantDatabase = ImplantDatabase.getInstance(getApplicationContext());
+        _implant = implantDatabase.implantDao().findImplantByUid(implantUid).get(0);
 
-        if(_implant != null && _type != null)
+        if(_implant != null)
         {
             setContentFragment();
         }
@@ -58,11 +54,11 @@ public class ImplantDetails extends AppCompatActivity
     {
         Fragment contentFragment = null;
 
-        if(_type == ImplantDetailsType.displayDetails)
+        if(!_inEditMode)
         {
             contentFragment = new DisplayImplantDetails(_implant);
         }
-        else if(_type == ImplantDetailsType.editDetails)
+        else if(_inEditMode)
         {
             //edit details fragment
         }

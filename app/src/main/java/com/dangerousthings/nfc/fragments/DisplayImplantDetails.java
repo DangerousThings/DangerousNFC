@@ -20,6 +20,7 @@ public class DisplayImplantDetails extends Fragment
 
     TextView mImplantNameTextView;
     TextView mImplantTypeTextView;
+    TextView mImplantUidTextView;
     ImageView mImplantImageView;
 
     public DisplayImplantDetails(Implant implant)
@@ -44,9 +45,11 @@ public class DisplayImplantDetails extends Fragment
         mImplantNameTextView = getView().findViewById(R.id.textview_implant_name);
         mImplantTypeTextView = getView().findViewById(R.id.textview_implant_type);
         mImplantImageView = getView().findViewById(R.id.imageview_implant);
+        mImplantUidTextView = getView().findViewById(R.id.textview_uid);
 
         mImplantNameTextView.setText(_implant.getImplantName());
         mImplantTypeTextView.setText(_implant.getImplantType());
+        mImplantUidTextView.setText(_implant.getUid());
         mImplantImageView.setImageResource(_implant.getImplantImage());
     }
 }

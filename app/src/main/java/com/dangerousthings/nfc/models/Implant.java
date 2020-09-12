@@ -13,6 +13,7 @@ public class Implant
     //UID
     @PrimaryKey
     @NonNull
+    @ColumnInfo(name = "implantUid")
     private String uid;
     public String getUid()
     {
