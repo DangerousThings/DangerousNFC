@@ -30,7 +30,7 @@ public class RecyclerDialogAdapter extends RecyclerView.Adapter<RecyclerDialogAd
     @Override
     public RecyclerDialogAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        View view = _inflater.inflate(R.layout.recycler_select_implant_row, parent, false);
+        View view = _inflater.inflate(R.layout.recycler_select_new_implant_row, parent, false);
         return new ViewHolder(view);
     }
 

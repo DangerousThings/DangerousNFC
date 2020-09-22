@@ -42,9 +42,9 @@ public class DisplayImplantDetails extends Fragment
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
     {
-        mImplantNameTextView = getView().findViewById(R.id.textview_implant_name);
-        mImplantTypeTextView = getView().findViewById(R.id.textview_implant_type);
-        mImplantImageView = getView().findViewById(R.id.imageview_implant);
+        mImplantNameTextView = getView().findViewById(R.id.textview_recycler_implant_name);
+        mImplantTypeTextView = getView().findViewById(R.id.textview_recycler_implant_type);
+        mImplantImageView = getView().findViewById(R.id.imageview_recycler_implant);
         mImplantUidTextView = getView().findViewById(R.id.textview_uid);
 
         mImplantNameTextView.setText(_implant.getImplantName());

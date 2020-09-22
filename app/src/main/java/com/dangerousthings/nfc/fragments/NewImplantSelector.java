@@ -3,7 +3,6 @@ package com.dangerousthings.nfc.fragments;
 import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +11,6 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,7 +21,6 @@ import com.dangerousthings.nfc.models.Implant;
 import com.dangerousthings.nfc.pages.ImplantDetails;
 import com.dangerousthings.nfc.utilities.HexUtils;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -49,7 +44,7 @@ public class NewImplantSelector extends DialogFragment implements RecyclerDialog
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        return inflater.inflate(R.layout.fragment_select_implant_recycler, container, false);
+        return inflater.inflate(R.layout.fragment_select_new_implant_recycler, container, false);
     }
 
     @Override

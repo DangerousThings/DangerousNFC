@@ -26,7 +26,7 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/imageview_implant"
+                    android:id="@+id/imageview_recycler_implant"
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:contentDescription="@string/implant_image"
@@ -51,7 +51,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/textview_implant_name"
+                android:id="@+id/textview_recycler_implant_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -64,7 +64,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textview_implant_type"
+                android:id="@+id/textview_recycler_implant_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -74,7 +74,7 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textview_implant_name" />
+                app:layout_constraintTop_toBottomOf="@+id/textview_recycler_implant_name" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView

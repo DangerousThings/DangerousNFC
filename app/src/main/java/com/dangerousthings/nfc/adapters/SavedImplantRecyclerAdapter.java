@@ -30,7 +30,7 @@ public class SavedImplantRecyclerAdapter extends RecyclerView.Adapter<SavedImpla
     @Override
     public SavedImplantRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        View view = _inflater.inflate(R.layout.recycler_select_implant_row, parent, false);
+        View view = _inflater.inflate(R.layout.recycler_select_new_implant_row, parent, false);
         return new ViewHolder(view);
     }
 
@@ -38,7 +38,8 @@ public class SavedImplantRecyclerAdapter extends RecyclerView.Adapter<SavedImpla
     public void onBindViewHolder(@NonNull SavedImplantRecyclerAdapter.ViewHolder holder, int position)
     {
         Implant implant = _data.get(position);
-        holder.mTextView.setText(implant.getImplantType());
+        holder.mNameTextView.setText(implant.getImplantName());
+        holder.mTypeTextView.setText(implant.getImplantType());
         holder.mImageView.setImageResource(implant.getImplantImage());
     }
 
@@ -50,14 +51,16 @@ public class SavedImplantRecyclerAdapter extends RecyclerView.Adapter<SavedImpla
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
     {
-        public TextView mTextView;
+        public TextView mNameTextView;
+        public TextView mTypeTextView;
         ImageView mImageView;
 
         public ViewHolder(@NonNull View itemView)
         {
             super(itemView);
-            mTextView = itemView.findViewById(R.id.textview_recycler_row);
-            mImageView = itemView.findViewById(R.id.imageview_recycler_row);
+            mNameTextView = itemView.findViewById(R.id.textview_recycler_implant_name);
+            mTypeTextView = itemView.findViewById(R.id.textview_recycler_implant_type);
+            mImageView = itemView.findViewById(R.id.imageview_recycler_implant);
             itemView.setOnClickListener(this);
         }
 

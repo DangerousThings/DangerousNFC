@@ -20,6 +20,7 @@ import com.dangerousthings.nfc.databases.ImplantDatabase;
 import com.dangerousthings.nfc.fragments.DetailsToolbar;
 import com.dangerousthings.nfc.fragments.NewImplantSelector;
 import com.dangerousthings.nfc.enums.TagType;
+import com.dangerousthings.nfc.fragments.SavedImplantSelector;
 import com.dangerousthings.nfc.models.Implant;
 import com.dangerousthings.nfc.utilities.FingerprintUtils;
 
@@ -49,14 +50,12 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                ImplantDatabase implantDatabase = ImplantDatabase.getInstance(getApplicationContext());
-                List<Implant> implantList = implantDatabase.implantDao().getImplantList();
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
                 fragmentTransaction.addToBackStack(null);
-                NewImplantSelector recyclerDialog = new NewImplantSelector(implantList, _tag);
-                fragmentTransaction.replace(R.id.frame_recycler_dialog, recyclerDialog);
+                SavedImplantSelector savedImplantSelector = new SavedImplantSelector();
+                fragmentTransaction.replace(R.id.frame_saved_implants, savedImplantSelector);
                 fragmentTransaction.commit();
             }
         });
