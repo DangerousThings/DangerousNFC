@@ -46,6 +46,8 @@ public class SavedImplantSelector extends Fragment implements SavedImplantRecycl
         mRecyclerView = getView().findViewById(R.id.recycler_saved_implant_list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         _adapter = new SavedImplantRecyclerAdapter(getActivity(), _implantList);
+        //TODO: _adapter.setClickListener(this);
+        mRecyclerView.setAdapter(_adapter);
     }
 
     @Override

@@ -95,7 +95,7 @@ public class NewImplantSelector extends DialogFragment implements RecyclerDialog
                     Intent implantDetailsIntent = new Intent(getActivity(), ImplantDetails.class);
                     implantDetailsIntent.putExtra(ImplantDetails.EXTRA_IMPLANT_UID, hexString);
                     //TODO: change to edit when done with display
-                    implantDetailsIntent.putExtra(ImplantDetails.EXTRA_IN_EDIT, false);
+                    implantDetailsIntent.putExtra(ImplantDetails.EXTRA_IN_EDIT, true);
                     getActivity().startActivity(implantDetailsIntent);
                     dismiss();
                 }

@@ -11,6 +11,7 @@ import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.databases.ImplantDatabase;
 import com.dangerousthings.nfc.fragments.DetailsToolbar;
 import com.dangerousthings.nfc.fragments.DisplayImplantDetails;
+import com.dangerousthings.nfc.fragments.EditImplantDetails;
 import com.dangerousthings.nfc.models.Implant;
 
 public class ImplantDetails extends AppCompatActivity
@@ -60,7 +61,7 @@ public class ImplantDetails extends AppCompatActivity
         }
         else if(_inEditMode)
         {
-            //edit details fragment
+            contentFragment = new EditImplantDetails(_implant);
         }
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

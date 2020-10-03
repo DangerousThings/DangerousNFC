@@ -30,7 +30,7 @@ public class SavedImplantRecyclerAdapter extends RecyclerView.Adapter<SavedImpla
     @Override
     public SavedImplantRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        View view = _inflater.inflate(R.layout.recycler_select_new_implant_row, parent, false);
+        View view = _inflater.inflate(R.layout.recycler_select_saved_implant_row, parent, false);
         return new ViewHolder(view);
     }
 
