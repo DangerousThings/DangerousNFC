@@ -1,129 +1,93 @@
 package com.dangerousthings.nfc.pages;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.app.PendingIntent;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.nfc.NfcAdapter;
-import android.nfc.Tag;
+import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.telecom.Call;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.dangerousthings.nfc.R;
-import com.dangerousthings.nfc.databases.ImplantDatabase;
-import com.dangerousthings.nfc.fragments.DetailsToolbar;
-import com.dangerousthings.nfc.fragments.NewImplantSelector;
-import com.dangerousthings.nfc.enums.TagType;
-import com.dangerousthings.nfc.fragments.SavedImplantSelector;
-import com.dangerousthings.nfc.models.Implant;
-import com.dangerousthings.nfc.utilities.FingerprintUtils;
+import com.dangerousthings.nfc.fragments.MainActionBar;
+import com.dangerousthings.nfc.fragments.MainFragment;
+import com.dangerousthings.nfc.interfaces.IOpenDrawerButton;
+import com.google.android.material.navigation.NavigationView;
 
-import java.util.List;
-import java.util.Objects;
-
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements IOpenDrawerButton
 {
-    //For Intent filter
-    IntentFilter[] _intentFilterArray;
-    PendingIntent _pendingIntent;
-    NfcAdapter _adapter;
-
-    //Fingerprinting contexts
-    Tag _tag;
-
-    Button mSavedImplantButton;
+    private DrawerLayout mDrawer;
+    private NavigationView mNavigation;
+    private ConstraintLayout mConstraint;
+    private ActionBarDrawerToggle mDrawerToggle;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mSavedImplantButton = findViewById(R.id.button_saved_implants);
-        mSavedImplantButton.setOnClickListener(new View.OnClickListener()
+        setStatusBarColor();
+        setDrawer();
+        setDefaultFragments();
+    }
+
+    private void setDefaultFragments()
+    {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.main_frame_content, MainFragment.newInstance());
+
+        MainActionBar mainActionBar = new MainActionBar();
+        mainActionBar.setDrawerInterface(this);
+        fragmentTransaction.replace(R.id.main_frame_actionbar, mainActionBar);
+
+        fragmentTransaction.commit();
+    }
+
+    private void setDrawer()
+    {
+        mDrawer = findViewById(R.id.main_drawer);
+        mNavigation = findViewById(R.id.main_navigation_view);
+        mConstraint = findViewById(R.id.main_constraint);
+
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawer, null, R.string.drawer_toggle_open, R.string.drawer_toggle_close)
         {
-            @Override
-            public void onClick(View view)
+            @SuppressLint("NewApi")
+            public void onDrawerSlide(View drawerView, float slideOffset)
             {
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                fragmentTransaction.addToBackStack(null);
-                SavedImplantSelector savedImplantSelector = new SavedImplantSelector();
-                fragmentTransaction.replace(R.id.frame_saved_implants, savedImplantSelector);
-                fragmentTransaction.commit();
+                super.onDrawerSlide(drawerView, slideOffset);
+                float moveFactor = (mNavigation.getWidth() * slideOffset);
+
+                mConstraint.setTranslationX(moveFactor);
             }
-        });
+        };
 
-        nfcPrimer();
+        mDrawer.setScrimColor(getResources().getColor(android.R.color.transparent));
+        mDrawer.setElevation(0);
+        mDrawer.setDrawerElevation(0);
+        mNavigation.setElevation(0);
+        mDrawer.setDrawerListener(mDrawerToggle);
     }
 
-    private void nfcPrimer()
+    private void setStatusBarColor()
     {
-        _adapter = NfcAdapter.getDefaultAdapter(this);
-
-        _pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-
-        IntentFilter ndef = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
-        IntentFilter tech = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
-        IntentFilter tag = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
-
-        _intentFilterArray = new IntentFilter[] {ndef, tech, tag};
-    }
-
-    private void handleNfcActionDiscovered(Intent intent)
-    {
-        _tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-        if(_tag != null)
-        {
-            TagType tagType = FingerprintUtils.fingerprintNfcTag(_tag);
-
-            if(tagType == TagType.Unknown)
-            {
-                Toast toast = Toast.makeText(this, R.string.implant_cannot_identify, Toast.LENGTH_LONG);
-                toast.show();
-                return;
-            }
-
-            List<Implant> list = FingerprintUtils.getImplantListFromType(tagType);
-
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            fragmentTransaction.addToBackStack(null);
-            NewImplantSelector recyclerDialog = new NewImplantSelector(list, _tag);
-            fragmentTransaction.replace(R.id.frame_recycler_dialog, recyclerDialog);
-            fragmentTransaction.commit();
-        }
+        Window window = getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(Color.parseColor("#FFFFFF"));
+        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
     }
 
     @Override
-    public void onNewIntent(Intent intent)
+    public void drawerButtonClicked()
     {
-        super.onNewIntent(intent);
-        if(Objects.equals(intent.getAction(), NfcAdapter.ACTION_NDEF_DISCOVERED)||Objects.equals(intent.getAction(), NfcAdapter.ACTION_TECH_DISCOVERED)||Objects.equals(intent.getAction(), NfcAdapter.ACTION_TAG_DISCOVERED))
-        {
-            handleNfcActionDiscovered(intent);
-        }
-    }
-
-    @Override
-    public void onPause()
-    {
-        super.onPause();
-        _adapter.disableForegroundDispatch(this);
-    }
-
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-        //TODO: add tech list
-        _adapter.enableForegroundDispatch(this, _pendingIntent, _intentFilterArray, null);
+        mDrawer.open();
     }
 }
