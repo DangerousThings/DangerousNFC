@@ -1,2 +1,2 @@
-include ':NearField'
-project(":NearField").projectDir = file("$rootDir/../NearField")
+rootProject.name='DangerousNFC'
+include ':app'

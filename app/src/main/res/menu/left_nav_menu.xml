@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="none">
+        <item
+            android:title="@string/ndef_operations">
+            <menu>
+                <group
+                    android:checkableBehavior="none">
+                    <item
+                        android:id="@+id/nav_ndef_write"
+                        android:title="@string/write_ndef_text_records"/>
+                </group>
+            </menu>
+        </item>
+        <item
+            android:title="@string/cryptographic_operations">
+            <menu>
+                <group
+                    android:checkableBehavior="none">
+                    <item
+                        android:id="@+id/nav_ndef_decrypt"
+                        android:title="@string/decrypt_ndef_text"/>
+                    <item
+                        android:id="@+id/nav_ndef_encrypt"
+                        android:title="@string/encrypt_ndef_text"/>
+                </group>
+            </menu>
+        </item>
+        <item
+            android:title="@string/nfc_tag_operations">
+            <menu>
+                <group
+                    android:checkableBehavior="none">
+                    <item
+                        android:id="@+id/nav_erase_tag"
+                        android:title="@string/erase_tag_contents"/>
+                    <item
+                        android:id="@+id/nav_tag_info"
+                        android:title="@string/get_tag_info"/>
+                </group>
+            </menu>
+        </item>
+    </group>
+</menu>
