@@ -15,17 +15,19 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.dangerousthings.nfc.R;
-import com.dangerousthings.nfc.fragments.MainActionBar;
+import com.dangerousthings.nfc.enums.MainActionBarState;
 import com.dangerousthings.nfc.fragments.MainFragment;
-import com.dangerousthings.nfc.interfaces.IOpenDrawerButton;
+import com.dangerousthings.nfc.interfaces.IMainActionBar;
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity implements IOpenDrawerButton
+public class MainActivity extends AppCompatActivity implements IMainActionBar
 {
     private DrawerLayout mDrawer;
     private NavigationView mNavigation;
     private ConstraintLayout mConstraint;
     private ActionBarDrawerToggle mDrawerToggle;
+
+    MainActionBarState actionBarState = MainActionBarState.ReadPayload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -42,11 +44,9 @@ public class MainActivity extends AppCompatActivity implements IOpenDrawerButton
     {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.main_frame_content, MainFragment.newInstance());
-
-        MainActionBar mainActionBar = new MainActionBar();
-        mainActionBar.setDrawerInterface(this);
-        fragmentTransaction.replace(R.id.main_frame_actionbar, mainActionBar);
+        MainFragment mainFragment = new MainFragment();
+        mainFragment.setActionBarInterface(this);
+        fragmentTransaction.replace(R.id.main_frame_content, mainFragment);
 
         fragmentTransaction.commit();
     }
@@ -89,5 +89,11 @@ public class MainActivity extends AppCompatActivity implements IOpenDrawerButton
     public void drawerButtonClicked()
     {
         mDrawer.open();
+    }
+
+    @Override
+    public void mainActionToggled(MainActionBarState state)
+    {
+        actionBarState = state;
     }
 }

@@ -66,4 +66,7 @@
     <string name="unknown_tag_type">Unknown Tag Type</string>
     <string name="thematic_break_button">Thematic break button</string>
     <string name="hamburger_icon_image">hamburger icon image</string>
+    <string name="dangerousnfc">DangerousNFC</string>
+    <string name="read_payload">Read Payload</string>
+    <string name="sync_implant">Sync Implant</string>
 </resources>
