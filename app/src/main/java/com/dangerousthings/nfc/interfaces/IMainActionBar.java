@@ -6,4 +6,5 @@ public interface IMainActionBar
 {
     void drawerButtonClicked();
     void mainActionToggled(MainActionBarState state);
+    void settingsButtonClicked();
 }
