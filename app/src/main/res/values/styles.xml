@@ -3,5 +3,16 @@
     <style name="BlackWhite" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/White</item>
         <item name="colorPrimaryDark">@color/Black</item>
+        <item name="colorAccent">#F56528</item>
+    </style>
+    <style name="DEOT" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#008F78</item>
+        <item name="colorPrimaryDark">#0A1017</item>
+        <item name="colorAccent">#BBC6C5</item>
+    </style>
+    <style name="OPZ" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#BCBDC2</item>
+        <item name="colorPrimaryDark">#4B4E5B</item>
+        <item name="colorAccent">#E0B000</item>
     </style>
 </resources>

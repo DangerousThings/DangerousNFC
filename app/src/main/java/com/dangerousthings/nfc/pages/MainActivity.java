@@ -23,6 +23,7 @@ import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.enums.MainActionBarState;
 import com.dangerousthings.nfc.fragments.MainFragment;
 import com.dangerousthings.nfc.interfaces.IMainActionBar;
+import com.dangerousthings.nfc.utilities.ColorUtils;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
@@ -126,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements IMainActionBar
         Window window = getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(Color.parseColor("#FFFFFF"));
+        window.setStatusBarColor(ColorUtils.getPrimaryColor(this));
         window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
     }
 
@@ -145,7 +146,9 @@ public class MainActivity extends AppCompatActivity implements IMainActionBar
     @Override
     public void settingsButtonClicked()
     {
-
+        Intent settingsIntent = new Intent(this, SettingsActivity.class);
+        startActivity(settingsIntent);
+        overridePendingTransition(0, 0);
     }
 
     @Override
