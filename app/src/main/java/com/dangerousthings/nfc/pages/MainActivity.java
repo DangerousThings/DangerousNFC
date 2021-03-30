@@ -28,7 +28,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity implements IMainActionBar
+public class MainActivity extends BaseActivity implements IMainActionBar
 {
     //NFC globals
     IntentFilter[] _intentFilterArray;
@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements IMainActionBar
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setStatusBarColor();
         setDrawer();
         setDefaultFragment();
         nfcPrimer();
@@ -120,15 +119,6 @@ public class MainActivity extends AppCompatActivity implements IMainActionBar
         mDrawer.setDrawerElevation(0);
         mNavigation.setElevation(0);
         mDrawer.addDrawerListener(mDrawerToggle);
-    }
-
-    private void setStatusBarColor()
-    {
-        Window window = getWindow();
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(ColorUtils.getPrimaryColor(this));
-        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
     }
 
     @Override

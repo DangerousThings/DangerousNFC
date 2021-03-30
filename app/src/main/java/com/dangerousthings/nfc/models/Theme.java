@@ -1,7 +1,31 @@
-package com.dangerousthings.nfc;
+package com.dangerousthings.nfc.models;
 
 public class Theme
 {
+    private int themeId;
+
+    public int getThemeId()
+    {
+        return themeId;
+    }
+
+    public void setThemeId(int themeId)
+    {
+        this.themeId = themeId;
+    }
+
+    private String themeTitle;
+
+    public String getThemeTitle()
+    {
+        return themeTitle;
+    }
+
+    public void setThemeTitle(String themeTitle)
+    {
+        this.themeTitle = themeTitle;
+    }
+
     private int colorPrimary;
 
     public int getColorPrimary()
@@ -36,5 +60,14 @@ public class Theme
     public void setColorAccent(int colorAccent)
     {
         this.colorAccent = colorAccent;
+    }
+
+    public Theme(int id, String themeName, int primary, int primaryDark, int accent)
+    {
+        themeId = id;
+        themeTitle = themeName;
+        colorPrimary = primary;
+        colorPrimaryDark = primaryDark;
+        colorAccent = accent;
     }
 }

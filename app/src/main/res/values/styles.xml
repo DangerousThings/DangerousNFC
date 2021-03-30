@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="BlackWhite" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="DT" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/White</item>
         <item name="colorPrimaryDark">@color/Black</item>
         <item name="colorAccent">#F56528</item>

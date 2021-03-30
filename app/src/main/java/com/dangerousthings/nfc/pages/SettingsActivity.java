@@ -11,9 +11,10 @@ import android.view.WindowManager;
 
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.fragments.SettingsFragment;
+import com.dangerousthings.nfc.fragments.ThemeFragment;
 import com.dangerousthings.nfc.utilities.ColorUtils;
 
-public class SettingsActivity extends AppCompatActivity
+public class SettingsActivity extends BaseActivity
 {
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -22,7 +23,6 @@ public class SettingsActivity extends AppCompatActivity
         setContentView(R.layout.activity_base);
 
         setDefaultFragment();
-        setStatusBarColor();
     }
 
     private void setDefaultFragment()
@@ -31,17 +31,17 @@ public class SettingsActivity extends AppCompatActivity
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         SettingsFragment settingsFragment = new SettingsFragment();
         fragmentTransaction.replace(R.id.frame_base, settingsFragment);
-
         fragmentTransaction.commit();
     }
 
-    private void setStatusBarColor()
+    public void switchToThemeFragment()
     {
-        Window window = getWindow();
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(ColorUtils.getPrimaryColor(this));
-        window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        ThemeFragment themeFragment = new ThemeFragment();
+        fragmentTransaction.replace(R.id.frame_base, themeFragment);
+        fragmentTransaction.addToBackStack("themeFragment");
+        fragmentTransaction.commit();
     }
 
     @Override

@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.dangerousthings.nfc.R;
+import com.dangerousthings.nfc.pages.SettingsActivity;
 
 public class SettingsFragment extends Fragment
 {
@@ -44,7 +45,7 @@ public class SettingsFragment extends Fragment
 
     private void changeThemeButton_Pushed()
     {
-
+        ((SettingsActivity)getActivity()).switchToThemeFragment();
     }
 
     private void confirmButton_Pushed()
