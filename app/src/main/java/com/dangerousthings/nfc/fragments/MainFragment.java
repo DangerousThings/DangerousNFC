@@ -20,14 +20,14 @@ import android.widget.ImageView;
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.enums.MainActionBarState;
 import com.dangerousthings.nfc.interfaces.IMainActionBar;
-
-import java.util.Objects;
+import com.dangerousthings.nfc.utilities.ColorUtils;
 
 public class MainFragment extends Fragment
 {
     IMainActionBar actionBarInterface;
     Button mToggleReadButton;
     Button mToggleSyncButton;
+    ImageButton mSettingsButton;
     ImageView mAnimationView;
 
     @Override
@@ -51,29 +51,31 @@ public class MainFragment extends Fragment
         mDrawerButton.setOnClickListener(v -> actionBarInterface.drawerButtonClicked());
         mToggleReadButton.setOnClickListener(v -> onToggleReadPressed());
         mToggleSyncButton.setOnClickListener(v -> onToggleSyncPressed());
-        mAnimationView = view.findViewById(R.id.image_scan_animation);
+        mAnimationView = view.findViewById(R.id.main_image_scan_animation);
+        mSettingsButton = view.findViewById(R.id.main_button_settings);
+        mSettingsButton.setOnClickListener(v -> actionBarInterface.settingsButtonClicked());
 
         setUpScanAnimation();
     }
 
-    private void onToggleReadPressed()
-    {
-        mToggleReadButton.setBackground(ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.left_pill_primary_dark));
-        mToggleSyncButton.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.right_pill_primary));
-        mToggleReadButton.setTextColor(ContextCompat.getColor(getActivity(), R.color.White));
-        mToggleSyncButton.setTextColor(ContextCompat.getColor(getActivity(), R.color.Black));
-
-        actionBarInterface.mainActionToggled(MainActionBarState.ReadPayload);
-    }
-
     private void onToggleSyncPressed()
     {
-        mToggleSyncButton.setBackground(ContextCompat.getDrawable(Objects.requireNonNull(getActivity()), R.drawable.right_pill_primary_dark));
-        mToggleReadButton.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.left_pill_primary));
-        mToggleReadButton.setTextColor(ContextCompat.getColor(getActivity(), R.color.Black));
-        mToggleSyncButton.setTextColor(ContextCompat.getColor(getActivity(), R.color.White));
+        mToggleReadButton.setBackground(ContextCompat.getDrawable(requireActivity(), R.drawable.left_pill_primary_dark));
+        mToggleSyncButton.setBackground(ContextCompat.getDrawable(requireActivity(), R.drawable.right_pill_primary));
+        mToggleReadButton.setTextColor(ColorUtils.getPrimaryColor(requireActivity()));
+        mToggleSyncButton.setTextColor(ColorUtils.getPrimaryDarkColor(requireActivity()));
 
         actionBarInterface.mainActionToggled(MainActionBarState.SyncImplant);
+    }
+
+    private void onToggleReadPressed()
+    {
+        mToggleSyncButton.setBackground(ContextCompat.getDrawable(requireActivity(), R.drawable.right_pill_primary_dark));
+        mToggleReadButton.setBackground(ContextCompat.getDrawable(requireActivity(), R.drawable.left_pill_primary));
+        mToggleReadButton.setTextColor(ColorUtils.getPrimaryDarkColor(requireActivity()));
+        mToggleSyncButton.setTextColor(ColorUtils.getPrimaryColor(requireActivity()));
+
+        actionBarInterface.mainActionToggled(MainActionBarState.ReadPayload);
     }
 
     public void setActionBarInterface(IMainActionBar mainActionBar)
@@ -83,9 +85,9 @@ public class MainFragment extends Fragment
 
     private void setUpScanAnimation()
     {
-        final AnimatedVectorDrawableCompat animation = AnimatedVectorDrawableCompat.create(Objects.requireNonNull(getActivity()), R.drawable.avd_scan);
+        final AnimatedVectorDrawableCompat animation = AnimatedVectorDrawableCompat.create(requireActivity(), R.drawable.avd_scan);
         assert animation != null;
-        animation.setTint(ContextCompat.getColor(getActivity(), R.color.White));
+        animation.setTint(ColorUtils.getPrimaryColor(getActivity()));
         mAnimationView.setImageDrawable(animation);
         final Handler handler = new Handler(Looper.getMainLooper());
         animation.registerAnimationCallback(new Animatable2Compat.AnimationCallback()
