@@ -50,6 +50,7 @@ public class ColorUtils
         themes.add(new Theme(R.style.DT, "DT", Color.parseColor("#FFFFFF"), Color.parseColor("#000000"), Color.parseColor("#F56528")));
         themes.add(new Theme(R.style.DEOT, "DEOT", Color.parseColor("#008F78"), Color.parseColor("#0A1017"), Color.parseColor("#BBC6C5")));
         themes.add(new Theme(R.style.OPZ, "OPZ", Color.parseColor("#BCBDC2"), Color.parseColor("#4B4E5B"), Color.parseColor("#E0B000")));
+        themes.add(new Theme(R.style.Wog, "Wog", Color.parseColor("#FFF6D8"), Color.parseColor("#167D7F"), Color.parseColor("#B5E5CF")));
         return themes;
     }
 }

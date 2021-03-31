@@ -1,34 +1,34 @@
 package com.dangerousthings.nfc.pages;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.enums.MainActionBarState;
-import com.dangerousthings.nfc.fragments.MainFragment;
-import com.dangerousthings.nfc.interfaces.IMainActionBar;
 import com.dangerousthings.nfc.utilities.ColorUtils;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
 
-public class MainActivity extends BaseActivity implements IMainActionBar
+public class MainActivity extends BaseActivity
 {
     //NFC globals
     IntentFilter[] _intentFilterArray;
@@ -39,8 +39,11 @@ public class MainActivity extends BaseActivity implements IMainActionBar
     private DrawerLayout mDrawer;
     private NavigationView mNavigation;
     private ConstraintLayout mConstraint;
+    private Button mToggleReadButton;
+    private Button mToggleSyncButton;
+    ImageView mAnimationView;
 
-    MainActionBarState actionBarState = MainActionBarState.ReadPayload;
+    MainActionBarState _actionBarState = MainActionBarState.ReadPayload;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -48,9 +51,19 @@ public class MainActivity extends BaseActivity implements IMainActionBar
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ImageButton mDrawerButton = findViewById(R.id.main_button_drawer_toggle);
+        ImageButton mSettingsButton = findViewById(R.id.main_button_settings);
+        mToggleReadButton = findViewById(R.id.main_button_toggle_read);
+        mToggleSyncButton = findViewById(R.id.main_button_toggle_sync);
+        mToggleReadButton.setOnClickListener(v -> toggleReadPressed());
+        mToggleSyncButton.setOnClickListener(v -> toggleSyncPressed());
+
+        mDrawerButton.setOnClickListener(v -> drawerButtonClicked());
+        mSettingsButton.setOnClickListener(v -> settingsButtonClicked());
+
         setDrawer();
-        setDefaultFragment();
         nfcPrimer();
+        setUpScanAnimation();
     }
 
     private void nfcPrimer()
@@ -81,19 +94,10 @@ public class MainActivity extends BaseActivity implements IMainActionBar
     {
         if(Objects.equals(intent.getAction(), NfcAdapter.ACTION_NDEF_DISCOVERED))
         {
-            //push to read page
+            Intent readMessageIntent = new Intent(this, ReadMessageActivity.class);
+            startActivity(readMessageIntent);
+            overridePendingTransition(0, 0);
         }
-    }
-
-    private void setDefaultFragment()
-    {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        MainFragment mainFragment = new MainFragment();
-        mainFragment.setActionBarInterface(this);
-        fragmentTransaction.replace(R.id.main_frame_content, mainFragment);
-
-        fragmentTransaction.commit();
     }
 
     private void setDrawer()
@@ -121,20 +125,52 @@ public class MainActivity extends BaseActivity implements IMainActionBar
         mDrawer.addDrawerListener(mDrawerToggle);
     }
 
-    @Override
-    public void drawerButtonClicked()
+    private void drawerButtonClicked()
     {
         mDrawer.open();
     }
 
-    @Override
-    public void mainActionToggled(MainActionBarState state)
+    private void toggleReadPressed()
     {
-        actionBarState = state;
+        mToggleSyncButton.setBackground(ContextCompat.getDrawable(this, R.drawable.right_pill_primary_dark));
+        mToggleReadButton.setBackground(ContextCompat.getDrawable(this, R.drawable.left_pill_accent));
+        mToggleReadButton.setTextColor(ColorUtils.getPrimaryDarkColor(this));
+        mToggleSyncButton.setTextColor(ColorUtils.getPrimaryColor(this));
+
+        _actionBarState = MainActionBarState.ReadPayload;
     }
 
-    @Override
-    public void settingsButtonClicked()
+    private void toggleSyncPressed()
+    {
+        mToggleReadButton.setBackground(ContextCompat.getDrawable(this, R.drawable.left_pill_primary_dark));
+        mToggleSyncButton.setBackground(ContextCompat.getDrawable(this, R.drawable.right_pill_accent));
+        mToggleReadButton.setTextColor(ColorUtils.getPrimaryColor(this));
+        mToggleSyncButton.setTextColor(ColorUtils.getPrimaryDarkColor(this));
+
+        _actionBarState = MainActionBarState.SyncImplant;
+    }
+
+    private void setUpScanAnimation()
+    {
+        mAnimationView = findViewById(R.id.main_image_scan_animation);
+        final AnimatedVectorDrawableCompat animation = AnimatedVectorDrawableCompat.create(this, R.drawable.avd_scan);
+        assert animation != null;
+        animation.setTint(ColorUtils.getPrimaryColor(this));
+        mAnimationView.setImageDrawable(animation);
+        final Handler handler = new Handler(Looper.getMainLooper());
+        animation.registerAnimationCallback(new Animatable2Compat.AnimationCallback()
+        {
+            @Override
+            public void onAnimationEnd(Drawable drawable)
+            {
+                handler.post(animation::start);
+                super.onAnimationEnd(drawable);
+            }
+        });
+        animation.start();
+    }
+
+    private void settingsButtonClicked()
     {
         Intent settingsIntent = new Intent(this, SettingsActivity.class);
         startActivity(settingsIntent);

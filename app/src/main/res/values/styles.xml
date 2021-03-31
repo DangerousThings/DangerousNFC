@@ -15,4 +15,9 @@
         <item name="colorPrimaryDark">#4B4E5B</item>
         <item name="colorAccent">#E0B000</item>
     </style>
+    <style name="Wog" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#FFF6D8</item>
+        <item name="colorPrimaryDark">#167D7F</item>
+        <item name="colorAccent">#B5E5CF</item>
+    </style>
 </resources>
