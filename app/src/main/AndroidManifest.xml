@@ -9,7 +9,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/DT">
-        <activity android:name=".pages.ReadMessageActivity"></activity>
+        <activity android:name=".pages.NdefMessageActivity" />
         <activity android:name=".pages.SettingsActivity" />
         <activity
             android:name=".pages.MainActivity"

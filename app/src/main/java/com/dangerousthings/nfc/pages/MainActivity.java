@@ -12,6 +12,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
+import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,6 +25,7 @@ import android.widget.ImageView;
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.enums.MainActionBarState;
 import com.dangerousthings.nfc.utilities.ColorUtils;
+import com.dangerousthings.nfc.utilities.NdefUtils;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
@@ -41,7 +43,6 @@ public class MainActivity extends BaseActivity
     private ConstraintLayout mConstraint;
     private Button mToggleReadButton;
     private Button mToggleSyncButton;
-    ImageView mAnimationView;
 
     MainActionBarState _actionBarState = MainActionBarState.ReadPayload;
 
@@ -94,9 +95,14 @@ public class MainActivity extends BaseActivity
     {
         if(Objects.equals(intent.getAction(), NfcAdapter.ACTION_NDEF_DISCOVERED))
         {
-            Intent readMessageIntent = new Intent(this, ReadMessageActivity.class);
-            startActivity(readMessageIntent);
-            overridePendingTransition(0, 0);
+            NdefMessage message = NdefUtils.getNdefMessage(intent);
+            if(message != null)
+            {
+                Intent readMessageIntent = new Intent(this, NdefMessageActivity.class);
+                readMessageIntent.putExtra(getString(R.string.intent_ndef_message), message);
+                startActivity(readMessageIntent);
+                overridePendingTransition(0, 0);
+            }
         }
     }
 
@@ -152,7 +158,7 @@ public class MainActivity extends BaseActivity
 
     private void setUpScanAnimation()
     {
-        mAnimationView = findViewById(R.id.main_image_scan_animation);
+        ImageView mAnimationView = findViewById(R.id.main_image_scan_animation);
         final AnimatedVectorDrawableCompat animation = AnimatedVectorDrawableCompat.create(this, R.drawable.avd_scan);
         assert animation != null;
         animation.setTint(ColorUtils.getPrimaryColor(this));

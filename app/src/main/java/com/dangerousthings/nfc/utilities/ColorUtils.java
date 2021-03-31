@@ -1,16 +1,12 @@
 package com.dangerousthings.nfc.utilities;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.util.TypedValue;
 
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.models.Theme;
-import com.dangerousthings.nfc.pages.SettingsActivity;
-
-import org.xmlpull.v1.XmlPullParser;
 
 import java.util.ArrayList;
 import java.util.List;
