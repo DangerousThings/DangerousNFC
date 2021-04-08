@@ -9,13 +9,6 @@
     android:background="?android:colorPrimary"
     tools:context=".pages.MainActivity"
     tools:ignore="Overdraw">
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/main_navigation_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="?android:colorPrimary"
-        app:menu="@menu/left_nav_menu"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main_constraint"
@@ -172,36 +165,40 @@
                     android:text="@string/read_payload"
                     android:textColor="?android:colorPrimaryDark"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/main_button_toggle_sync"
+                    app:layout_constraintEnd_toStartOf="@+id/main_button_toggle_advanced"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
-                    android:id="@+id/main_button_toggle_sync"
+                    android:id="@+id/main_button_toggle_advanced"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:background="@drawable/right_pill_primary_dark"
                     android:minWidth="120dp"
                     android:minHeight="35dp"
-                    android:text="@string/sync_implant"
+                    android:text="Advanced"
                     android:textColor="?android:colorPrimary"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageButton
-                    android:id="@+id/main_button_settings"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/ic_settings"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/main_button_toggle_read"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="?android:colorPrimaryDark" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/main_navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="?android:colorPrimary">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/main_fragment_menu"
+            android:name="com.dangerousthings.nfc.fragments.MainMenuFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>
 

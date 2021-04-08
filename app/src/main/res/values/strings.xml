@@ -24,4 +24,6 @@
     <string name="saved_theme">com.dangerousthings.nfc.SAVED_THEME</string>
     <string name="record_space">Record %1$d</string>
     <string name="ndef_records">NDEF Records:</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
