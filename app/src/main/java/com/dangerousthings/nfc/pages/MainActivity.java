@@ -139,6 +139,12 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
                                 }
 
                                 implantDAO.insertImplant(implant);
+
+                                Intent onboardImplant = new Intent(this, ImplantManagementActivity.class);
+                                onboardImplant.putExtra(getString(R.string.intent_tag_uid), HexUtils.bytesToHex(tag.getId()));
+                                onboardImplant.putExtra(getString(R.string.intent_oboard_flag), true);
+                                startActivity(onboardImplant);
+                                overridePendingTransition(0, 0);
                             }))
                             .setNegativeButton("No", ((dialog, which) -> dialog.cancel()))
                             .show();
@@ -215,10 +221,6 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
             }
         });
         animation.start();
-    }
-
-    private void settingsButtonClicked()
-    {
     }
 
     @Override

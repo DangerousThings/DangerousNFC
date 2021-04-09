@@ -25,7 +25,7 @@ public class SettingsActivity extends BaseActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         SettingsFragment settingsFragment = new SettingsFragment();
-        fragmentTransaction.replace(R.id.frame_base, settingsFragment);
+        fragmentTransaction.replace(R.id.base_frame, settingsFragment);
         fragmentTransaction.commit();
     }
 
@@ -34,7 +34,7 @@ public class SettingsActivity extends BaseActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         ThemeFragment themeFragment = new ThemeFragment();
-        fragmentTransaction.replace(R.id.frame_base, themeFragment);
+        fragmentTransaction.replace(R.id.base_frame, themeFragment);
         fragmentTransaction.addToBackStack("themeFragment");
         fragmentTransaction.commit();
     }

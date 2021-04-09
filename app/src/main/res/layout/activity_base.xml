@@ -8,7 +8,7 @@
     tools:context=".pages.SettingsActivity">
 
     <FrameLayout
-        android:id="@+id/frame_base"
+        android:id="@+id/base_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="8dp"

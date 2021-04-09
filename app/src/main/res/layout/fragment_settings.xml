@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@drawable/rounded_primary_dark"
-            app:layout_constraintBottom_toTopOf="@+id/settings_actionbar_constraint"
+            app:layout_constraintBottom_toTopOf="@+id/settings_constraint_actionbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:fontFamily="@font/ibmplexmono_text"
-                    android:text="Theme:"
+                    android:text="@string/theme"
                     android:textColor="?android:colorPrimary"
                     android:textSize="24sp" />
 
@@ -52,7 +52,7 @@
                     android:background="@drawable/rounded_primary"
                     android:layout_gravity="center_vertical"
                     android:minHeight="40dp"
-                    android:text="Change Theme" />
+                    android:text="@string/change_theme" />
             </LinearLayout>
 
             <View
@@ -70,7 +70,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/settings_actionbar_constraint"
+            android:id="@+id/settings_constraint_actionbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
@@ -89,7 +89,8 @@
                 android:tint="?android:colorPrimaryDark"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/back_button" />
 
             <ImageButton
                 android:id="@+id/settings_button_confirm"
@@ -101,7 +102,8 @@
                 android:tint="?android:colorPrimaryDark"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/confirm_button" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

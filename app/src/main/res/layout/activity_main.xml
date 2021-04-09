@@ -129,7 +129,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="?android:colorPrimary" />
+                    app:tint="?android:colorPrimary"
+                    android:contentDescription="@string/scan_animation" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -176,7 +177,7 @@
                     android:background="@drawable/right_pill_primary_dark"
                     android:minWidth="120dp"
                     android:minHeight="35dp"
-                    android:text="Advanced"
+                    android:text="@string/advanced"
                     android:textColor="?android:colorPrimary"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

@@ -84,7 +84,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/ibmplexmono_semibold"
-                android:text="Saved Implants"
+                android:text="@string/saved_implants"
                 android:textColor="?android:colorPrimary"
                 android:textSize="18sp" />
         </LinearLayout>
