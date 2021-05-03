@@ -27,7 +27,7 @@ import android.widget.ImageView;
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.databases.ImplantDatabase;
 import com.dangerousthings.nfc.enums.MainActionBarState;
-import com.dangerousthings.nfc.fragments.MainMenuFragment;
+import com.dangerousthings.nfc.fragments.MainDrawerFragment;
 import com.dangerousthings.nfc.interfaces.IImplantDAO;
 import com.dangerousthings.nfc.interfaces.IMainMenuClickListener;
 import com.dangerousthings.nfc.models.Implant;
@@ -67,7 +67,7 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
         mToggleAdvancedButton.setOnClickListener(v -> toggleSyncPressed());
 
         //set up menu fragments click listener
-        MainMenuFragment mMenuFragment = (MainMenuFragment) getSupportFragmentManager().findFragmentById(R.id.main_fragment_menu);
+        MainDrawerFragment mMenuFragment = (MainDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.main_fragment_menu);
         mMenuFragment.setOnClickListener(this);
 
         mDrawerButton.setOnClickListener(v -> drawerButtonClicked());

@@ -37,4 +37,6 @@
     <string name="theme">Theme:</string>
     <string name="change_theme">Change Theme</string>
     <string name="confirm_button">confirm button</string>
+    <string name="dangerousnfc">DangerousNFC</string>
+    <string name="implantname">ImplantName</string>
 </resources>

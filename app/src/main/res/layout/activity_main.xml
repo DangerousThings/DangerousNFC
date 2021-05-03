@@ -196,7 +196,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/main_fragment_menu"
-            android:name="com.dangerousthings.nfc.fragments.MainMenuFragment"
+            android:name="com.dangerousthings.nfc.fragments.MainDrawerFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 

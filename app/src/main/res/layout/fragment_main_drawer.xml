@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.MainMenuFragment">
+    tools:context=".fragments.MainDrawerFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/ibmplexmono_semibold"
-            android:text="DangerousNFC"
+            android:text="@string/dangerousnfc"
             android:textColor="?android:colorPrimaryDark"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"

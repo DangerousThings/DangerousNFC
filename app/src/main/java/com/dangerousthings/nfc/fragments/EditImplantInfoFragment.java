@@ -63,6 +63,23 @@ public class EditImplantInfoFragment extends Fragment
         mBackButton = view.findViewById(R.id.edit_implant_button_back);
         mSaveButton = view.findViewById(R.id.edit_implant_button_save);
 
-        mBackButton.setOnClickListener(v -> requireActivity().onBackPressed());
+        mBackButton.setOnClickListener(v -> popBack());
+        mSaveButton.setOnClickListener(v -> updateImplant());
+    }
+
+    private void updateImplant()
+    {
+        //TODO: pull in fragment's values into implant
+        ImplantDatabase database = ImplantDatabase.getInstance(requireActivity());
+        IImplantDAO implantDAO = database.implantDAO();
+        implantDAO.updateImplant(_implant);
+    }
+
+    private void popBack()
+    {
+        ImplantDatabase database = ImplantDatabase.getInstance(requireActivity());
+        IImplantDAO implantDAO = database.implantDAO();
+        implantDAO.deleteImplant(_implant);
+        requireActivity().onBackPressed();
     }
 }
