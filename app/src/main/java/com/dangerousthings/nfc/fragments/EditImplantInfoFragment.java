@@ -8,13 +8,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.databases.ImplantDatabase;
 import com.dangerousthings.nfc.interfaces.IImplantDAO;
 import com.dangerousthings.nfc.models.Implant;
-import com.dangerousthings.nfc.pages.ImplantManagementActivity;
 
 public class EditImplantInfoFragment extends Fragment
 {
@@ -23,6 +24,8 @@ public class EditImplantInfoFragment extends Fragment
 
     ImageButton mBackButton;
     ImageButton mSaveButton;
+    TextView mUIDText;
+    EditText mNameEdit;
 
     private Implant _implant;
 
@@ -62,24 +65,21 @@ public class EditImplantInfoFragment extends Fragment
     {
         mBackButton = view.findViewById(R.id.edit_implant_button_back);
         mSaveButton = view.findViewById(R.id.edit_implant_button_save);
+        mUIDText = view.findViewById(R.id.edit_implant_text_uid);
+        mNameEdit = view.findViewById(R.id.edit_implant_edittext_name);
 
-        mBackButton.setOnClickListener(v -> popBack());
+        mBackButton.setOnClickListener(v -> requireActivity().onBackPressed());
         mSaveButton.setOnClickListener(v -> updateImplant());
+
+        mUIDText.setText(_implant.getUID());
     }
 
     private void updateImplant()
     {
+        _implant.setImplantName(mNameEdit.getText().toString());
         //TODO: pull in fragment's values into implant
         ImplantDatabase database = ImplantDatabase.getInstance(requireActivity());
         IImplantDAO implantDAO = database.implantDAO();
         implantDAO.updateImplant(_implant);
-    }
-
-    private void popBack()
-    {
-        ImplantDatabase database = ImplantDatabase.getInstance(requireActivity());
-        IImplantDAO implantDAO = database.implantDAO();
-        implantDAO.deleteImplant(_implant);
-        requireActivity().onBackPressed();
     }
 }

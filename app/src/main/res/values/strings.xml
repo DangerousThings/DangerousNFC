@@ -39,4 +39,6 @@
     <string name="confirm_button">confirm button</string>
     <string name="dangerousnfc">DangerousNFC</string>
     <string name="implantname">ImplantName</string>
+    <string name="uid">UID:</string>
+    <string name="implant_image">implant image</string>
 </resources>

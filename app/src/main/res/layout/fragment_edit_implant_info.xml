@@ -27,10 +27,11 @@
                 android:layout_marginTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:src="@tools:sample/avatars" />
+                tools:src="@tools:sample/avatars"
+                android:contentDescription="@string/implant_image" />
 
             <EditText
-                android:id="@+id/edit_implant_name"
+                android:id="@+id/edit_implant_edittext_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
@@ -41,7 +42,33 @@
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="@+id/edit_implant_image"
                 app:layout_constraintStart_toEndOf="@+id/edit_implant_image"
-                app:layout_constraintTop_toTopOf="@+id/edit_implant_image" />
+                app:layout_constraintTop_toTopOf="@+id/edit_implant_image"
+                android:inputType="text"
+                android:autofillHints="" />
+
+            <TextView
+                android:id="@+id/edit_implant_text_uid_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/ibmplexmono_semibold"
+                android:text="@string/uid"
+                android:textColor="?android:colorPrimary"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@+id/edit_implant_image"
+                app:layout_constraintTop_toBottomOf="@+id/edit_implant_image" />
+
+            <TextView
+                android:id="@+id/edit_implant_text_uid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/ibmplexmono_text"
+                android:textColor="?android:colorPrimary"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_implant_text_uid_label"
+                app:layout_constraintStart_toEndOf="@+id/edit_implant_text_uid_label"
+                app:layout_constraintTop_toTopOf="@+id/edit_implant_text_uid_label" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
