@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.databases.ImplantDatabase;
+import com.dangerousthings.nfc.fragments.DisplayImplantInfoFragment;
 import com.dangerousthings.nfc.fragments.EditImplantInfoFragment;
 import com.dangerousthings.nfc.interfaces.IImplantDAO;
 import com.dangerousthings.nfc.models.Implant;
@@ -29,19 +30,30 @@ public class ImplantManagementActivity extends BaseActivity
 
         _onboardFlag = getIntent().getBooleanExtra(getString(R.string.intent_oboard_flag), false);
 
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if(_onboardFlag)
         {
             //start onboard fragment
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             EditImplantInfoFragment onboardFragment = EditImplantInfoFragment.newInstance(UID);
             fragmentTransaction.replace(R.id.base_frame, onboardFragment);
-            fragmentTransaction.commit();
         }
         else
         {
-            //start operation/information fragment
+            DisplayImplantInfoFragment displayFragment = DisplayImplantInfoFragment.newInstance(UID);
+            fragmentTransaction.replace(R.id.base_frame, displayFragment);
         }
+        fragmentTransaction.commit();
+    }
+
+    public void switchToDisplayFragment(String UID)
+    {
+        _onboardFlag = false;
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        DisplayImplantInfoFragment displayFragment = DisplayImplantInfoFragment.newInstance(UID);
+        fragmentTransaction.replace(R.id.base_frame, displayFragment);
+        fragmentTransaction.commit();
     }
 
     @Override

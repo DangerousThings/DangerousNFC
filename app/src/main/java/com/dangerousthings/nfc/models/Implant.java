@@ -8,6 +8,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.dangerousthings.nfc.enums.TagFamily;
+
 @Entity(tableName = "implant")
 public class Implant
 {
@@ -62,5 +64,25 @@ public class Implant
     public void setNdefMessage(NdefMessage ndefMessage)
     {
         this.ndefMessage = ndefMessage;
+    }
+
+    //TagFamily
+    @ColumnInfo(name = "TagFamily")
+    private TagFamily tagFamily;
+
+    public TagFamily getTagFamily()
+    {
+        return tagFamily;
+    }
+
+    public void setTagFamily(TagFamily tagFamily)
+    {
+        this.tagFamily = tagFamily;
+    }
+
+    //Tag writing
+    public boolean writeToTag(NdefMessage message)
+    {
+        return false;
     }
 }

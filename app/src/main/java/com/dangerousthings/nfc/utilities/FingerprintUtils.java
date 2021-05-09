@@ -4,7 +4,7 @@ import android.nfc.Tag;
 import android.nfc.tech.IsoDep;
 import android.nfc.tech.NfcA;
 
-import com.dangerousthings.nfc.enums.TagType;
+import com.dangerousthings.nfc.enums.TagFamily;
 import com.dangerousthings.nfc.models.Implant;
 
 import java.io.IOException;
@@ -23,26 +23,26 @@ public class FingerprintUtils
 
     public static final String GET_VERSION = "60";
 
-    public static TagType fingerprintNfcTag(Tag tag)
+    public static TagFamily fingerprintNfcTag(Tag tag)
     {
         //send GET_VERSION command
         String get_version = sendNfcHexCommand(GET_VERSION, tag);
         if(get_version == null)
         {
-            return TagType.UNKNOWN;
+            return TagFamily.UNKNOWN;
         }
         switch(get_version)
         {
             case GET_VERSION_RESULT_NTAG_216:
-                return TagType.NTAG_216;
+                return TagFamily.NTAG_Standard;
             case GET_VERSION_RESULT_DESFIRE_EV1_8K:
-                return TagType.DESFire_EV1_8K;
+                return TagFamily.DESFire;
             case GET_VERSION_RESULT_VIVOKEY_FLEX_ONE:
-                return TagType.SmartMX2;
+                return TagFamily.Vivokey;
             case GET_VERSION_RESULT_NTAG_I2C_PLUS:
-                return TagType.NTAG_I2C_Plus;
+                return TagFamily.NTAG_I2C;
             default:
-                return TagType.UNKNOWN;
+                return TagFamily.UNKNOWN;
         }
     }
 
@@ -78,18 +78,16 @@ public class FingerprintUtils
         }
     }
 
-    public static List<Implant> getImplantListFromType(TagType tagType)
+    public static List<Implant> getImplantListFromType(TagFamily tagFamily)
     {
         List<Implant> implantList = new ArrayList<>();
-        switch(tagType)
+        switch(tagFamily)
         {
-            case NTAG_216:
+            case NTAG_Standard:
                 break;
-            case DESFire_EV1_8K:
+            case DESFire:
                 break;
-            case SmartMX2:
-                break;
-            case NTAG_I2C_Plus:
+            case NTAG_I2C:
                 break;
         }
         return implantList;

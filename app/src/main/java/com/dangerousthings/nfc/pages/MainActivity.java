@@ -27,11 +27,13 @@ import android.widget.ImageView;
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.databases.ImplantDatabase;
 import com.dangerousthings.nfc.enums.MainActionBarState;
+import com.dangerousthings.nfc.enums.TagFamily;
 import com.dangerousthings.nfc.fragments.MainDrawerFragment;
 import com.dangerousthings.nfc.interfaces.IImplantDAO;
 import com.dangerousthings.nfc.interfaces.IMainMenuClickListener;
 import com.dangerousthings.nfc.models.Implant;
 import com.dangerousthings.nfc.utilities.ColorUtils;
+import com.dangerousthings.nfc.utilities.FingerprintUtils;
 import com.dangerousthings.nfc.utilities.HexUtils;
 import com.dangerousthings.nfc.utilities.NdefUtils;
 import com.google.android.material.navigation.NavigationView;
@@ -68,6 +70,7 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
 
         //set up menu fragments click listener
         MainDrawerFragment mMenuFragment = (MainDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.main_fragment_menu);
+        assert mMenuFragment != null;
         mMenuFragment.setOnClickListener(this);
 
         mDrawerButton.setOnClickListener(v -> drawerButtonClicked());
@@ -118,21 +121,22 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
             }
             else if(_actionBarState.equals(MainActionBarState.Advanced))
             {
+                //make new implant and pull basic info
                 ImplantDatabase database = ImplantDatabase.getInstance(this);
                 IImplantDAO implantDAO = database.implantDAO();
                 Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 
+                assert tag != null;
                 if(implantDAO.getImplantByUID(HexUtils.bytesToHex(tag.getId())) == null)
                 {
+                    Implant implant = new Implant();
+                    implant.setUID(HexUtils.bytesToHex(tag.getId()));
+                    implant.setTagFamily(FingerprintUtils.fingerprintNfcTag(tag));
                     new AlertDialog.Builder(this)
                             .setTitle("New Implant Detected")
                             .setMessage("Would you like to save this implant?")
                             .setPositiveButton("Yes", ((dialog, which) ->
                             {
-                                //Create new implant
-                                Implant implant = new Implant();
-                                implant.setUID(HexUtils.bytesToHex(tag.getId()));
-
                                 if(message != null)
                                 {
                                     implant.setNdefMessage(message);
@@ -148,6 +152,14 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
                             }))
                             .setNegativeButton("No", ((dialog, which) -> dialog.cancel()))
                             .show();
+                }
+                else
+                {
+                    Intent displayImplant = new Intent(this, ImplantManagementActivity.class);
+                    displayImplant.putExtra(getString(R.string.intent_tag_uid), HexUtils.bytesToHex(tag.getId()));
+                    displayImplant.putExtra(getString(R.string.intent_oboard_flag), false);
+                    startActivity(displayImplant);
+                    overridePendingTransition(0, 0);
                 }
             }
         }

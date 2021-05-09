@@ -41,4 +41,5 @@
     <string name="implantname">ImplantName</string>
     <string name="uid">UID:</string>
     <string name="implant_image">implant image</string>
+    <string name="tag_family">Tag Family:</string>
 </resources>
