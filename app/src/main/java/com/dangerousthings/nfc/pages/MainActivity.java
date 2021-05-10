@@ -27,7 +27,6 @@ import android.widget.ImageView;
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.databases.ImplantDatabase;
 import com.dangerousthings.nfc.enums.MainActionBarState;
-import com.dangerousthings.nfc.enums.TagFamily;
 import com.dangerousthings.nfc.fragments.MainDrawerFragment;
 import com.dangerousthings.nfc.interfaces.IImplantDAO;
 import com.dangerousthings.nfc.interfaces.IMainMenuClickListener;
@@ -269,5 +268,8 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
     public void onSavedImplantsClicked()
     {
         mDrawer.close();
+        Intent savedImplantsIntent = new Intent(this, SavedImplantsActivity.class);
+        startActivity(savedImplantsIntent);
+        overridePendingTransition(0, 0);
     }
 }

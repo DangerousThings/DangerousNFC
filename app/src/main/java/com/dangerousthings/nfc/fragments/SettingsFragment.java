@@ -14,8 +14,6 @@ import android.widget.ImageButton;
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.pages.SettingsActivity;
 
-import java.util.Objects;
-
 public class SettingsFragment extends Fragment
 {
     Button mChangeThemeButton;

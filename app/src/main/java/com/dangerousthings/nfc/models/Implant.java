@@ -1,7 +1,6 @@
 package com.dangerousthings.nfc.models;
 
 import android.nfc.NdefMessage;
-import android.nfc.Tag;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
