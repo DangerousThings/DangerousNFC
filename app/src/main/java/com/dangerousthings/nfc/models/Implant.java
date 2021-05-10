@@ -7,6 +7,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.dangerousthings.nfc.enums.ImplantModel;
 import com.dangerousthings.nfc.enums.TagFamily;
 
 @Entity(tableName = "implant")
@@ -77,6 +78,25 @@ public class Implant
     public void setTagFamily(TagFamily tagFamily)
     {
         this.tagFamily = tagFamily;
+    }
+
+    //Implant Model
+    @ColumnInfo(name = "ImplantModel")
+    private ImplantModel implantModel;
+
+    public ImplantModel getImplantModel()
+    {
+        return implantModel;
+    }
+
+    public void setImplantModel(ImplantModel implantModel)
+    {
+        this.implantModel = implantModel;
+    }
+
+    public String getImplantModelAsString()
+    {
+        return implantModel.toString().replace("_", " ");
     }
 
     //Tag writing
