@@ -23,6 +23,7 @@ public class DisplayImplantInfoFragment extends Fragment
     TextView mNameText;
     TextView mUIDText;
     TextView mFamilyText;
+    TextView mModelText;
     ImageButton mBackButton;
 
     private Implant _implant;
@@ -64,11 +65,13 @@ public class DisplayImplantInfoFragment extends Fragment
         mNameText = view.findViewById(R.id.display_implant_text_name);
         mUIDText = view.findViewById(R.id.display_implant_text_uid);
         mFamilyText = view.findViewById(R.id.display_implant_text_family);
+        mModelText = view.findViewById(R.id.display_implant_text_model);
         mBackButton = view.findViewById(R.id.dislpay_implant_button_back);
 
         mNameText.setText(_implant.getImplantName());
         mUIDText.setText(_implant.getUID());
         mFamilyText.setText(_implant.getTagFamily().toString());
+        mModelText.setText(_implant.getImplantModelAsString());
         mBackButton.setOnClickListener(v -> requireActivity().onBackPressed());
     }
 }

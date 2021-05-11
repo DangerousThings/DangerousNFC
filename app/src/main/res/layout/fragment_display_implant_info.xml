@@ -90,6 +90,31 @@
                 app:layout_constraintBottom_toBottomOf="@+id/display_implant_text_family_label"
                 app:layout_constraintStart_toEndOf="@+id/display_implant_text_family_label"
                 app:layout_constraintTop_toTopOf="@+id/display_implant_text_family_label" />
+
+            <TextView
+                android:id="@+id/display_implant_text_model_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/ibmplexmono_semibold"
+                android:textColor="?android:colorPrimary"
+                android:text="@string/implant_model"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/display_implant_text_family_label" />
+
+            <TextView
+                android:id="@+id/display_implant_text_model"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/ibmplexmono_text"
+                android:textColor="?android:colorPrimary"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/display_implant_text_model_label"
+                app:layout_constraintStart_toEndOf="@+id/display_implant_text_model_label"
+                app:layout_constraintTop_toTopOf="@+id/display_implant_text_model_label" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout

@@ -15,5 +15,6 @@ public enum ImplantModel
     flexNT,
     Vivokey_Apex_Flex,
     Vivokey_Apex_Max,
-    Vivokey_Flex_One
+    Vivokey_Flex_One,
+    Unknown
 }

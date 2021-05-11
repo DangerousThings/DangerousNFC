@@ -5,6 +5,7 @@ import android.nfc.NdefMessage;
 
 import androidx.room.TypeConverter;
 
+import com.dangerousthings.nfc.enums.ImplantModel;
 import com.dangerousthings.nfc.enums.TagFamily;
 
 public class Converters
@@ -39,5 +40,17 @@ public class Converters
     public static TagFamily tagFamilyFromString(String s)
     {
         return TagFamily.valueOf(s);
+    }
+
+    @TypeConverter
+    public static String stringFromImplantModel(ImplantModel type)
+    {
+        return type.name();
+    }
+
+    @TypeConverter
+    public static ImplantModel getImplantModelFromString(String s)
+    {
+        return ImplantModel.valueOf(s);
     }
 }
