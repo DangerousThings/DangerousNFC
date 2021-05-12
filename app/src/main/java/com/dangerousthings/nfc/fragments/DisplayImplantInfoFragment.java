@@ -8,13 +8,16 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.databases.ImplantDatabase;
+import com.dangerousthings.nfc.interfaces.IClickListener;
 import com.dangerousthings.nfc.interfaces.IImplantDAO;
 import com.dangerousthings.nfc.models.Implant;
+import com.dangerousthings.nfc.pages.ImplantManagementActivity;
 
 public class DisplayImplantInfoFragment extends Fragment
 {
@@ -25,19 +28,22 @@ public class DisplayImplantInfoFragment extends Fragment
     TextView mFamilyText;
     TextView mModelText;
     ImageButton mBackButton;
+    Button mOperationsButton;
 
     private Implant _implant;
+    IClickListener _clickListener;
 
     public DisplayImplantInfoFragment()
     {
     }
 
-    public static DisplayImplantInfoFragment newInstance(String implantUID)
+    public static DisplayImplantInfoFragment newInstance(String implantUID, ImplantManagementActivity activity)
     {
         DisplayImplantInfoFragment fragment = new DisplayImplantInfoFragment();
         Bundle args = new Bundle();
         args.putString(ARG_IMPLANT_UID, implantUID);
         fragment.setArguments(args);
+        fragment.setClickListener(activity);
         return fragment;
     }
 
@@ -67,11 +73,18 @@ public class DisplayImplantInfoFragment extends Fragment
         mFamilyText = view.findViewById(R.id.display_implant_text_family);
         mModelText = view.findViewById(R.id.display_implant_text_model);
         mBackButton = view.findViewById(R.id.dislpay_implant_button_back);
+        mOperationsButton = view.findViewById(R.id.display_implant_button_operations);
 
         mNameText.setText(_implant.getImplantName());
         mUIDText.setText(_implant.getUID());
         mFamilyText.setText(_implant.getTagFamily().toString());
         mModelText.setText(_implant.getImplantModelAsString());
         mBackButton.setOnClickListener(v -> requireActivity().onBackPressed());
+        mOperationsButton.setOnClickListener(v -> _clickListener.onClick());
+    }
+
+    public void setClickListener(IClickListener listener)
+    {
+        _clickListener = listener;
     }
 }

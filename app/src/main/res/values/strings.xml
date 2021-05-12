@@ -4,6 +4,11 @@
     <string name="intent_ndef_message">com.dangerousthings.nfc.NDEF_MESSAGE</string>
     <string name="intent_tag_uid">com.dangerousthings.nfc.TAG_UID</string>
     <string name="intent_oboard_flag">com.dangerousthings.nfc.ONBOARD_FLAG</string>
+    <!--Menu IDs-->
+    <string name="menu_view_records">com.dangerousthings.nfc.VIEW_RECORDS</string>
+    <string name="menu_memory_management">com.dangerousthings.nfc.MANAGE_MEMORY</string>
+    <string name="menu_ndef_submenu">com.dangerousthings.nfc.NDEF_SUBMENU</string>
+    <string name="menu_memory_submenu">com.dangerousthings.nfc.MEMORY_SUBMENU</string>
     <!---->
     <string name="app_name">Dangerous NFC</string>
     <string name="ndef_operations">NDEF Operations</string>
@@ -43,4 +48,5 @@
     <string name="implant_image">implant image</string>
     <string name="tag_family">Tag Family:</string>
     <string name="implant_model">Implant Model:</string>
+    <string name="operations">Operations</string>
 </resources>

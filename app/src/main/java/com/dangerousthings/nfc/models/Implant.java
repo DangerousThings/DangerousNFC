@@ -1,6 +1,14 @@
 package com.dangerousthings.nfc.models;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.nfc.NdefMessage;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.SubMenu;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,8 +16,10 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.enums.ImplantModel;
 import com.dangerousthings.nfc.enums.TagFamily;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -140,5 +150,21 @@ public class Implant
     public boolean writeToTag(NdefMessage message)
     {
         return false;
+    }
+
+    //Operations List
+    public void getOperationsMenu(Menu menu)
+    {
+        menu.clear();
+        switch(tagFamily)
+        {
+            case NTAG_Standard: case NTAG_I2C: case DESFire: case Vivokey: case UNKNOWN:
+                menu.addSubMenu(Menu.NONE, R.string.menu_ndef_submenu, Menu.NONE, "NDEF Operations");
+                SubMenu ndefMenu = menu.findItem(R.string.menu_ndef_submenu).getSubMenu();
+                ndefMenu.add(0, R.string.menu_view_records, 0, "View NDEF Records");
+                menu.addSubMenu(Menu.NONE, R.string.menu_memory_submenu, Menu.NONE, "Memory Operations");
+                SubMenu memoryMenu = menu.findItem(R.string.menu_memory_submenu).getSubMenu();
+                memoryMenu.add(0, R.string.menu_memory_management, 0, "Manage Implant Memory");
+        }
     }
 }
