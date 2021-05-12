@@ -2,6 +2,8 @@
 <resources>
     <!--Intent extra flags-->
     <string name="intent_ndef_message">com.dangerousthings.nfc.NDEF_MESSAGE</string>
+    <string name="intent_tag_uid">com.dangerousthings.nfc.TAG_UID</string>
+    <string name="intent_oboard_flag">com.dangerousthings.nfc.ONBOARD_FLAG</string>
     <!---->
     <string name="app_name">Dangerous NFC</string>
     <string name="ndef_operations">NDEF Operations</string>
@@ -24,4 +26,21 @@
     <string name="saved_theme">com.dangerousthings.nfc.SAVED_THEME</string>
     <string name="record_space">Record %1$d</string>
     <string name="ndef_records">NDEF Records:</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="scan_animation">scan animation</string>
+    <string name="advanced">Advanced</string>
+    <string name="back_button">back button</string>
+    <string name="add_button">add button</string>
+    <string name="save_button">save button</string>
+    <string name="saved_implants">Saved Implants</string>
+    <string name="theme">Theme:</string>
+    <string name="change_theme">Change Theme</string>
+    <string name="confirm_button">confirm button</string>
+    <string name="dangerousnfc">DangerousNFC</string>
+    <string name="implantname">ImplantName</string>
+    <string name="uid">UID:</string>
+    <string name="implant_image">implant image</string>
+    <string name="tag_family">Tag Family:</string>
+    <string name="implant_model">Implant Model:</string>
 </resources>

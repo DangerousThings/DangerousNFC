@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.EditImplantInfoFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/rounded_primary_dark"
+            app:layout_constraintBottom_toTopOf="@+id/edit_implant_constraint_actionbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/edit_implant_image"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:contentDescription="@string/implant_image"
+                android:scaleType="fitCenter"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/implant_placeholder" />
+
+            <EditText
+                android:id="@+id/edit_implant_edittext_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:fontFamily="@font/ibmplexmono_semibold"
+                android:hint="@string/implantname"
+                android:inputType="text"
+                android:textColor="?android:colorPrimary"
+                android:textColorHint="?android:colorPrimary"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_implant_image"
+                app:layout_constraintStart_toEndOf="@+id/edit_implant_image"
+                app:layout_constraintTop_toTopOf="@+id/edit_implant_image" />
+
+            <TextView
+                android:id="@+id/edit_implant_text_uid_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:fontFamily="@font/ibmplexmono_semibold"
+                android:text="@string/uid"
+                android:textColor="?android:colorPrimary"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@+id/edit_implant_image"
+                app:layout_constraintTop_toBottomOf="@+id/edit_implant_image" />
+
+            <TextView
+                android:id="@+id/edit_implant_text_uid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/ibmplexmono_text"
+                android:textColor="?android:colorPrimary"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_implant_text_uid_label"
+                app:layout_constraintStart_toEndOf="@+id/edit_implant_text_uid_label"
+                app:layout_constraintTop_toTopOf="@+id/edit_implant_text_uid_label" />
+
+            <TextView
+                android:id="@+id/edit_implant_text_family_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/ibmplexmono_semibold"
+                android:text="@string/tag_family"
+                android:textColor="?android:colorPrimary"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_implant_text_uid_label" />
+
+            <TextView
+                android:id="@+id/edit_implant_text_family"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:fontFamily="@font/ibmplexmono_text"
+                android:textColor="?android:colorPrimary"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_implant_text_family_label"
+                app:layout_constraintStart_toEndOf="@+id/edit_implant_text_family_label"
+                app:layout_constraintTop_toTopOf="@+id/edit_implant_text_family_label" />
+
+            <TextView
+                android:id="@+id/edit_implant_text_implant_model_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/ibmplexmono_semibold"
+                android:text="@string/implant_model"
+                android:textColor="?android:colorPrimary"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_implant_text_family_label" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/rounded_primary_edge"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_implant_text_implant_model_label"
+                app:layout_constraintStart_toEndOf="@+id/edit_implant_text_implant_model_label"
+                app:layout_constraintTop_toTopOf="@+id/edit_implant_text_implant_model_label">
+
+                <Spinner
+                    android:id="@+id/edit_implant_spinner_model"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|end"
+                    android:layout_weight="0"
+                    android:background="@android:color/transparent"
+                    android:padding="0dp" />
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0"
+                    android:padding="0dp"
+                    android:layout_marginEnd="4dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_drop"
+                    app:tint="?android:colorPrimary" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/edit_implant_constraint_actionbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="234dp">
+
+            <ImageButton
+                android:id="@+id/edit_implant_button_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/ic_back"
+                android:contentDescription="@string/back_button"
+                android:src="@drawable/ic_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="?android:colorPrimaryDark" />
+
+            <ImageButton
+                android:id="@+id/edit_implant_button_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/save_button"
+                android:src="@drawable/ic_save"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="?android:colorPrimaryDark" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

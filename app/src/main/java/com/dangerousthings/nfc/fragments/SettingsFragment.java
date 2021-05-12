@@ -14,8 +14,6 @@ import android.widget.ImageButton;
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.pages.SettingsActivity;
 
-import java.util.Objects;
-
 public class SettingsFragment extends Fragment
 {
     Button mChangeThemeButton;
@@ -40,17 +38,17 @@ public class SettingsFragment extends Fragment
         mChangeThemeButton = view.findViewById(R.id.settings_button_change_theme);
         mBackButton = view.findViewById(R.id.settings_button_back);
         mConfirmButton = view.findViewById(R.id.settings_button_confirm);
-        mChangeThemeButton.setOnClickListener(v -> changeThemeButton_Pushed());
-        mBackButton.setOnClickListener(v -> Objects.requireNonNull(getActivity()).onBackPressed());
-        mConfirmButton.setOnClickListener(v -> confirmButton_Pushed());
+        mChangeThemeButton.setOnClickListener(v -> changeThemeButtonClicked());
+        mBackButton.setOnClickListener(v -> requireActivity().onBackPressed());
+        mConfirmButton.setOnClickListener(v -> confirmButtonClicked());
     }
 
-    private void changeThemeButton_Pushed()
+    private void changeThemeButtonClicked()
     {
-        ((SettingsActivity) Objects.requireNonNull(getActivity())).switchToThemeFragment();
+        ((SettingsActivity) requireActivity()).switchToThemeFragment();
     }
 
-    private void confirmButton_Pushed()
+    private void confirmButtonClicked()
     {
 
     }

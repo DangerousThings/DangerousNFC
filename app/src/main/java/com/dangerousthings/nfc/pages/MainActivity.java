@@ -8,12 +8,14 @@ import androidx.vectordrawable.graphics.drawable.Animatable2Compat;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -23,14 +25,21 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.dangerousthings.nfc.R;
+import com.dangerousthings.nfc.databases.ImplantDatabase;
 import com.dangerousthings.nfc.enums.MainActionBarState;
+import com.dangerousthings.nfc.fragments.MainDrawerFragment;
+import com.dangerousthings.nfc.interfaces.IImplantDAO;
+import com.dangerousthings.nfc.interfaces.IMainMenuClickListener;
+import com.dangerousthings.nfc.models.Implant;
 import com.dangerousthings.nfc.utilities.ColorUtils;
+import com.dangerousthings.nfc.utilities.FingerprintUtils;
+import com.dangerousthings.nfc.utilities.HexUtils;
 import com.dangerousthings.nfc.utilities.NdefUtils;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
 
-public class MainActivity extends BaseActivity
+public class MainActivity extends BaseActivity implements IMainMenuClickListener
 {
     //NFC globals
     IntentFilter[] _intentFilterArray;
@@ -42,9 +51,9 @@ public class MainActivity extends BaseActivity
     private NavigationView mNavigation;
     private ConstraintLayout mConstraint;
     private Button mToggleReadButton;
-    private Button mToggleSyncButton;
+    private Button mToggleAdvancedButton;
 
-    MainActionBarState _actionBarState = MainActionBarState.ReadPayload;
+    MainActionBarState _actionBarState = MainActionBarState.ReadNDEF;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -53,14 +62,17 @@ public class MainActivity extends BaseActivity
         setContentView(R.layout.activity_main);
 
         ImageButton mDrawerButton = findViewById(R.id.main_button_drawer_toggle);
-        ImageButton mSettingsButton = findViewById(R.id.main_button_settings);
         mToggleReadButton = findViewById(R.id.main_button_toggle_read);
-        mToggleSyncButton = findViewById(R.id.main_button_toggle_sync);
+        mToggleAdvancedButton = findViewById(R.id.main_button_toggle_advanced);
         mToggleReadButton.setOnClickListener(v -> toggleReadPressed());
-        mToggleSyncButton.setOnClickListener(v -> toggleSyncPressed());
+        mToggleAdvancedButton.setOnClickListener(v -> toggleSyncPressed());
+
+        //set up menu fragments click listener
+        MainDrawerFragment mMenuFragment = (MainDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.main_fragment_menu);
+        assert mMenuFragment != null;
+        mMenuFragment.setOnClickListener(this);
 
         mDrawerButton.setOnClickListener(v -> drawerButtonClicked());
-        mSettingsButton.setOnClickListener(v -> settingsButtonClicked());
 
         setDrawer();
         nfcPrimer();
@@ -93,15 +105,61 @@ public class MainActivity extends BaseActivity
 
     private void handleActionDiscovered(Intent intent)
     {
-        if(Objects.equals(intent.getAction(), NfcAdapter.ACTION_NDEF_DISCOVERED))
+        if(Objects.equals(intent.getAction(), NfcAdapter.ACTION_NDEF_DISCOVERED) || Objects.equals(intent.getAction(), NfcAdapter.ACTION_TECH_DISCOVERED) || Objects.equals(intent.getAction(), NfcAdapter.ACTION_TAG_DISCOVERED))
         {
             NdefMessage message = NdefUtils.getNdefMessage(intent);
-            if(message != null)
+            if(_actionBarState.equals(MainActionBarState.ReadNDEF))
             {
-                Intent readMessageIntent = new Intent(this, NdefMessageActivity.class);
-                readMessageIntent.putExtra(getString(R.string.intent_ndef_message), message);
-                startActivity(readMessageIntent);
-                overridePendingTransition(0, 0);
+                if (message != null)
+                {
+                    Intent readMessageIntent = new Intent(this, NdefMessageActivity.class);
+                    readMessageIntent.putExtra(getString(R.string.intent_ndef_message), message);
+                    startActivity(readMessageIntent);
+                    overridePendingTransition(0, 0);
+                }
+            }
+            else if(_actionBarState.equals(MainActionBarState.Advanced))
+            {
+                //make new implant and pull basic info
+                ImplantDatabase database = ImplantDatabase.getInstance(this);
+                IImplantDAO implantDAO = database.implantDAO();
+                Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+
+                assert tag != null;
+                if(implantDAO.getImplantByUID(HexUtils.bytesToHex(tag.getId())) == null)
+                {
+                    Implant implant = new Implant();
+                    implant.setUID(HexUtils.bytesToHex(tag.getId()));
+                    implant.setTagFamily(FingerprintUtils.fingerprintNfcTag(tag));
+                    new AlertDialog.Builder(this)
+                            .setTitle("New Implant Detected")
+                            .setMessage("Would you like to save this implant?")
+                            .setPositiveButton("Yes", ((dialog, which) ->
+                            {
+                                if(message != null)
+                                {
+                                    implant.setNdefMessage(message);
+                                }
+
+                                implantDAO.insertImplant(implant);
+
+                                Intent onboardImplant = new Intent(this, ImplantManagementActivity.class);
+                                onboardImplant.putExtra(getString(R.string.intent_tag_uid), HexUtils.bytesToHex(tag.getId()));
+                                onboardImplant.putExtra(getString(R.string.intent_oboard_flag), true);
+                                startActivity(onboardImplant);
+                                overridePendingTransition(0, 0);
+                            }))
+                            .setNegativeButton("No", ((dialog, which) -> dialog.cancel()))
+                            .show();
+                }
+                else
+                {
+                    Intent displayImplant = new Intent(this, ImplantManagementActivity.class);
+                    displayImplant.putExtra(getString(R.string.intent_tag_uid), HexUtils.bytesToHex(tag.getId()));
+                    displayImplant.putExtra(getString(R.string.intent_oboard_flag), false);
+                    startActivity(displayImplant);
+                    overridePendingTransition(0, 0);
+                }
             }
         }
     }
@@ -138,22 +196,22 @@ public class MainActivity extends BaseActivity
 
     private void toggleReadPressed()
     {
-        mToggleSyncButton.setBackground(ContextCompat.getDrawable(this, R.drawable.right_pill_primary_dark));
+        mToggleAdvancedButton.setBackground(ContextCompat.getDrawable(this, R.drawable.right_pill_primary_dark));
         mToggleReadButton.setBackground(ContextCompat.getDrawable(this, R.drawable.left_pill_accent));
         mToggleReadButton.setTextColor(ColorUtils.getPrimaryDarkColor(this));
-        mToggleSyncButton.setTextColor(ColorUtils.getPrimaryColor(this));
+        mToggleAdvancedButton.setTextColor(ColorUtils.getPrimaryColor(this));
 
-        _actionBarState = MainActionBarState.ReadPayload;
+        _actionBarState = MainActionBarState.ReadNDEF;
     }
 
     private void toggleSyncPressed()
     {
         mToggleReadButton.setBackground(ContextCompat.getDrawable(this, R.drawable.left_pill_primary_dark));
-        mToggleSyncButton.setBackground(ContextCompat.getDrawable(this, R.drawable.right_pill_accent));
+        mToggleAdvancedButton.setBackground(ContextCompat.getDrawable(this, R.drawable.right_pill_accent));
         mToggleReadButton.setTextColor(ColorUtils.getPrimaryColor(this));
-        mToggleSyncButton.setTextColor(ColorUtils.getPrimaryDarkColor(this));
+        mToggleAdvancedButton.setTextColor(ColorUtils.getPrimaryDarkColor(this));
 
-        _actionBarState = MainActionBarState.SyncImplant;
+        _actionBarState = MainActionBarState.Advanced;
     }
 
     private void setUpScanAnimation()
@@ -176,13 +234,6 @@ public class MainActivity extends BaseActivity
         animation.start();
     }
 
-    private void settingsButtonClicked()
-    {
-        Intent settingsIntent = new Intent(this, SettingsActivity.class);
-        startActivity(settingsIntent);
-        overridePendingTransition(0, 0);
-    }
-
     @Override
     public void onPause()
     {
@@ -202,5 +253,23 @@ public class MainActivity extends BaseActivity
     {
         super.onNewIntent(intent);
         handleActionDiscovered(intent);
+    }
+
+    @Override
+    public void onSettingsClicked()
+    {
+        mDrawer.close();
+        Intent settingsIntent = new Intent(this, SettingsActivity.class);
+        startActivity(settingsIntent);
+        overridePendingTransition(0, 0);
+    }
+
+    @Override
+    public void onSavedImplantsClicked()
+    {
+        mDrawer.close();
+        Intent savedImplantsIntent = new Intent(this, SavedImplantsActivity.class);
+        startActivity(savedImplantsIntent);
+        overridePendingTransition(0, 0);
     }
 }
