@@ -131,6 +131,10 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
                     Implant implant = new Implant();
                     implant.setUID(HexUtils.bytesToHex(tag.getId()));
                     implant.setTagFamily(FingerprintUtils.fingerprintNfcTag(tag));
+                    if(message != null)
+                    {
+                        implant.setNdefMessage(message);
+                    }
                     new AlertDialog.Builder(this)
                             .setTitle("New Implant Detected")
                             .setMessage("Would you like to save this implant?")
