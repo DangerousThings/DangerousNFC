@@ -1,5 +1,6 @@
 package com.dangerousthings.nfc.pages;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
@@ -9,9 +10,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.databases.ImplantDatabase;
@@ -114,7 +118,27 @@ public class ImplantManagementActivity extends BaseActivity implements IClickLis
         _implant.getOperationsMenu(mNavigation.getMenu());
         mDrawer.addDrawerListener(mDrawerToggle);
 
+        mNavigation.setNavigationItemSelectedListener(this::drawerItemSelected);
+    }
 
+    private boolean drawerItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+        if(id == R.string.menu_view_records)
+        {
+            //push to records
+            Intent readMessageIntent = new Intent(this, NdefMessageActivity.class);
+            readMessageIntent.putExtra(getString(R.string.intent_ndef_message), _implant.getNdefMessage());
+            startActivity(readMessageIntent);
+            overridePendingTransition(0, 0);
+            mDrawer.closeDrawer(GravityCompat.END);
+        }
+        else if(id == R.string.menu_memory_management)
+        {
+            //push to memory management
+            Toast.makeText(this, "Feature not implemented yet", Toast.LENGTH_SHORT).show();
+        }
+        return true;
     }
 
     public void lockDrawer(boolean locked)
