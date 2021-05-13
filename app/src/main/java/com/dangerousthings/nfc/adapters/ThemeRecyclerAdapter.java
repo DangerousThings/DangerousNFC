@@ -1,6 +1,7 @@
 package com.dangerousthings.nfc.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,10 @@ public class ThemeRecyclerAdapter extends RecyclerView.Adapter<ThemeRecyclerAdap
     {
         Theme theme = _themes.get(position);
         holder.mThemeName.setText(theme.getThemeTitle());
-        holder.mBoxPrimary.setBackgroundColor(theme.getColorPrimary());
+        GradientDrawable shape = new GradientDrawable();
+        shape.setCornerRadii(new float[]{30,30,30,30,0,0,0,0});
+        shape.setColor(theme.getColorPrimary());
+        holder.mBoxPrimary.setBackground(shape);
         holder.mBoxPrimaryDark.setBackgroundColor(theme.getColorPrimaryDark());
         holder.mBoxAccent.setBackgroundColor(theme.getColorAccent());
     }
