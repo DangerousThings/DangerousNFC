@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:colorPrimary"
-    tools:context=".pages.NdefMessageActivity">
+    tools:context=".pages.NdefManagementActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/message_constraint_base"

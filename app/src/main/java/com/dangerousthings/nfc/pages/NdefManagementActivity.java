@@ -26,7 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class NdefMessageActivity extends BaseActivity
+public class NdefManagementActivity extends BaseActivity
 {
     NdefMessage _message;
     Implant _implant;
@@ -55,10 +55,12 @@ public class NdefMessageActivity extends BaseActivity
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         Fragment fragment;
+        //if plain text
         if(record.toMimeType().equals(getString(R.string.mime_plaintext)))
         {
-            fragment = DisplayPlainTextFragment.newInstance(record.getPayload());
+            fragment = DisplayPlainTextFragment.newInstance(record);
         }
+        //if the mimetype is not currently supported
         else
         {
             fragment = null;

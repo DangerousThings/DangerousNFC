@@ -1,6 +1,5 @@
 package com.dangerousthings.nfc.pages;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
@@ -12,7 +11,6 @@ import androidx.fragment.app.FragmentTransaction;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -134,7 +132,7 @@ public class ImplantManagementActivity extends BaseActivity implements IClickLis
         if(id == R.string.menu_view_records)
         {
             //push to records
-            Intent readMessageIntent = new Intent(this, NdefMessageActivity.class);
+            Intent readMessageIntent = new Intent(this, NdefManagementActivity.class);
             readMessageIntent.putExtra(getString(R.string.intent_ndef_message), _implant.getNdefMessage());
             startActivity(readMessageIntent);
             overridePendingTransition(0, 0);

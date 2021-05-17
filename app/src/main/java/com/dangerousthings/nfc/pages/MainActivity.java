@@ -112,7 +112,7 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
             {
                 if (message != null)
                 {
-                    Intent readMessageIntent = new Intent(this, NdefMessageActivity.class);
+                    Intent readMessageIntent = new Intent(this, NdefManagementActivity.class);
                     readMessageIntent.putExtra(getString(R.string.intent_ndef_message), message);
                     startActivity(readMessageIntent);
                     overridePendingTransition(0, 0);

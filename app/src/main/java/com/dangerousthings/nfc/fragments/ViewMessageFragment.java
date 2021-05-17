@@ -15,7 +15,7 @@ import android.widget.ImageButton;
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.adapters.NdefMessageRecyclerAdapter;
 import com.dangerousthings.nfc.interfaces.IItemClickListener;
-import com.dangerousthings.nfc.pages.NdefMessageActivity;
+import com.dangerousthings.nfc.pages.NdefManagementActivity;
 
 import java.util.Arrays;
 
@@ -82,7 +82,7 @@ public class ViewMessageFragment extends Fragment implements IItemClickListener
     @Override
     public void onItemClick(int position)
     {
-        ((NdefMessageActivity)requireActivity()).displayRecord(_recyclerAdapter.getRecord(position));
+        ((NdefManagementActivity)requireActivity()).displayRecord(_recyclerAdapter.getRecord(position));
     }
 
     private void addButtonClicked()
