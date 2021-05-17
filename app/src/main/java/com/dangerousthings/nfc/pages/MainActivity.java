@@ -149,7 +149,7 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
 
                                 Intent onboardImplant = new Intent(this, ImplantManagementActivity.class);
                                 onboardImplant.putExtra(getString(R.string.intent_tag_uid), HexUtils.bytesToHex(tag.getId()));
-                                onboardImplant.putExtra(getString(R.string.intent_oboard_flag), true);
+                                onboardImplant.putExtra(getString(R.string.intent_onboard_flag), true);
                                 startActivity(onboardImplant);
                                 overridePendingTransition(0, 0);
                             }))
@@ -160,7 +160,7 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
                 {
                     Intent displayImplant = new Intent(this, ImplantManagementActivity.class);
                     displayImplant.putExtra(getString(R.string.intent_tag_uid), HexUtils.bytesToHex(tag.getId()));
-                    displayImplant.putExtra(getString(R.string.intent_oboard_flag), false);
+                    displayImplant.putExtra(getString(R.string.intent_onboard_flag), false);
                     startActivity(displayImplant);
                     overridePendingTransition(0, 0);
                 }

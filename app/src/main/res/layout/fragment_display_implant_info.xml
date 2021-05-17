@@ -146,6 +146,7 @@
                 android:background="@drawable/rounded_accent"
                 android:minHeight="35dp"
                 android:minWidth="120dp"
+                android:textColor="?android:colorPrimaryDark"
                 android:text="@string/operations"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

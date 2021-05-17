@@ -26,7 +26,14 @@ import com.dangerousthings.nfc.interfaces.IImplantDAO;
 import com.dangerousthings.nfc.models.Implant;
 import com.google.android.material.navigation.NavigationView;
 
-import static java.lang.Integer.parseInt;
+/**
+ * Bundle requirements:
+ *
+ *   Requested implant's UID as a string extra under the name R.string.intent_tag_uid
+ *
+ *   Onboard flag denoting if this instance of the fragment is to be used as onboarding
+ *   for a new implant, a boolean extra under R.string.intent_onboard_flag
+ */
 
 public class ImplantManagementActivity extends BaseActivity implements IClickListener
 {
@@ -50,7 +57,7 @@ public class ImplantManagementActivity extends BaseActivity implements IClickLis
         _implant = implantDAO.getImplantByUID(UID);
         setDrawer();
 
-        _onboardFlag = getIntent().getBooleanExtra(getString(R.string.intent_oboard_flag), false);
+        _onboardFlag = getIntent().getBooleanExtra(getString(R.string.intent_onboard_flag), false);
         lockDrawer(_onboardFlag);
 
         FragmentManager fragmentManager = getSupportFragmentManager();

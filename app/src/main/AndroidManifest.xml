@@ -12,16 +12,16 @@
         android:theme="@style/DT">
         <activity
             android:name=".pages.SavedImplantsActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".pages.ImplantManagementActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".pages.NdefMessageActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".pages.SettingsActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".pages.MainActivity"
             android:screenOrientation="portrait">

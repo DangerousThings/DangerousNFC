@@ -1,8 +1,12 @@
 package com.dangerousthings.nfc.pages;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.os.Bundle;
@@ -10,52 +14,68 @@ import android.widget.ImageButton;
 
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.adapters.NdefMessageRecyclerAdapter;
+import com.dangerousthings.nfc.databases.ImplantDatabase;
+import com.dangerousthings.nfc.fragments.DisplayPlainTextFragment;
+import com.dangerousthings.nfc.fragments.ViewMessageFragment;
+import com.dangerousthings.nfc.interfaces.IImplantDAO;
 import com.dangerousthings.nfc.interfaces.IItemClickListener;
+import com.dangerousthings.nfc.models.Implant;
 import com.dangerousthings.nfc.utilities.NdefUtils;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class NdefMessageActivity extends BaseActivity implements IItemClickListener
+public class NdefMessageActivity extends BaseActivity
 {
-    List<NdefRecord> _message;
-
-    //UI elements
-    RecyclerView mRecyclerView;
-    NdefMessageRecyclerAdapter _recyclerAdapter;
-    ImageButton mBackButton;
-    ImageButton mAddRecordButton;
+    NdefMessage _message;
+    Implant _implant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ndef_message);
+        setContentView(R.layout.activity_base);
 
-        mRecyclerView = findViewById(R.id.message_recycler_ndef_records);
-        mBackButton = findViewById(R.id.message_button_back);
-        mAddRecordButton = findViewById(R.id.message_button_add);
-
-        mAddRecordButton.setOnClickListener(v -> addButtonClicked());
-
-        _message = NdefUtils.getNdefRecordList((NdefMessage) Objects.requireNonNull(Objects.requireNonNull(getIntent().getExtras()).get(getString(R.string.intent_ndef_message))));
-
-        _recyclerAdapter = new NdefMessageRecyclerAdapter(this, _message);
-        _recyclerAdapter.setClickListener(this);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(_recyclerAdapter);
-
-        mBackButton.setOnClickListener(v -> onBackPressed());
+        //pull extras
+        _message = getIntent().getParcelableExtra(getString(R.string.intent_ndef_message));
+        String UID = getIntent().getExtras().getString(getString(R.string.intent_tag_uid));
+        if(UID != null)
+        {
+            ImplantDatabase database = ImplantDatabase.getInstance(this);
+            IImplantDAO implantDAO = database.implantDAO();
+            _implant = implantDAO.getImplantByUID(UID);
+        }
+        startViewMessageFragment();
     }
 
-    private void addButtonClicked()
+    public void displayRecord(NdefRecord record)
     {
-        //TODO: push to a blank EditRecord activity
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        Fragment fragment;
+        if(record.toMimeType().equals(getString(R.string.mime_plaintext)))
+        {
+            fragment = DisplayPlainTextFragment.newInstance(record.getPayload());
+        }
+        else
+        {
+            fragment = null;
+        }
+
+        fragmentTransaction.replace(R.id.base_frame, fragment);
+        fragmentTransaction.addToBackStack("displayNdef");
+        fragmentTransaction.commit();
     }
 
-    @Override
-    public void onItemClick(int position)
+    private void startViewMessageFragment()
     {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
+        ViewMessageFragment messages = ViewMessageFragment.newInstance(_message);
+        fragmentTransaction.replace(R.id.base_frame, messages);
+        fragmentTransaction.commit();
     }
 }

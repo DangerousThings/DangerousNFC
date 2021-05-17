@@ -52,7 +52,7 @@ public class SavedImplantsActivity extends BaseActivity implements IItemLongClic
     {
         Intent displayImplant = new Intent(this, ImplantManagementActivity.class);
         displayImplant.putExtra(getString(R.string.intent_tag_uid), _recyclerAdapter.getImplant(position).getUID());
-        displayImplant.putExtra(getString(R.string.intent_oboard_flag), false);
+        displayImplant.putExtra(getString(R.string.intent_onboard_flag), false);
         startActivity(displayImplant);
         overridePendingTransition(0, 0);
     }

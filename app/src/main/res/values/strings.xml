@@ -3,12 +3,15 @@
     <!--Intent extra flags-->
     <string name="intent_ndef_message">com.dangerousthings.nfc.NDEF_MESSAGE</string>
     <string name="intent_tag_uid">com.dangerousthings.nfc.TAG_UID</string>
-    <string name="intent_oboard_flag">com.dangerousthings.nfc.ONBOARD_FLAG</string>
+    <string name="intent_onboard_flag">com.dangerousthings.nfc.ONBOARD_FLAG</string>
+    <string name="intent_record">com.dangerousthings.nfc.NDEF_RECORD</string>
     <!--Menu IDs-->
     <string name="menu_view_records">com.dangerousthings.nfc.VIEW_RECORDS</string>
     <string name="menu_memory_management">com.dangerousthings.nfc.MANAGE_MEMORY</string>
     <string name="menu_ndef_submenu">com.dangerousthings.nfc.NDEF_SUBMENU</string>
     <string name="menu_memory_submenu">com.dangerousthings.nfc.MEMORY_SUBMENU</string>
+    <!--Mime Types-->
+    <string name="mime_plaintext">text/plain</string>
     <!---->
     <string name="app_name">Dangerous NFC</string>
     <string name="ndef_operations">NDEF Operations</string>
@@ -31,8 +34,6 @@
     <string name="saved_theme">com.dangerousthings.nfc.SAVED_THEME</string>
     <string name="record_space">Record %1$d</string>
     <string name="ndef_records">NDEF Records:</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="scan_animation">scan animation</string>
     <string name="advanced">Advanced</string>
     <string name="back_button">back button</string>
@@ -49,4 +50,7 @@
     <string name="tag_family">Tag Family:</string>
     <string name="implant_model">Implant Model:</string>
     <string name="operations">Operations</string>
+    <string name="no_record_text_detected">No record text detected</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
