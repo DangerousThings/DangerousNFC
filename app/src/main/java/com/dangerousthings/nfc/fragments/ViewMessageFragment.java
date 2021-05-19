@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.adapters.NdefMessageRecyclerAdapter;
 import com.dangerousthings.nfc.interfaces.IItemClickListener;
+import com.dangerousthings.nfc.interfaces.IManageRecordsClickListener;
 import com.dangerousthings.nfc.pages.NdefManagementActivity;
 
 import java.util.Arrays;
@@ -24,6 +25,7 @@ public class ViewMessageFragment extends Fragment implements IItemClickListener
     private static final String ARG_MESSAGE = "message";
 
     private NdefMessage _message;
+    private IManageRecordsClickListener _listener;
 
     //UI elements
     RecyclerView mRecyclerView;
@@ -87,6 +89,11 @@ public class ViewMessageFragment extends Fragment implements IItemClickListener
 
     private void addButtonClicked()
     {
-        //TODO
+        _listener.onNewRecordClick();
+    }
+
+    public void setClickListener(IManageRecordsClickListener listener)
+    {
+        _listener = listener;
     }
 }

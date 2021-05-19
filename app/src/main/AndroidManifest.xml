@@ -11,6 +11,9 @@
         android:label="@string/app_name"
         android:theme="@style/DT">
         <activity
+            android:name=".pages.EditNdefActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".pages.SavedImplantsActivity"
             android:screenOrientation="portrait" />
         <activity

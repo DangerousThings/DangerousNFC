@@ -33,6 +33,5 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="end"
-        android:background="?android:colorPrimary"
-        app:menu="@menu/operation_menu"></com.google.android.material.navigation.NavigationView>
+        android:background="?android:colorPrimary"/>
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -3,30 +3,21 @@ package com.dangerousthings.nfc.pages;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.os.Bundle;
-import android.widget.ImageButton;
 
 import com.dangerousthings.nfc.R;
-import com.dangerousthings.nfc.adapters.NdefMessageRecyclerAdapter;
 import com.dangerousthings.nfc.databases.ImplantDatabase;
 import com.dangerousthings.nfc.fragments.DisplayPlainTextFragment;
 import com.dangerousthings.nfc.fragments.ViewMessageFragment;
+import com.dangerousthings.nfc.interfaces.IManageRecordsClickListener;
 import com.dangerousthings.nfc.interfaces.IImplantDAO;
-import com.dangerousthings.nfc.interfaces.IItemClickListener;
 import com.dangerousthings.nfc.models.Implant;
-import com.dangerousthings.nfc.utilities.NdefUtils;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-
-public class NdefManagementActivity extends BaseActivity
+public class NdefManagementActivity extends BaseActivity implements IManageRecordsClickListener
 {
     NdefMessage _message;
     Implant _implant;
@@ -77,7 +68,16 @@ public class NdefManagementActivity extends BaseActivity
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         ViewMessageFragment messages = ViewMessageFragment.newInstance(_message);
+        messages.setClickListener(this);
         fragmentTransaction.replace(R.id.base_frame, messages);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onNewRecordClick()
+    {
+        Intent addRecord = new Intent(this, EditNdefActivity.class);
+        startActivity(addRecord);
+        overridePendingTransition(0, 0);
     }
 }
