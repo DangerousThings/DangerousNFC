@@ -77,6 +77,10 @@ public class NdefManagementActivity extends BaseActivity implements IManageRecor
     public void onNewRecordClick()
     {
         Intent addRecord = new Intent(this, EditNdefActivity.class);
+        if(_implant != null)
+        {
+            addRecord.putExtra(getString(R.string.intent_ndef_capacity), _implant.getNdefCapacity());
+        }
         startActivity(addRecord);
         overridePendingTransition(0, 0);
     }

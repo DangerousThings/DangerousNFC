@@ -146,6 +146,20 @@ public class Implant
         return modelList;
     }
 
+    //Ndef Capacity
+    @ColumnInfo(name = "NdefCapacity")
+    private int ndefCapacity;
+
+    public int getNdefCapacity()
+    {
+        return ndefCapacity;
+    }
+
+    public void setNdefCapacity(int ndefCapacity)
+    {
+        this.ndefCapacity = ndefCapacity;
+    }
+
     //Tag writing
     public boolean writeToTag(NdefMessage message)
     {

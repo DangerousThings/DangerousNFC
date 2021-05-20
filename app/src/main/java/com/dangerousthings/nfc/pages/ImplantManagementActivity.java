@@ -134,6 +134,7 @@ public class ImplantManagementActivity extends BaseActivity implements IClickLis
             //push to records
             Intent readMessageIntent = new Intent(this, NdefManagementActivity.class);
             readMessageIntent.putExtra(getString(R.string.intent_ndef_message), _implant.getNdefMessage());
+            readMessageIntent.putExtra(getString(R.string.intent_tag_uid), _implant.getUID());
             startActivity(readMessageIntent);
             overridePendingTransition(0, 0);
             mDrawer.closeDrawer(GravityCompat.END);

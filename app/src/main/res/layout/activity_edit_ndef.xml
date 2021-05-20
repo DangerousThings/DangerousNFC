@@ -22,9 +22,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_ndef_linear">
-
-        </FrameLayout>
+            app:layout_constraintTop_toBottomOf="@+id/edit_ndef_linear" />
 
         <LinearLayout
             android:id="@+id/edit_ndef_linear"
@@ -46,7 +44,6 @@
                 android:background="@drawable/record_size_background"
                 android:fontFamily="@font/ibmplexmono_text"
                 android:gravity="center"
-                android:text="745/868 Bytes"
                 android:textColor="?android:colorPrimary"
                 android:textSize="18sp" />
 
@@ -63,6 +60,32 @@
                 android:textColor="?android:colorPrimaryDark"
                 android:textSize="18sp" />
         </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/edit_ndef_button_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:background="@android:color/transparent"
+            android:maxHeight="?android:actionBarSize"
+            android:minHeight="?android:actionBarSize"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_back"
+            app:tint="?android:colorPrimaryDark" />
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:minHeight="?android:actionBarSize"
+            android:maxHeight="?android:actionBarSize"
+            app:tint="?android:colorPrimaryDark"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_check" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView

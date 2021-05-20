@@ -6,28 +6,41 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.nfc.NdefRecord;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.fragments.EditPlainTextFragment;
+import com.dangerousthings.nfc.interfaces.IEditFragment;
+import com.dangerousthings.nfc.interfaces.ITracksPayloadSize;
+import com.dangerousthings.nfc.utilities.HexUtils;
 import com.google.android.material.navigation.NavigationView;
 
-public class EditNdefActivity extends BaseActivity
+public class EditNdefActivity extends BaseActivity implements ITracksPayloadSize
 {
     NdefRecord _record;
+    String _ndefCapacityText;
 
     DrawerLayout mDrawer;
     NavigationView mNavigation;
     ConstraintLayout mConstraint;
     Button mPayloadTypeButton;
+    ImageButton mBackButton;
+    TextView mPayloadSizeText;
+
+    IEditFragment _fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -36,11 +49,25 @@ public class EditNdefActivity extends BaseActivity
         setContentView(R.layout.activity_edit_ndef);
 
         _record = getIntent().getParcelableExtra(getString(R.string.intent_record));
+        int capacity = getIntent().getIntExtra(getString(R.string.intent_ndef_capacity), 0);
+        if(capacity != 0)
+        {
+            _ndefCapacityText = "/" + capacity + " Bytes";
+        }
+        else
+        {
+            _ndefCapacityText = " Bytes";
+        }
+
         setDrawer();
         startFragment();
 
         mPayloadTypeButton = findViewById(R.id.edit_ndef_button_payload_type);
         mPayloadTypeButton.setOnClickListener(v -> mDrawer.openDrawer(GravityCompat.END));
+        mBackButton = findViewById(R.id.edit_ndef_button_back);
+        mBackButton.setOnClickListener(v -> confirmExit());
+        mPayloadSizeText = findViewById(R.id.edit_ndef_text_payload_size);
+        mPayloadSizeText.setText(0 + _ndefCapacityText);
     }
 
     private void startFragment()
@@ -49,8 +76,9 @@ public class EditNdefActivity extends BaseActivity
         {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            EditPlainTextFragment plainTextFragment = EditPlainTextFragment.newInstance();
-            transaction.replace(R.id.edit_ndef_frame, plainTextFragment);
+            _fragment = EditPlainTextFragment.newInstance();
+            _fragment.setPayloadTrackingInterface(this);
+            transaction.replace(R.id.edit_ndef_frame, ((Fragment)_fragment));
             transaction.commit();
         }
     }
@@ -80,5 +108,26 @@ public class EditNdefActivity extends BaseActivity
         mDrawer.addDrawerListener(mDrawerToggle);
 
         //mNavigation.setNavigationItemSelectedListener(this::drawerItemSelected);
+    }
+
+    private void confirmExit()
+    {
+        new AlertDialog.Builder(this)
+                .setTitle("Discard Unchanged Changes?")
+                .setMessage("Are you sure you want to leave this page without saving this record?")
+                .setPositiveButton("Yes", ((dialog, which) ->
+                {
+                    //TODO: handle the record returned from the fragment
+                    finish();
+                    overridePendingTransition(0,0);
+                }))
+                .setNegativeButton("No", ((dialog, which) -> dialog.cancel()))
+                .show();
+    }
+
+    @Override
+    public void payloadChanged()
+    {
+        mPayloadSizeText.setText(_fragment.getPayloadSize() + _ndefCapacityText);
     }
 }

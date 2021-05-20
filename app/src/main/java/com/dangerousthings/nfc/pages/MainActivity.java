@@ -35,6 +35,7 @@ import com.dangerousthings.nfc.utilities.ColorUtils;
 import com.dangerousthings.nfc.utilities.FingerprintUtils;
 import com.dangerousthings.nfc.utilities.HexUtils;
 import com.dangerousthings.nfc.utilities.NdefUtils;
+import com.dangerousthings.nfc.utilities.TagUtils;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
@@ -131,6 +132,7 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
                     Implant implant = new Implant();
                     implant.setUID(HexUtils.bytesToHex(tag.getId()));
                     implant.setTagFamily(FingerprintUtils.fingerprintNfcTag(tag));
+                    implant.setNdefCapacity(TagUtils.getNdefCapacity(tag));
                     if(message != null)
                     {
                         implant.setNdefMessage(message);
