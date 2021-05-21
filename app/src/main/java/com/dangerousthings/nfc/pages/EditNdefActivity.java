@@ -1,7 +1,6 @@
 package com.dangerousthings.nfc.pages;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
@@ -15,7 +14,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.nfc.NdefRecord;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -25,7 +23,6 @@ import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.fragments.EditPlainTextFragment;
 import com.dangerousthings.nfc.interfaces.IEditFragment;
 import com.dangerousthings.nfc.interfaces.ITracksPayloadSize;
-import com.dangerousthings.nfc.utilities.HexUtils;
 import com.google.android.material.navigation.NavigationView;
 
 public class EditNdefActivity extends BaseActivity implements ITracksPayloadSize
@@ -38,6 +35,7 @@ public class EditNdefActivity extends BaseActivity implements ITracksPayloadSize
     ConstraintLayout mConstraint;
     Button mPayloadTypeButton;
     ImageButton mBackButton;
+    ImageButton mSaveButton;
     TextView mPayloadSizeText;
 
     IEditFragment _fragment;
@@ -65,9 +63,21 @@ public class EditNdefActivity extends BaseActivity implements ITracksPayloadSize
         mPayloadTypeButton = findViewById(R.id.edit_ndef_button_payload_type);
         mPayloadTypeButton.setOnClickListener(v -> mDrawer.openDrawer(GravityCompat.END));
         mBackButton = findViewById(R.id.edit_ndef_button_back);
-        mBackButton.setOnClickListener(v -> confirmExit());
+        mBackButton.setOnClickListener(v -> onBackPressed());
         mPayloadSizeText = findViewById(R.id.edit_ndef_text_payload_size);
-        mPayloadSizeText.setText(0 + _ndefCapacityText);
+        mPayloadSizeText.setText(getString(R.string.two_arguments, 0, _ndefCapacityText));
+        mSaveButton = findViewById(R.id.edit_ndef_button_save);
+        mSaveButton.setOnClickListener(v -> returnRecordResult());
+    }
+
+    private void returnRecordResult()
+    {
+        Intent result = new Intent();
+        NdefRecord resultRecord = _fragment.getNdefRecord();
+        result.putExtra(getString(R.string.intent_record), resultRecord);
+        setResult(ViewRecordsActivity.RESULT_OK, result);
+        finish();
+        overridePendingTransition(0, 0);
     }
 
     private void startFragment()
@@ -110,7 +120,14 @@ public class EditNdefActivity extends BaseActivity implements ITracksPayloadSize
         //mNavigation.setNavigationItemSelectedListener(this::drawerItemSelected);
     }
 
-    private void confirmExit()
+    @Override
+    public void payloadChanged()
+    {
+        mPayloadSizeText.setText(getString(R.string.two_arguments, _fragment.getPayloadSize(), _ndefCapacityText));
+    }
+
+    @Override
+    public void onBackPressed()
     {
         new AlertDialog.Builder(this)
                 .setTitle("Discard Unchanged Changes?")
@@ -118,16 +135,11 @@ public class EditNdefActivity extends BaseActivity implements ITracksPayloadSize
                 .setPositiveButton("Yes", ((dialog, which) ->
                 {
                     //TODO: handle the record returned from the fragment
+                    setResult(RESULT_CANCELED);
                     finish();
                     overridePendingTransition(0,0);
                 }))
                 .setNegativeButton("No", ((dialog, which) -> dialog.cancel()))
                 .show();
-    }
-
-    @Override
-    public void payloadChanged()
-    {
-        mPayloadSizeText.setText(_fragment.getPayloadSize() + _ndefCapacityText);
     }
 }

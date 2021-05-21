@@ -1,5 +1,7 @@
 package com.dangerousthings.nfc.fragments;
 
+import android.content.Context;
+import android.hardware.input.InputManager;
 import android.nfc.FormatException;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -9,12 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
+import android.text.Selection;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.interfaces.IEditFragment;
@@ -28,6 +33,7 @@ public class EditPlainTextFragment extends Fragment implements IEditFragment
     ITracksPayloadSize _trackerInterface;
 
     EditText mEditText;
+    LinearLayout mEditLinear;
 
     public EditPlainTextFragment()
     {
@@ -67,7 +73,21 @@ public class EditPlainTextFragment extends Fragment implements IEditFragment
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
     {
         mEditText = view.findViewById(R.id.edit_plaintext_edittext);
+        mEditLinear = view.findViewById(R.id.edit_plaintext_linear);
+
+        mEditLinear.setOnClickListener(v -> focusEntry());
+
         setupTextChangedEvent();
+    }
+
+    private void focusEntry()
+    {
+        mEditText.requestFocus();
+        InputMethodManager inputMethodManager = (InputMethodManager)requireActivity().getSystemService((Context.INPUT_METHOD_SERVICE));
+        inputMethodManager.showSoftInput(mEditText, InputMethodManager.SHOW_IMPLICIT);
+        int position = mEditText.length();
+        Editable editable = mEditText.getText();
+        Selection.setSelection(editable, position);
     }
 
     private void setupTextChangedEvent()
@@ -103,7 +123,8 @@ public class EditPlainTextFragment extends Fragment implements IEditFragment
     @Override
     public NdefRecord getNdefRecord()
     {
-        return NdefRecord.createMime(getString(R.string.mime_plaintext), new byte[]{});
+        byte[] bytes = mEditText.getText().toString().getBytes();
+        return NdefRecord.createMime(getString(R.string.mime_plaintext), bytes);
     }
 
     @Override

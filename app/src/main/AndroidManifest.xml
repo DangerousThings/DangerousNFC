@@ -20,7 +20,7 @@
             android:name=".pages.ImplantManagementActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".pages.NdefManagementActivity"
+            android:name=".pages.ViewRecordsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".pages.SettingsActivity"

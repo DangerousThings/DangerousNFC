@@ -132,7 +132,7 @@ public class ImplantManagementActivity extends BaseActivity implements IClickLis
         if(id == R.string.menu_view_records)
         {
             //push to records
-            Intent readMessageIntent = new Intent(this, NdefManagementActivity.class);
+            Intent readMessageIntent = new Intent(this, ViewRecordsActivity.class);
             readMessageIntent.putExtra(getString(R.string.intent_ndef_message), _implant.getNdefMessage());
             readMessageIntent.putExtra(getString(R.string.intent_tag_uid), _implant.getUID());
             startActivity(readMessageIntent);

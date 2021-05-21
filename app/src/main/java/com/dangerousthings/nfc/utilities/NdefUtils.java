@@ -71,9 +71,4 @@ public class NdefUtils
         System.arraycopy(randomByteArray, 0, payload, 1 + langBytes.length, randomByteArray.length);
         return new NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_TEXT, new byte[0], payload);
     }
-
-    public static List<NdefRecord> getNdefRecordList(NdefMessage message)
-    {
-        return Arrays.asList(message.getRecords());
-    }
 }
