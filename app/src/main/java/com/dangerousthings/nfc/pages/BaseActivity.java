@@ -12,6 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.utilities.ColorUtils;
 
+/**
+ * A base activity that handles changing the StatusBar color, activating the current theme, and back press animations
+ */
+
 public class BaseActivity extends AppCompatActivity
 {
     @Override

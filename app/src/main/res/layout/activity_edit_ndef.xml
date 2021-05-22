@@ -72,7 +72,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/ic_back"
-            app:tint="?android:colorPrimaryDark" />
+            app:tint="?android:colorPrimaryDark"
+            android:contentDescription="@string/back_button" />
 
         <ImageButton
             android:id="@+id/edit_ndef_button_save"
@@ -85,7 +86,8 @@
             android:background="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_check" />
+            app:srcCompat="@drawable/ic_check"
+            android:contentDescription="@string/save_button" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView

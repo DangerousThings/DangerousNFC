@@ -25,6 +25,13 @@ import com.dangerousthings.nfc.interfaces.IEditFragment;
 import com.dangerousthings.nfc.interfaces.ITracksPayloadSize;
 import com.google.android.material.navigation.NavigationView;
 
+/**
+ * --------------REQUIRED ARGUMENTS----------------
+ * - NdefRecord passed in as parcelableExtra under the R.string.intent_record tag
+ * - String representing the operating implants maximum Ndef Capacity  passed in as
+ *   a stringExtra under the R.string.intent_ndef_capacity tag
+ */
+
 public class EditNdefActivity extends BaseActivity implements ITracksPayloadSize
 {
     NdefRecord _record;
@@ -47,19 +54,15 @@ public class EditNdefActivity extends BaseActivity implements ITracksPayloadSize
         setContentView(R.layout.activity_edit_ndef);
 
         _record = getIntent().getParcelableExtra(getString(R.string.intent_record));
-        int capacity = getIntent().getIntExtra(getString(R.string.intent_ndef_capacity), 0);
-        if(capacity != 0)
-        {
-            _ndefCapacityText = "/" + capacity + " Bytes";
-        }
-        else
-        {
-            _ndefCapacityText = " Bytes";
-        }
 
+        getCapacityText();
         setDrawer();
         startFragment();
+        setViews();
+    }
 
+    private void setViews()
+    {
         mPayloadTypeButton = findViewById(R.id.edit_ndef_button_payload_type);
         mPayloadTypeButton.setOnClickListener(v -> mDrawer.openDrawer(GravityCompat.END));
         mBackButton = findViewById(R.id.edit_ndef_button_back);
@@ -70,13 +73,27 @@ public class EditNdefActivity extends BaseActivity implements ITracksPayloadSize
         mSaveButton.setOnClickListener(v -> returnRecordResult());
     }
 
+    private void getCapacityText()
+    {
+        int capacity = getIntent().getIntExtra(getString(R.string.intent_ndef_capacity), 0);
+        if(capacity != 0)
+        {
+            _ndefCapacityText = "/" + capacity + " Bytes";
+        }
+        else
+        {
+            _ndefCapacityText = " Bytes";
+        }
+    }
+
     private void returnRecordResult()
     {
         Intent result = new Intent();
         NdefRecord resultRecord = _fragment.getNdefRecord();
         result.putExtra(getString(R.string.intent_record), resultRecord);
         setResult(ViewRecordsActivity.RES_CODE_RECORD, result);
-        popBack();
+        finish();
+        overridePendingTransition(0, 0);
     }
 
     private void startFragment()
@@ -120,6 +137,7 @@ public class EditNdefActivity extends BaseActivity implements ITracksPayloadSize
         mNavigation.setElevation(0);
         mDrawer.addDrawerListener(mDrawerToggle);
 
+        //TODO: write drawer switching logic
         //mNavigation.setNavigationItemSelectedListener(this::drawerItemSelected);
     }
 
@@ -138,15 +156,10 @@ public class EditNdefActivity extends BaseActivity implements ITracksPayloadSize
                 .setPositiveButton("Yes", ((dialog, which) ->
                 {
                     setResult(RESULT_CANCELED);
-                    popBack();
+                    finish();
+                    overridePendingTransition(0, 0);
                 }))
                 .setNegativeButton("No", ((dialog, which) -> dialog.cancel()))
                 .show();
-    }
-
-    private void popBack()
-    {
-        finish();
-        overridePendingTransition(0, 0);
     }
 }

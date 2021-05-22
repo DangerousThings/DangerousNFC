@@ -27,7 +27,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_back" />
+            app:srcCompat="@drawable/ic_back"
+            android:contentDescription="@string/back_button" />
 
         <ImageButton
             android:id="@+id/view_record_button_edit"
@@ -39,6 +40,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:tint="?android:colorPrimaryDark"
+            android:contentDescription="@string/back_button"
             app:srcCompat="@drawable/ic_edit" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

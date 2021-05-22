@@ -1,8 +1,6 @@
 package com.dangerousthings.nfc.fragments;
 
 import android.content.Context;
-import android.hardware.input.InputManager;
-import android.nfc.FormatException;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.os.Bundle;
@@ -18,16 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.interfaces.IEditFragment;
 import com.dangerousthings.nfc.interfaces.ITracksPayloadSize;
 import com.dangerousthings.nfc.utilities.NdefUtils;
-
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 
 public class EditPlainTextFragment extends Fragment implements IEditFragment
 {

@@ -25,17 +25,16 @@ import com.dangerousthings.nfc.models.Implant;
 import com.google.android.material.navigation.NavigationView;
 
 /**
- * Bundle requirements:
- *
- *   Requested implant's UID as a string extra under the name R.string.intent_tag_uid
- *
- *   Onboard flag denoting if this instance of the fragment is to be used as onboarding
- *   for a new implant, a boolean extra under R.string.intent_onboard_flag
+ * --------------REQUIRED ARGUMENTS----------------
+ * - String UID for the operating implant passed in under the R.string.intent_uid tag
+ * - boolean denoting onboarding status for the operating implant
+ *   passed in under the R.string.intent_onboard_flag tag
  */
 
 public class ImplantManagementActivity extends BaseActivity implements IClickListener
 {
     Implant _implant;
+    String _uid;
     public boolean _onboardFlag = false;
 
     DrawerLayout mDrawer;
@@ -48,30 +47,37 @@ public class ImplantManagementActivity extends BaseActivity implements IClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_implant_management);
 
-
-        String UID = getIntent().getStringExtra(getString(R.string.intent_tag_uid));
-        ImplantDatabase database = ImplantDatabase.getInstance(this);
-        IImplantDAO implantDAO = database.implantDAO();
-        _implant = implantDAO.getImplantByUID(UID);
-        setDrawer();
-
+        getImplantFromUid();
         _onboardFlag = getIntent().getBooleanExtra(getString(R.string.intent_onboard_flag), false);
+        setDrawer();
         lockDrawer(_onboardFlag);
+        loadFragment();
+    }
 
+    private void loadFragment()
+    {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if(_onboardFlag)
         {
             //start onboard fragment
-            EditImplantInfoFragment onboardFragment = EditImplantInfoFragment.newInstance(UID);
+            EditImplantInfoFragment onboardFragment = EditImplantInfoFragment.newInstance(_uid);
             fragmentTransaction.replace(R.id.base_frame, onboardFragment);
         }
         else
         {
-            DisplayImplantInfoFragment displayFragment = DisplayImplantInfoFragment.newInstance(UID, this);
+            DisplayImplantInfoFragment displayFragment = DisplayImplantInfoFragment.newInstance(_uid, this);
             fragmentTransaction.replace(R.id.base_frame, displayFragment);
         }
         fragmentTransaction.commit();
+    }
+
+    private void getImplantFromUid()
+    {
+        _uid = getIntent().getStringExtra(getString(R.string.intent_tag_uid));
+        ImplantDatabase database = ImplantDatabase.getInstance(this);
+        IImplantDAO implantDAO = database.implantDAO();
+        _implant = implantDAO.getImplantByUID(_uid);
     }
 
     public void switchToDisplayFragment(String UID)

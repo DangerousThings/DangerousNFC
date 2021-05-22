@@ -7,8 +7,6 @@ import android.nfc.NfcAdapter;
 import android.os.Parcelable;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 public class NdefUtils

@@ -22,7 +22,6 @@ import com.dangerousthings.nfc.models.Implant;
 import com.dangerousthings.nfc.pages.ImplantManagementActivity;
 import com.dangerousthings.nfc.utilities.ColorUtils;
 import com.dangerousthings.nfc.utilities.Converters;
-import com.dangerousthings.nfc.utilities.TagUtils;
 
 public class EditImplantInfoFragment extends Fragment
 {
@@ -85,7 +84,7 @@ public class EditImplantInfoFragment extends Fragment
         mFamilyText.setText(_implant.getTagFamily().toString());
 
         mModelSpinner = view.findViewById(R.id.edit_implant_spinner_model);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, _implant.getImplantModelListAsString());
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, _implant.getImplantModelListAsString());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mModelSpinner.setAdapter(adapter);
         mModelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()

@@ -77,5 +77,19 @@
             app:layout_constraintTop_toTopOf="parent"
             app:tint="?android:colorPrimaryDark" />
 
+        <ImageButton
+            android:id="@+id/view_records_button_write"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:background="@android:color/transparent"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/view_records_button_add"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_save"
+            app:tint="?android:colorPrimaryDark"
+            android:contentDescription="@string/write_ndef_message_button" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

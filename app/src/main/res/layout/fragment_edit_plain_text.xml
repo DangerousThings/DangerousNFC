@@ -57,10 +57,12 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginEnd="8dp"
                         android:ems="10"
+                        android:hint="@string/enter_text_message"
                         android:fontFamily="@font/ibmplexmono_text"
                         android:inputType="textMultiLine|textPersonName"
                         android:textColor="?android:colorPrimary"
-                        android:textColorHint="?android:colorPrimary" />
+                        android:textColorHint="?android:colorPrimary"
+                        android:importantForAutofill="no" />
                 </LinearLayout>
             </ScrollView>
         </androidx.constraintlayout.widget.ConstraintLayout>

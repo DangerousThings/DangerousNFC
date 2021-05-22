@@ -58,4 +58,7 @@
     <string name="jpeg">JPEG</string>
     <string name="uri">URI</string>
     <string name="two_arguments">%1$d%2$s</string>
+    <string name="write_ndef_message_button">write ndef message button</string>
+    <string name="down_arrow">down arrow</string>
+    <string name="enter_text_message">Enter text message</string>
 </resources>

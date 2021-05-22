@@ -4,13 +4,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
 
 import com.dangerousthings.nfc.R;
@@ -34,13 +32,15 @@ public class ViewRecordsActivity extends BaseActivity implements IItemClickListe
     NdefMessage _message;
     ArrayList<NdefRecord> _records;
     int _alteredIndex = 0;
+    boolean _recordsEdited = false;
     Implant _implant;
+    NdefMessageRecyclerAdapter _recyclerAdapter;
 
     //UI elements
     RecyclerView mRecyclerView;
-    NdefMessageRecyclerAdapter _recyclerAdapter;
     ImageButton mBackButton;
     ImageButton mAddRecordButton;
+    ImageButton mWriteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -64,6 +64,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemClickListe
         mRecyclerView = findViewById(R.id.view_records_recycler);
         mBackButton = findViewById(R.id.view_records_button_back);
         mAddRecordButton = findViewById(R.id.view_records_button_add);
+        mWriteButton = findViewById(R.id.view_records_button_write);
 
         mAddRecordButton.setOnClickListener(v -> onNewRecordClick());
 
@@ -84,6 +85,8 @@ public class ViewRecordsActivity extends BaseActivity implements IItemClickListe
             NdefRecord record = Objects.requireNonNull(data.getExtras()).getParcelable(getString(R.string.intent_record));
             _records.add(_alteredIndex, record);
             _recyclerAdapter.notifyDataSetChanged();
+            _recordsEdited = true;
+            mWriteButton.setVisibility(View.VISIBLE);
         }
         else if(resultCode == RES_CODE_PUSH_EDIT)
         {
@@ -116,7 +119,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemClickListe
     @Override
     public void onBackPressed()
     {
-        if(!getNdefMessage().equals(_message))
+        if(_recordsEdited)
         {
             new AlertDialog.Builder(this)
                     .setTitle("Discard Unchanged Changes?")

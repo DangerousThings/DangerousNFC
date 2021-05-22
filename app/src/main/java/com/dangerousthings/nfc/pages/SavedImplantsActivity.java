@@ -14,7 +14,6 @@ import com.dangerousthings.nfc.databases.ImplantDatabase;
 import com.dangerousthings.nfc.interfaces.IImplantDAO;
 import com.dangerousthings.nfc.interfaces.IItemLongClickListener;
 import com.dangerousthings.nfc.models.Implant;
-import com.dangerousthings.nfc.utilities.HexUtils;
 
 import java.util.List;
 
