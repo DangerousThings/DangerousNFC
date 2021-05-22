@@ -82,15 +82,19 @@ public class EditNdefActivity extends BaseActivity implements ITracksPayloadSize
 
     private void startFragment()
     {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
         if(_record == null)
         {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
             _fragment = EditPlainTextFragment.newInstance();
-            _fragment.setPayloadTrackingInterface(this);
-            transaction.replace(R.id.edit_ndef_frame, ((Fragment)_fragment));
-            transaction.commit();
         }
+        else if(_record.toMimeType().equals(getString(R.string.mime_plaintext)))
+        {
+            _fragment = EditPlainTextFragment.newInstance(_record);
+        }
+        _fragment.setPayloadTrackingInterface(this);
+        transaction.replace(R.id.edit_ndef_frame, ((Fragment)_fragment));
+        transaction.commit();
     }
 
     private void setDrawer()
@@ -134,7 +138,6 @@ public class EditNdefActivity extends BaseActivity implements ITracksPayloadSize
                 .setMessage("Are you sure you want to leave this page without saving this record?")
                 .setPositiveButton("Yes", ((dialog, which) ->
                 {
-                    //TODO: handle the record returned from the fragment
                     setResult(RESULT_CANCELED);
                     finish();
                     overridePendingTransition(0,0);

@@ -1,30 +1,27 @@
 package com.dangerousthings.nfc.pages;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.os.Bundle;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.adapters.NdefMessageRecyclerAdapter;
 import com.dangerousthings.nfc.databases.ImplantDatabase;
-import com.dangerousthings.nfc.fragments.DisplayPlainTextFragment;
 import com.dangerousthings.nfc.interfaces.IItemClickListener;
 import com.dangerousthings.nfc.interfaces.IImplantDAO;
 import com.dangerousthings.nfc.models.Implant;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
 import java.util.Objects;
 
 public class ViewRecordsActivity extends BaseActivity implements IItemClickListener
@@ -32,7 +29,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemClickListe
     public final static int REQ_CODE_RECORD = 1;
 
     NdefMessage _message;
-    NdefMessage _stagingMessage;
+    ArrayList<NdefRecord> _records;
     int _alteredIndex = 0;
     Implant _implant;
 
@@ -48,9 +45,11 @@ public class ViewRecordsActivity extends BaseActivity implements IItemClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_records);
 
-        //pull extras
         _message = getIntent().getParcelableExtra(getString(R.string.intent_ndef_message));
-        _stagingMessage = _message;
+        assert _message != null;
+        _records = new ArrayList<>();
+        Collections.addAll(_records, _message.getRecords());
+
         String UID = Objects.requireNonNull(getIntent().getExtras()).getString(getString(R.string.intent_tag_uid));
         if(UID != null)
         {
@@ -66,39 +65,14 @@ public class ViewRecordsActivity extends BaseActivity implements IItemClickListe
         mAddRecordButton.setOnClickListener(v -> onNewRecordClick());
 
         //set up recyclerview
-        _recyclerAdapter = new NdefMessageRecyclerAdapter(this, Arrays.asList(_message.getRecords()));
+        _recyclerAdapter = new NdefMessageRecyclerAdapter(this, _records);
         _recyclerAdapter.setClickListener(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(_recyclerAdapter);
 
         mBackButton.setOnClickListener(v -> onBackPressed());
-    }
 
-    //TODO: rework this
-    public void displayRecord(NdefRecord record)
-    {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        Fragment fragment;
-        //if plain text
-        if(record.toMimeType().equals(getString(R.string.mime_plaintext)))
-        {
-            fragment = DisplayPlainTextFragment.newInstance(record);
-        }
-        //if the mimetype is not currently supported
-        else
-        {
-            fragment = null;
-            Toast.makeText(this, "Mime type not currently supported", Toast.LENGTH_SHORT).show();
-        }
-
-        if(fragment != null)
-        {
-            fragmentTransaction.replace(R.id.base_frame, fragment);
-            fragmentTransaction.addToBackStack("displayNdef");
-            fragmentTransaction.commit();
-        }
+        setBroadcastReceiver();
     }
 
     @Override
@@ -107,14 +81,37 @@ public class ViewRecordsActivity extends BaseActivity implements IItemClickListe
         if(resultCode == RESULT_OK)
         {
             NdefRecord record = Objects.requireNonNull(data.getExtras()).getParcelable(getString(R.string.intent_record));
-            List<NdefRecord> records = new ArrayList<>(Arrays.asList(_stagingMessage.getRecords()));
-            records.add(record);
-            NdefRecord[] recordArray = new NdefRecord[records.size()];
-            recordArray = records.toArray(recordArray);
-            _stagingMessage = new NdefMessage(recordArray);
+            _records.add(_alteredIndex, record);
             _recyclerAdapter.notifyDataSetChanged();
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void setBroadcastReceiver()
+    {
+        BroadcastReceiver receiver = new BroadcastReceiver()
+        {
+            @Override
+            public void onReceive(Context context, Intent intent)
+            {
+                String action = intent.getAction();
+                assert action != null;
+                if(action.equals(getString(R.string.intent_start_edit_ndef)))
+                {
+                    onEditButtonClick();
+                }
+            }
+        };
+        registerReceiver(receiver, new IntentFilter(getString(R.string.intent_start_edit_ndef)));
+    }
+
+    private void onEditButtonClick()
+    {
+        Intent editRecord = new Intent(this, EditNdefActivity.class);
+        editRecord.putExtra(getString(R.string.intent_record), _recyclerAdapter.getRecord(_alteredIndex));
+        editRecord.putExtra(getString(R.string.intent_ndef_capacity), _implant.getNdefCapacity());
+        startActivityForResult(editRecord, REQ_CODE_RECORD);
+        overridePendingTransition(0, 0);
     }
 
     public void onNewRecordClick()
@@ -126,21 +123,19 @@ public class ViewRecordsActivity extends BaseActivity implements IItemClickListe
         }
         startActivityForResult(addRecord, REQ_CODE_RECORD);
         overridePendingTransition(0, 0);
-        _alteredIndex = _stagingMessage.getRecords().length;
+        _alteredIndex = _records.size();
     }
 
     @Override
     public void onBackPressed()
     {
-        //TODO: this doesn't work. redo this.
-        if(_stagingMessage.equals(_message))
+        if(!getNdefMessage().equals(_message))
         {
             new AlertDialog.Builder(this)
                     .setTitle("Discard Unchanged Changes?")
                     .setMessage("Are you sure you want to leave this page without writing changes to this implant?")
                     .setPositiveButton("Yes", ((dialog, which) ->
                     {
-                        //TODO: handle the record returned from the fragment
                         finish();
                         overridePendingTransition(0,0);
                     }))
@@ -157,6 +152,17 @@ public class ViewRecordsActivity extends BaseActivity implements IItemClickListe
     @Override
     public void onItemClick(int position)
     {
+        Intent viewRecordIntent = new Intent(this, ViewRecordActivity.class);
+        viewRecordIntent.putExtra(getString(R.string.intent_record), _recyclerAdapter.getRecord(position));
+        _alteredIndex = position;
+        startActivity(viewRecordIntent);
+        overridePendingTransition(0, 0);
+    }
 
+    private NdefMessage getNdefMessage()
+    {
+        NdefRecord[] records = new NdefRecord[_records.size()];
+        records = _records.toArray(records);
+        return new NdefMessage(records);
     }
 }

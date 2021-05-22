@@ -6,6 +6,7 @@
     <string name="intent_onboard_flag">com.dangerousthings.nfc.ONBOARD_FLAG</string>
     <string name="intent_record">com.dangerousthings.nfc.NDEF_RECORD</string>
     <string name="intent_ndef_capacity">com.dangerousthings.nfc.NDEF_CAPACITY</string>
+    <string name="intent_start_edit_ndef">com.dangerousthings.nfc.START_EDIT_NDEF_ACTIVITY</string>
     <!--Menu IDs-->
     <string name="menu_view_records">com.dangerousthings.nfc.VIEW_RECORDS</string>
     <string name="menu_memory_management">com.dangerousthings.nfc.MANAGE_MEMORY</string>

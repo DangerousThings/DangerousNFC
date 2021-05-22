@@ -24,6 +24,10 @@ import android.widget.LinearLayout;
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.interfaces.IEditFragment;
 import com.dangerousthings.nfc.interfaces.ITracksPayloadSize;
+import com.dangerousthings.nfc.utilities.NdefUtils;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 public class EditPlainTextFragment extends Fragment implements IEditFragment
 {
@@ -73,8 +77,16 @@ public class EditPlainTextFragment extends Fragment implements IEditFragment
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
     {
         mEditText = view.findViewById(R.id.edit_plaintext_edittext);
+        if(_record != null)
+        {
+            byte[] payload = _record.getPayload();
+            if(payload != null)
+            {
+                mEditText.setText(NdefUtils.getEnStringFromBytes(payload));
+                _trackerInterface.payloadChanged();
+            }
+        }
         mEditLinear = view.findViewById(R.id.edit_plaintext_linear);
-
         mEditLinear.setOnClickListener(v -> focusEntry());
 
         setupTextChangedEvent();
@@ -123,8 +135,7 @@ public class EditPlainTextFragment extends Fragment implements IEditFragment
     @Override
     public NdefRecord getNdefRecord()
     {
-        byte[] bytes = mEditText.getText().toString().getBytes();
-        return NdefRecord.createMime(getString(R.string.mime_plaintext), bytes);
+        return NdefRecord.createTextRecord("en", mEditText.getText().toString());
     }
 
     @Override

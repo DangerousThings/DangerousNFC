@@ -9,28 +9,26 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.utilities.NdefUtils;
 
-public class DisplayPlainTextFragment extends Fragment
+public class ViewPlainTextFragment extends Fragment
 {
     TextView mPlainText;
-    ImageButton mBackButton;
 
     private static final String ARG_RECORD = "record";
 
     private NdefRecord _record;
 
-    public DisplayPlainTextFragment()
+    public ViewPlainTextFragment()
     {
     }
 
-    public static DisplayPlainTextFragment newInstance(NdefRecord record)
+    public static ViewPlainTextFragment newInstance(NdefRecord record)
     {
-        DisplayPlainTextFragment fragment = new DisplayPlainTextFragment();
+        ViewPlainTextFragment fragment = new ViewPlainTextFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_RECORD, record);
         fragment.setArguments(args);
@@ -50,7 +48,7 @@ public class DisplayPlainTextFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        return inflater.inflate(R.layout.fragment_display_plain_text, container, false);
+        return inflater.inflate(R.layout.fragment_view_plain_text, container, false);
     }
 
     @Override
@@ -58,7 +56,5 @@ public class DisplayPlainTextFragment extends Fragment
     {
         mPlainText = view.findViewById(R.id.display_plaintext_text);
         mPlainText.setText(NdefUtils.getEnStringFromBytes(_record.getPayload()));
-        mBackButton = view.findViewById(R.id.display_plaintext_button_back);
-        mBackButton.setOnClickListener(v -> requireActivity().onBackPressed());
     }
 }
