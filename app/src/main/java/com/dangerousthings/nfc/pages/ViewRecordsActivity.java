@@ -27,6 +27,9 @@ import java.util.Objects;
 public class ViewRecordsActivity extends BaseActivity implements IItemClickListener
 {
     public final static int REQ_CODE_RECORD = 1;
+    public final static int REQ_CODE_VIEW_RECORD = 2;
+    public final static int RES_CODE_RECORD = 3;
+    public final static int RES_CODE_PUSH_EDIT = 4;
 
     NdefMessage _message;
     ArrayList<NdefRecord> _records;
@@ -71,38 +74,22 @@ public class ViewRecordsActivity extends BaseActivity implements IItemClickListe
         mRecyclerView.setAdapter(_recyclerAdapter);
 
         mBackButton.setOnClickListener(v -> onBackPressed());
-
-        setBroadcastReceiver();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if(resultCode == RESULT_OK)
+        if(resultCode == RES_CODE_RECORD)
         {
             NdefRecord record = Objects.requireNonNull(data.getExtras()).getParcelable(getString(R.string.intent_record));
             _records.add(_alteredIndex, record);
             _recyclerAdapter.notifyDataSetChanged();
         }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    private void setBroadcastReceiver()
-    {
-        BroadcastReceiver receiver = new BroadcastReceiver()
+        else if(resultCode == RES_CODE_PUSH_EDIT)
         {
-            @Override
-            public void onReceive(Context context, Intent intent)
-            {
-                String action = intent.getAction();
-                assert action != null;
-                if(action.equals(getString(R.string.intent_start_edit_ndef)))
-                {
-                    onEditButtonClick();
-                }
-            }
-        };
-        registerReceiver(receiver, new IntentFilter(getString(R.string.intent_start_edit_ndef)));
+            onEditButtonClick();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void onEditButtonClick()
@@ -110,7 +97,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemClickListe
         Intent editRecord = new Intent(this, EditNdefActivity.class);
         editRecord.putExtra(getString(R.string.intent_record), _recyclerAdapter.getRecord(_alteredIndex));
         editRecord.putExtra(getString(R.string.intent_ndef_capacity), _implant.getNdefCapacity());
-        startActivityForResult(editRecord, REQ_CODE_RECORD);
+        startActivityForResult(editRecord, REQ_CODE_VIEW_RECORD);
         overridePendingTransition(0, 0);
     }
 
@@ -155,7 +142,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemClickListe
         Intent viewRecordIntent = new Intent(this, ViewRecordActivity.class);
         viewRecordIntent.putExtra(getString(R.string.intent_record), _recyclerAdapter.getRecord(position));
         _alteredIndex = position;
-        startActivity(viewRecordIntent);
+        startActivityForResult(viewRecordIntent, REQ_CODE_VIEW_RECORD);
         overridePendingTransition(0, 0);
     }
 

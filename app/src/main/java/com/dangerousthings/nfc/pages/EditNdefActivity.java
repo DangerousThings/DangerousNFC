@@ -75,9 +75,8 @@ public class EditNdefActivity extends BaseActivity implements ITracksPayloadSize
         Intent result = new Intent();
         NdefRecord resultRecord = _fragment.getNdefRecord();
         result.putExtra(getString(R.string.intent_record), resultRecord);
-        setResult(ViewRecordsActivity.RESULT_OK, result);
-        finish();
-        overridePendingTransition(0, 0);
+        setResult(ViewRecordsActivity.RES_CODE_RECORD, result);
+        popBack();
     }
 
     private void startFragment()
@@ -139,10 +138,15 @@ public class EditNdefActivity extends BaseActivity implements ITracksPayloadSize
                 .setPositiveButton("Yes", ((dialog, which) ->
                 {
                     setResult(RESULT_CANCELED);
-                    finish();
-                    overridePendingTransition(0,0);
+                    popBack();
                 }))
                 .setNegativeButton("No", ((dialog, which) -> dialog.cancel()))
                 .show();
+    }
+
+    private void popBack()
+    {
+        finish();
+        overridePendingTransition(0, 0);
     }
 }

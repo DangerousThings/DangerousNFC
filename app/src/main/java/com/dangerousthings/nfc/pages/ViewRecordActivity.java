@@ -32,7 +32,7 @@ public class ViewRecordActivity extends BaseActivity
         mBackButton = findViewById(R.id.view_record_button_back);
         mBackButton.setOnClickListener(v -> onBackPressed());
         mEditButton = findViewById(R.id.view_record_button_edit);
-        mEditButton.setOnClickListener(v -> broadcastEditRecordIntent());
+        mEditButton.setOnClickListener(v -> returnResult());
     }
 
     private void loadFragment()
@@ -62,10 +62,10 @@ public class ViewRecordActivity extends BaseActivity
         }
     }
 
-    private void broadcastEditRecordIntent()
+    private void returnResult()
     {
-        Intent broadcastIntent = new Intent(getString(R.string.intent_start_edit_ndef));
-        sendBroadcast(broadcastIntent);
+        Intent result = new Intent();
+        setResult(ViewRecordsActivity.RES_CODE_PUSH_EDIT, result);
         finish();
         overridePendingTransition(0, 0);
     }
