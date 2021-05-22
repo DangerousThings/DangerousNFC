@@ -83,7 +83,19 @@ public class ViewRecordsActivity extends BaseActivity implements IItemClickListe
         if(resultCode == RES_CODE_RECORD)
         {
             NdefRecord record = Objects.requireNonNull(data.getExtras()).getParcelable(getString(R.string.intent_record));
-            _records.add(_alteredIndex, record);
+            //This is a little messy. I'll probably come back to it later to optimize a bit
+            try
+            {
+                if(_records.get(_alteredIndex) != null)
+                {
+                    _records.remove(_alteredIndex);
+                    _records.add(_alteredIndex, record);
+                }
+            }
+            catch(Exception e)
+            {
+                _records.add(_alteredIndex, record);
+            }
             _recyclerAdapter.notifyDataSetChanged();
             _recordsEdited = true;
             mWriteButton.setVisibility(View.VISIBLE);
@@ -122,7 +134,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemClickListe
         if(_recordsEdited)
         {
             new AlertDialog.Builder(this)
-                    .setTitle("Discard Unchanged Changes?")
+                    .setTitle("Discard Unsaveed Changes?")
                     .setMessage("Are you sure you want to leave this page without writing changes to this implant?")
                     .setPositiveButton("Yes", ((dialog, which) ->
                     {

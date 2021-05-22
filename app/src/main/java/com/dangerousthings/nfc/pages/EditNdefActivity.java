@@ -150,16 +150,24 @@ public class EditNdefActivity extends BaseActivity implements ITracksPayloadSize
     @Override
     public void onBackPressed()
     {
-        new AlertDialog.Builder(this)
-                .setTitle("Discard Unchanged Changes?")
-                .setMessage("Are you sure you want to leave this page without saving this record?")
-                .setPositiveButton("Yes", ((dialog, which) ->
-                {
-                    setResult(RESULT_CANCELED);
-                    finish();
-                    overridePendingTransition(0, 0);
-                }))
-                .setNegativeButton("No", ((dialog, which) -> dialog.cancel()))
-                .show();
+        if(!_fragment.getNdefRecord().equals(_record))
+        {
+            new AlertDialog.Builder(this)
+                           .setTitle("Discard Unsaved Changes?")
+                           .setMessage("Are you sure you want to leave this page without saving this record?")
+                           .setPositiveButton("Yes", ((dialog, which) ->
+                           {
+                               setResult(RESULT_CANCELED);
+                               finish();
+                               overridePendingTransition(0, 0);
+                           }))
+                           .setNegativeButton("No", ((dialog, which) -> dialog.cancel()))
+                           .show();
+        }
+        else
+        {
+            finish();
+            overridePendingTransition(0, 0);
+        }
     }
 }
