@@ -26,8 +26,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemClickListe
 {
     public final static int REQ_CODE_RECORD = 1;
     public final static int REQ_CODE_VIEW_RECORD = 2;
-    public final static int RES_CODE_RECORD = 3;
-    public final static int RES_CODE_PUSH_EDIT = 4;
+    public final static int REQ_CODE_WRITE_MESSAGE = 3;
 
     NdefMessage _message;
     ArrayList<NdefRecord> _records;
@@ -48,12 +47,14 @@ public class ViewRecordsActivity extends BaseActivity implements IItemClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_records);
 
-        _message = getIntent().getParcelableExtra(getString(R.string.intent_ndef_message));
-        assert _message != null;
         _records = new ArrayList<>();
-        Collections.addAll(_records, _message.getRecords());
+        _message = getIntent().getParcelableExtra(getString(R.string.intent_ndef_message));
+        if(_message != null)
+        {
+            Collections.addAll(_records, _message.getRecords());
+        }
 
-        String UID = Objects.requireNonNull(getIntent().getExtras()).getString(getString(R.string.intent_tag_uid));
+        String UID = getIntent().getStringExtra(getString(R.string.intent_tag_uid));
         if(UID != null)
         {
             ImplantDatabase database = ImplantDatabase.getInstance(this);
@@ -65,6 +66,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemClickListe
         mBackButton = findViewById(R.id.view_records_button_back);
         mAddRecordButton = findViewById(R.id.view_records_button_add);
         mWriteButton = findViewById(R.id.view_records_button_write);
+        mWriteButton.setOnClickListener(v -> writeRecords());
 
         mAddRecordButton.setOnClickListener(v -> onNewRecordClick());
 
@@ -80,29 +82,37 @@ public class ViewRecordsActivity extends BaseActivity implements IItemClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if(resultCode == RES_CODE_RECORD)
+        if(resultCode == RESULT_OK)
         {
-            NdefRecord record = Objects.requireNonNull(data.getExtras()).getParcelable(getString(R.string.intent_record));
-            //This is a little messy. I'll probably come back to it later to optimize a bit
-            try
+            if(requestCode == REQ_CODE_RECORD)
             {
-                if(_records.get(_alteredIndex) != null)
+                NdefRecord record = Objects.requireNonNull(data.getExtras()).getParcelable(getString(R.string.intent_record));
+                //This is a little messy. I'll probably come back to it later to optimize a bit
+                try
                 {
-                    _records.remove(_alteredIndex);
+                    if(_records.get(_alteredIndex) != null)
+                    {
+                        _records.remove(_alteredIndex);
+                        _records.add(_alteredIndex, record);
+                    }
+                }
+                catch(Exception e)
+                {
                     _records.add(_alteredIndex, record);
                 }
+                _recyclerAdapter.notifyDataSetChanged();
+                _recordsEdited = true;
+                mWriteButton.setVisibility(View.VISIBLE);
             }
-            catch(Exception e)
+            else if(requestCode == REQ_CODE_VIEW_RECORD)
             {
-                _records.add(_alteredIndex, record);
+                onEditButtonClick();
             }
-            _recyclerAdapter.notifyDataSetChanged();
-            _recordsEdited = true;
-            mWriteButton.setVisibility(View.VISIBLE);
-        }
-        else if(resultCode == RES_CODE_PUSH_EDIT)
-        {
-            onEditButtonClick();
+            else if(requestCode == REQ_CODE_WRITE_MESSAGE)
+            {
+                finish();
+                overridePendingTransition(0, 0);
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -111,8 +121,11 @@ public class ViewRecordsActivity extends BaseActivity implements IItemClickListe
     {
         Intent editRecord = new Intent(this, EditNdefActivity.class);
         editRecord.putExtra(getString(R.string.intent_record), _recyclerAdapter.getRecord(_alteredIndex));
-        editRecord.putExtra(getString(R.string.intent_ndef_capacity), _implant.getNdefCapacity());
-        startActivityForResult(editRecord, REQ_CODE_VIEW_RECORD);
+        if(_implant != null)
+        {
+            editRecord.putExtra(getString(R.string.intent_ndef_capacity), _implant.getNdefCapacity());
+        }
+        startActivityForResult(editRecord, REQ_CODE_RECORD);
         overridePendingTransition(0, 0);
     }
 
@@ -134,7 +147,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemClickListe
         if(_recordsEdited)
         {
             new AlertDialog.Builder(this)
-                    .setTitle("Discard Unsaveed Changes?")
+                    .setTitle("Discard Unsaved Changes?")
                     .setMessage("Are you sure you want to leave this page without writing changes to this implant?")
                     .setPositiveButton("Yes", ((dialog, which) ->
                     {
@@ -159,6 +172,21 @@ public class ViewRecordsActivity extends BaseActivity implements IItemClickListe
         _alteredIndex = position;
         startActivityForResult(viewRecordIntent, REQ_CODE_VIEW_RECORD);
         overridePendingTransition(0, 0);
+    }
+
+    private void writeRecords()
+    {
+        Intent writeIntent = new Intent(this, ImplantInterfaceActivity.class);
+        writeIntent.putExtra(getString(R.string.intent_ndef_message), getNdefMessage());
+        startActivityForResult(writeIntent, REQ_CODE_WRITE_MESSAGE);
+        overridePendingTransition(0, 0);
+    }
+
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode)
+    {
+        intent.putExtra(getString(R.string.intent_request_code), requestCode);
+        super.startActivityForResult(intent, requestCode);
     }
 
     private NdefMessage getNdefMessage()

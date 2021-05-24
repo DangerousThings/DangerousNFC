@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.interfaces.IMainMenuClickListener;
@@ -32,10 +33,12 @@ public class MainDrawerFragment extends Fragment
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
     {
-        LinearLayout mSettingsLinear = view.findViewById(R.id.main_linear_settings);
-        mSettingsLinear.setOnClickListener(v -> _clickListener.onSettingsClicked());
-        LinearLayout mSavedImplantsLinear = view.findViewById(R.id.main_linear_saved_implants);
-        mSavedImplantsLinear.setOnClickListener(v -> _clickListener.onSavedImplantsClicked());
+        TextView settingsText = view.findViewById(R.id.main_text_settings);
+        settingsText.setOnClickListener(v -> _clickListener.onSettingsClicked());
+        TextView savedImplantsText = view.findViewById(R.id.main_text_saved_implants);
+        savedImplantsText.setOnClickListener(v -> _clickListener.onSavedImplantsClicked());
+        TextView newNdefMessageText = view.findViewById(R.id.main_text_new_message);
+        newNdefMessageText.setOnClickListener(v -> _clickListener.onNewNdefMessageClicked());
     }
 
     public void setOnClickListener(IMainMenuClickListener listener)

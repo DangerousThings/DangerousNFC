@@ -4,4 +4,5 @@ public interface IMainMenuClickListener
 {
     void onSettingsClicked();
     void onSavedImplantsClicked();
+    void onNewNdefMessageClicked();
 }

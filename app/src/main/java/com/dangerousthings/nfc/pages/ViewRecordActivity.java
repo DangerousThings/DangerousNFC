@@ -31,7 +31,7 @@ public class ViewRecordActivity extends BaseActivity
         mBackButton = findViewById(R.id.view_record_button_back);
         mBackButton.setOnClickListener(v -> onBackPressed());
         mEditButton = findViewById(R.id.view_record_button_edit);
-        mEditButton.setOnClickListener(v -> returnResult());
+        mEditButton.setOnClickListener(v -> editButtonClicked());
     }
 
     private void loadFragment()
@@ -61,10 +61,10 @@ public class ViewRecordActivity extends BaseActivity
         }
     }
 
-    private void returnResult()
+    private void editButtonClicked()
     {
         Intent result = new Intent();
-        setResult(ViewRecordsActivity.RES_CODE_PUSH_EDIT, result);
+        setResult(ViewRecordsActivity.RESULT_OK, result);
         finish();
         overridePendingTransition(0, 0);
     }

@@ -278,4 +278,13 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
         startActivity(savedImplantsIntent);
         overridePendingTransition(0, 0);
     }
+
+    @Override
+    public void onNewNdefMessageClicked()
+    {
+        mDrawer.close();
+        Intent emptyNdefMessage = new Intent(this, ViewRecordsActivity.class);
+        startActivity(emptyNdefMessage);
+        overridePendingTransition(0, 0);
+    }
 }

@@ -7,6 +7,7 @@
     <string name="intent_record">com.dangerousthings.nfc.NDEF_RECORD</string>
     <string name="intent_ndef_capacity">com.dangerousthings.nfc.NDEF_CAPACITY</string>
     <string name="intent_start_edit_ndef">com.dangerousthings.nfc.START_EDIT_NDEF_ACTIVITY</string>
+    <string name="intent_request_code">com.dangerousthings.nfc.REQUEST_CODE</string>
     <!--Menu IDs-->
     <string name="menu_view_records">com.dangerousthings.nfc.VIEW_RECORDS</string>
     <string name="menu_memory_management">com.dangerousthings.nfc.MANAGE_MEMORY</string>
@@ -61,4 +62,6 @@
     <string name="write_ndef_message_button">write ndef message button</string>
     <string name="down_arrow">down arrow</string>
     <string name="enter_text_message">Enter text message</string>
+    <string name="settings">Settings</string>
+    <string name="new_ndef_message">New NDEF Message</string>
 </resources>
