@@ -28,17 +28,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:gravity="center"
             android:layout_marginStart="16dp"
-            android:textColor="?android:colorPrimaryDark"
-            android:fontFamily="@font/ibmplexmono_semibold"
-            android:text="@string/settings"
+            android:layout_marginBottom="16dp"
             android:drawablePadding="10dp"
+            android:fontFamily="@font/ibmplexmono_semibold"
+            android:gravity="center"
+            android:text="@string/settings"
+            android:textColor="?android:colorPrimaryDark"
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:drawableStartCompat="@drawable/ic_settings"
             app:drawableTint="?android:colorPrimaryDark"
-            app:drawableStartCompat="@drawable/ic_settings" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/main_text_saved_implants"

@@ -141,8 +141,7 @@ public class EditPlainTextFragment extends Fragment implements IEditFragment
         }
         else
         {
-            //TODO: Make this better
-            return new NdefMessage(NdefRecord.createMime("text/plain", mEditText.getText().toString().getBytes())).getByteArrayLength();
+            return new NdefMessage(getNdefRecord()).getByteArrayLength();
         }
     }
 }

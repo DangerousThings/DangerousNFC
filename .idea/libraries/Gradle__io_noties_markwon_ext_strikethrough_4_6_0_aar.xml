@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: io.noties.markwon:ext-strikethrough:4.6.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/aa6640269656af5e0cd1f0788466829c/jetified-ext-strikethrough-4.6.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/aa6640269656af5e0cd1f0788466829c/jetified-ext-strikethrough-4.6.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/aa6640269656af5e0cd1f0788466829c/jetified-ext-strikethrough-4.6.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.noties.markwon/ext-strikethrough/4.6.0/29bc4b3b73ab9b88f65413eca79f22c3a0252eb8/ext-strikethrough-4.6.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.noties.markwon/ext-strikethrough/4.6.0/cc73624b747ac9da2a1186cdfb87ae3798000b9e/ext-strikethrough-4.6.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

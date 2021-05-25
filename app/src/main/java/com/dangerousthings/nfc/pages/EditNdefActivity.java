@@ -14,12 +14,15 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.nfc.NdefRecord;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dangerousthings.nfc.R;
+import com.dangerousthings.nfc.fragments.EditMarkdownFragment;
 import com.dangerousthings.nfc.fragments.EditPlainTextFragment;
 import com.dangerousthings.nfc.interfaces.IEditFragment;
 import com.dangerousthings.nfc.interfaces.ITracksPayloadSize;
@@ -137,14 +140,43 @@ public class EditNdefActivity extends BaseActivity implements ITracksPayloadSize
         mNavigation.setElevation(0);
         mDrawer.addDrawerListener(mDrawerToggle);
 
-        //TODO: write drawer switching logic
-        //mNavigation.setNavigationItemSelectedListener(this::drawerItemSelected);
+        mNavigation.setNavigationItemSelectedListener(this::drawerItemSelected);
     }
 
     @Override
     public void payloadChanged()
     {
         mPayloadSizeText.setText(getString(R.string.two_arguments, _fragment.getPayloadSize(), _ndefCapacityText));
+    }
+
+    private boolean drawerItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+        if(id == R.id.nav_plaintext)
+        {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            _fragment = EditPlainTextFragment.newInstance();
+            _fragment.setPayloadTrackingInterface(this);
+            transaction.replace(R.id.edit_ndef_frame, ((Fragment)_fragment));
+            transaction.commit();
+
+            mPayloadTypeButton.setText(R.string.plain_text);
+            mDrawer.closeDrawer(GravityCompat.END);
+        }
+        else if(id == R.id.nav_markdown)
+        {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            _fragment = EditMarkdownFragment.newInstance();
+            _fragment.setPayloadTrackingInterface(this);
+            transaction.replace(R.id.edit_ndef_frame, ((Fragment)_fragment));
+            transaction.commit();
+
+            mPayloadTypeButton.setText(R.string.markdown);
+            mDrawer.closeDrawer(GravityCompat.END);
+        }
+        return true;
     }
 
     @Override
