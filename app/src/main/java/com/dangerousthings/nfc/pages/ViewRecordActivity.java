@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.dangerousthings.nfc.R;
+import com.dangerousthings.nfc.fragments.ViewMarkdownFragment;
 import com.dangerousthings.nfc.fragments.ViewPlainTextFragment;
 
 public class ViewRecordActivity extends BaseActivity
@@ -46,6 +47,10 @@ public class ViewRecordActivity extends BaseActivity
             fragment = ViewPlainTextFragment.newInstance(_record);
         }
         //if the mimetype is not currently supported
+        else if(_record.toMimeType().equals("text/markdown"))
+        {
+            fragment = ViewMarkdownFragment.newInstance(_record);
+        }
         else
         {
             fragment = null;

@@ -28,7 +28,7 @@ public class EditPlainTextFragment extends Fragment implements IEditFragment
     private static final String ARG_RECORD = "record";
 
     NdefRecord _record;
-    ITracksPayloadSize _trackerInterface;
+    ITracksPayloadSize _tracker;
 
     EditText mEditText;
     LinearLayout mEditLinear;
@@ -77,11 +77,11 @@ public class EditPlainTextFragment extends Fragment implements IEditFragment
             if(payload != null)
             {
                 mEditText.setText(NdefUtils.getEnStringFromBytes(payload));
-                _trackerInterface.payloadChanged();
             }
         }
         mEditLinear = view.findViewById(R.id.edit_plaintext_linear);
         mEditLinear.setOnClickListener(v -> focusEntry());
+        _tracker.payloadChanged();
 
         setupTextChangedEvent();
     }
@@ -109,7 +109,7 @@ public class EditPlainTextFragment extends Fragment implements IEditFragment
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2)
             {
-                _trackerInterface.payloadChanged();
+                _tracker.payloadChanged();
             }
 
             @Override
@@ -123,7 +123,7 @@ public class EditPlainTextFragment extends Fragment implements IEditFragment
     @Override
     public void setPayloadTrackingInterface(ITracksPayloadSize tracker)
     {
-        _trackerInterface = tracker;
+        _tracker = tracker;
     }
 
     @Override

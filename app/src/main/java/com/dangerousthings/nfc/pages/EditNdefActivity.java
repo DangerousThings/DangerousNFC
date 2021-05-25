@@ -58,10 +58,10 @@ public class EditNdefActivity extends BaseActivity implements ITracksPayloadSize
 
         _record = getIntent().getParcelableExtra(getString(R.string.intent_record));
 
+        setViews();
         getCapacityText();
         setDrawer();
         startFragment();
-        setViews();
     }
 
     private void setViews()
@@ -110,6 +110,12 @@ public class EditNdefActivity extends BaseActivity implements ITracksPayloadSize
         else if(_record.toMimeType().equals(getString(R.string.mime_plaintext)))
         {
             _fragment = EditPlainTextFragment.newInstance(_record);
+            mPayloadTypeButton.setText(R.string.plain_text);
+        }
+        else if(_record.toMimeType().equals("text/markdown"))
+        {
+            _fragment = EditMarkdownFragment.newInstance(_record);
+            mPayloadTypeButton.setText(R.string.markdown);
         }
         _fragment.setPayloadTrackingInterface(this);
         transaction.replace(R.id.edit_ndef_frame, ((Fragment)_fragment));
@@ -156,7 +162,14 @@ public class EditNdefActivity extends BaseActivity implements ITracksPayloadSize
         {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            _fragment = EditPlainTextFragment.newInstance();
+            if(_record != null)
+            {
+                _fragment = EditPlainTextFragment.newInstance(_record);
+            }
+            else
+            {
+                _fragment = EditPlainTextFragment.newInstance();
+            }
             _fragment.setPayloadTrackingInterface(this);
             transaction.replace(R.id.edit_ndef_frame, ((Fragment)_fragment));
             transaction.commit();
@@ -168,7 +181,14 @@ public class EditNdefActivity extends BaseActivity implements ITracksPayloadSize
         {
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            _fragment = EditMarkdownFragment.newInstance();
+            if(_record != null)
+            {
+                _fragment = EditMarkdownFragment.newInstance(_record);
+            }
+            else
+            {
+                _fragment = EditMarkdownFragment.newInstance();
+            }
             _fragment.setPayloadTrackingInterface(this);
             transaction.replace(R.id.edit_ndef_frame, ((Fragment)_fragment));
             transaction.commit();

@@ -20,7 +20,16 @@
         <item name="colorPrimaryDark">#167D7F</item>
         <item name="colorAccent">#B5E5CF</item>
     </style>
-
+    <style name="BlackOnWhite" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#FFFFFF</item>
+        <item name="colorPrimaryDark">#000000</item>
+        <item name="colorAccent">#7F7F7F</item>
+    </style>
+    <style name="MurderedOut" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#BEBEBE</item>
+        <item name="colorPrimaryDark">#000000</item>
+        <item name="colorAccent">#7F7F7F</item>
+    </style>
     <style name="ImplantModelSpinner" parent="@android:style/Widget.TextView.SpinnerItem">
         <item name="android:textColor">?android:colorPrimaryDark</item>
         <item name="backgroundColor">?android:colorPrimaryDark</item>

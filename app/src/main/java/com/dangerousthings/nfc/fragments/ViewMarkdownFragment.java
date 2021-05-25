@@ -14,21 +14,24 @@ import android.widget.TextView;
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.utilities.NdefUtils;
 
-public class ViewPlainTextFragment extends Fragment
+import io.noties.markwon.Markwon;
+import io.noties.markwon.ext.strikethrough.StrikethroughPlugin;
+
+public class ViewMarkdownFragment extends Fragment
 {
-    TextView mPlainText;
+    TextView mMarkdownText;
 
     private static final String ARG_RECORD = "record";
 
     private NdefRecord _record;
 
-    public ViewPlainTextFragment()
+    public ViewMarkdownFragment()
     {
     }
 
-    public static ViewPlainTextFragment newInstance(NdefRecord record)
+    public static ViewMarkdownFragment newInstance(NdefRecord record)
     {
-        ViewPlainTextFragment fragment = new ViewPlainTextFragment();
+        ViewMarkdownFragment fragment = new ViewMarkdownFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_RECORD, record);
         fragment.setArguments(args);
@@ -54,7 +57,13 @@ public class ViewPlainTextFragment extends Fragment
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
     {
-        mPlainText = view.findViewById(R.id.view_text_textview);
-        mPlainText.setText(NdefUtils.getEnStringFromBytes(_record.getPayload()));
+        mMarkdownText = view.findViewById(R.id.view_text_textview);
+        final Markwon markwon = Markwon.builder(requireActivity())
+                .usePlugin(StrikethroughPlugin.create())
+                .build();
+        if(_record != null)
+        {
+            markwon.setMarkdown(mMarkdownText, NdefUtils.getStringFromBytes(_record.getPayload()));
+        }
     }
 }

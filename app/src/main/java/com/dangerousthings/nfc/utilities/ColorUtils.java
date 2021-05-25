@@ -47,6 +47,8 @@ public class ColorUtils
         themes.add(new Theme(R.style.DEOT, "DEOT", Color.parseColor("#008F78"), Color.parseColor("#0A1017"), Color.parseColor("#BBC6C5")));
         themes.add(new Theme(R.style.OPZ, "OPZ", Color.parseColor("#BCBDC2"), Color.parseColor("#4B4E5B"), Color.parseColor("#E0B000")));
         themes.add(new Theme(R.style.Wog, "Wog", Color.parseColor("#FFF6D8"), Color.parseColor("#167D7F"), Color.parseColor("#B5E5CF")));
+        themes.add(new Theme(R.style.BlackOnWhite, "Black on White", Color.parseColor("#FFFFFF"), Color.parseColor("#000000"), Color.parseColor("#7F7F7F")));
+        themes.add(new Theme(R.style.MurderedOut, "Murdered Out", Color.parseColor("#BEBEBE"), Color.parseColor("#000000"), Color.parseColor("#7F7F7F")));
         return themes;
     }
 }

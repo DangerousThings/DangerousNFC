@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.interfaces.IEditFragment;
 import com.dangerousthings.nfc.interfaces.ITracksPayloadSize;
+import com.dangerousthings.nfc.utilities.NdefUtils;
 
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -133,6 +134,12 @@ public class EditMarkdownFragment extends Fragment implements IEditFragment
         mQuoteButton.setOnClickListener(v -> insertTextAroundSelection("> ", ""));
         mThematicBreakButton.setOnClickListener(v -> insertTextAroundSelection("***\n", ""));
         mLinearLayout.setOnClickListener(v -> focusEntry());
+
+        if(_record != null)
+        {
+            mEditText.setText(NdefUtils.getStringFromBytes(_record.getPayload()));
+            _tracker.payloadChanged();
+        }
 
         final Markwon markwon = Markwon.create(requireActivity());
         final MarkwonEditor editor = MarkwonEditor.create(markwon);

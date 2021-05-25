@@ -12,7 +12,7 @@
         android:background="@drawable/rounded_primary_dark">
 
         <ScrollView
-            android:id="@+id/display_plaintext_scroll"
+            android:id="@+id/view_text_scroll"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="8dp"
@@ -25,7 +25,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/display_plaintext_text"
+                android:id="@+id/view_text_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ibmplexmono_text"

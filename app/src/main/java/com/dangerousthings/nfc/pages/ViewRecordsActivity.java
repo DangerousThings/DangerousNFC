@@ -16,13 +16,14 @@ import com.dangerousthings.nfc.adapters.NdefMessageRecyclerAdapter;
 import com.dangerousthings.nfc.databases.ImplantDatabase;
 import com.dangerousthings.nfc.interfaces.IItemClickListener;
 import com.dangerousthings.nfc.interfaces.IImplantDAO;
+import com.dangerousthings.nfc.interfaces.IItemLongClickListener;
 import com.dangerousthings.nfc.models.Implant;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 
-public class ViewRecordsActivity extends BaseActivity implements IItemClickListener
+public class ViewRecordsActivity extends BaseActivity implements IItemLongClickListener
 {
     public final static int REQ_CODE_RECORD = 1;
     public final static int REQ_CODE_VIEW_RECORD = 2;
@@ -110,6 +111,13 @@ public class ViewRecordsActivity extends BaseActivity implements IItemClickListe
             }
             else if(requestCode == REQ_CODE_WRITE_MESSAGE)
             {
+                if(_implant != null)
+                {
+                    _implant.setNdefMessage(getNdefMessage());
+                    ImplantDatabase database = ImplantDatabase.getInstance(this);
+                    IImplantDAO implantDAO = database.implantDAO();
+                    implantDAO.updateImplant(_implant);
+                }
                 finish();
                 overridePendingTransition(0, 0);
             }
@@ -172,6 +180,22 @@ public class ViewRecordsActivity extends BaseActivity implements IItemClickListe
         _alteredIndex = position;
         startActivityForResult(viewRecordIntent, REQ_CODE_VIEW_RECORD);
         overridePendingTransition(0, 0);
+    }
+
+    @Override
+    public boolean onItemLongClick(int position)
+    {
+        new AlertDialog.Builder(this)
+                .setTitle("Delete Record?")
+                .setMessage("Are you sure you want to delete this record?")
+                .setPositiveButton("Yes", ((dialog, which) ->
+                {
+                    _records.remove(position);
+                    _recyclerAdapter.notifyDataSetChanged();
+                }))
+                .setNegativeButton("No", ((dialog, which) -> dialog.cancel()))
+                .show();
+        return true;
     }
 
     private void writeRecords()
