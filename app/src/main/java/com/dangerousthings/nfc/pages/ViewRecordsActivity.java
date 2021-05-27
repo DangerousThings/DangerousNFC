@@ -192,6 +192,8 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
                 {
                     _records.remove(position);
                     _recyclerAdapter.notifyDataSetChanged();
+                    _recordsEdited = true;
+                    mWriteButton.setVisibility(View.VISIBLE);
                 }))
                 .setNegativeButton("No", ((dialog, which) -> dialog.cancel()))
                 .show();
