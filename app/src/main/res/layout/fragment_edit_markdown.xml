@@ -22,38 +22,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <ImageButton
-                android:id="@+id/edit_markdown_button_preview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:background="@android:color/transparent"
-                android:src="@drawable/ic_eye"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="?android:colorPrimaryDark" />
-
-            <View
-                android:id="@+id/divider"
-                android:layout_width="2dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:background="?android:colorPrimaryDark"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/edit_markdown_button_preview"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <HorizontalScrollView
                 android:id="@+id/horizontalScrollView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:background="@drawable/rounded_primary_dark"
                 android:scrollbars="none"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/divider"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -67,86 +45,82 @@
                         android:id="@+id/edit_markdown_button_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_margin="8dp"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:scaleType="center"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginTop="8dp"
-                        app:tint="?android:colorPrimaryDark"
-                        android:src="@drawable/ic_bold" />
+                        android:src="@drawable/ic_bold"
+                        app:tint="?android:colorPrimary" />
 
                     <ImageButton
                         android:id="@+id/edit_markdown_button_italicize"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_margin="8dp"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
-                        android:layout_margin="8dp"
-                        app:tint="?android:colorPrimaryDark"
-                        android:src="@drawable/ic_italic" />
+                        android:src="@drawable/ic_italic"
+                        app:tint="?android:colorPrimary" />
 
                     <ImageButton
                         android:id="@+id/edit_markdown_button_code"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_margin="8dp"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
-                        android:layout_margin="8dp"
-                        app:tint="?android:colorPrimaryDark"
-                        android:src="@drawable/ic_code" />
+                        android:src="@drawable/ic_code"
+                        app:tint="?android:colorPrimary" />
 
                     <ImageButton
                         android:id="@+id/edit_markdown_button_link"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_margin="8dp"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
-                        android:layout_margin="8dp"
-                        app:tint="?android:colorPrimaryDark"
-                        android:src="@drawable/ic_link" />
+                        android:src="@drawable/ic_link"
+                        app:tint="?android:colorPrimary" />
 
                     <ImageButton
                         android:id="@+id/edit_markdown_button_strikethrough"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_margin="8dp"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
-                        android:layout_margin="8dp"
-                        app:tint="?android:colorPrimaryDark"
-                        android:src="@drawable/ic_strikethrough" />
+                        android:src="@drawable/ic_strikethrough"
+                        app:tint="?android:colorPrimary" />
 
                     <ImageButton
                         android:id="@+id/edit_markdown_button_bullet"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_margin="8dp"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
-                        android:layout_margin="8dp"
-                        app:tint="?android:colorPrimaryDark"
-                        android:src="@drawable/ic_bullet_list" />
+                        android:src="@drawable/ic_bullet_list"
+                        app:tint="?android:colorPrimary" />
 
                     <ImageButton
                         android:id="@+id/edit_markdown_button_quote"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_margin="8dp"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
-                        android:layout_margin="8dp"
-                        app:tint="?android:colorPrimaryDark"
-                        android:src="@drawable/ic_quote" />
+                        android:src="@drawable/ic_quote"
+                        app:tint="?android:colorPrimary" />
 
                     <ImageButton
                         android:id="@+id/edit_markdown_button_break"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_margin="8dp"
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="8dp"
-                        app:tint="?android:colorPrimaryDark"
-                        android:src="@drawable/ic_horizontal_line" />
+                        android:src="@drawable/ic_horizontal_line"
+                        app:tint="?android:colorPrimary" />
                 </LinearLayout>
             </HorizontalScrollView>
 

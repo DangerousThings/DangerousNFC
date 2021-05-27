@@ -94,7 +94,6 @@ public class EditMarkdownFragment extends Fragment implements IEditFragment
 
         mLinearLayout = view.findViewById(R.id.edit_markdown_linear);
 
-        mPreviewButton = view.findViewById(R.id.edit_markdown_button_preview);
         mBoldButton = view.findViewById(R.id.edit_markdown_button_bold);
         mItalicizeButton = view.findViewById(R.id.edit_markdown_button_italicize);
         mCodeButton = view.findViewById(R.id.edit_markdown_button_code);
