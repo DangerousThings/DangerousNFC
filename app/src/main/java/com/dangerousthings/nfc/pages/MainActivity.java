@@ -25,6 +25,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.dangerousthings.nfc.R;
+import com.dangerousthings.nfc.controls.OnSwipeTouchListener;
 import com.dangerousthings.nfc.databases.ImplantDatabase;
 import com.dangerousthings.nfc.enums.MainActionBarState;
 import com.dangerousthings.nfc.fragments.MainDrawerFragment;
@@ -170,6 +171,7 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void setDrawer()
     {
         mDrawer = findViewById(R.id.main_drawer);
@@ -193,6 +195,18 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
         mDrawer.setDrawerElevation(0);
         mNavigation.setElevation(0);
         mDrawer.addDrawerListener(mDrawerToggle);
+        mDrawer.setOnTouchListener(new OnSwipeTouchListener(this)
+        {
+            public void onSwipeRight()
+            {
+                mDrawer.open();
+            }
+
+            public void onSwipeLeft()
+            {
+                mDrawer.close();
+            }
+        });
     }
 
     private void drawerButtonClicked()
