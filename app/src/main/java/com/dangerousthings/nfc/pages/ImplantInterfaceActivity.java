@@ -123,6 +123,7 @@ public class ImplantInterfaceActivity extends BaseActivity
     {
         Intent result = new Intent();
         setResult(ViewRecordsActivity.RESULT_OK, result);
+        result.putExtra(getString(R.string.intent_request_code), getIntent().getIntExtra(getString(R.string.intent_request_code), -1));
         finish();
         overridePendingTransition(0, 0);
     }

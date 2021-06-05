@@ -19,7 +19,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.fragments.EditMarkdownFragment;
@@ -94,6 +93,7 @@ public class EditNdefActivity extends BaseActivity implements ITracksPayloadSize
         Intent result = new Intent();
         NdefRecord resultRecord = _fragment.getNdefRecord();
         result.putExtra(getString(R.string.intent_record), resultRecord);
+        result.putExtra(getString(R.string.intent_request_code), getIntent().getIntExtra(getString(R.string.intent_request_code), -1));
         setResult(ViewRecordsActivity.RESULT_OK, result);
         finish();
         overridePendingTransition(0, 0);

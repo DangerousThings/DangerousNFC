@@ -1,8 +1,11 @@
 package com.dangerousthings.nfc.pages;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.nfc.NdefMessage;
@@ -14,7 +17,6 @@ import android.widget.ImageButton;
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.adapters.NdefMessageRecyclerAdapter;
 import com.dangerousthings.nfc.databases.ImplantDatabase;
-import com.dangerousthings.nfc.interfaces.IItemClickListener;
 import com.dangerousthings.nfc.interfaces.IImplantDAO;
 import com.dangerousthings.nfc.interfaces.IItemLongClickListener;
 import com.dangerousthings.nfc.models.Implant;
@@ -35,6 +37,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
     boolean _recordsEdited = false;
     Implant _implant;
     NdefMessageRecyclerAdapter _recyclerAdapter;
+    ActivityResultLauncher<Intent> _activityResultLauncher;
 
     //UI elements
     RecyclerView mRecyclerView;
@@ -48,21 +51,90 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_records);
 
+        prepareActivity();
+        setUpViews();
+        setUpActivityResultLauncher();
+    }
+
+    private void prepareActivity()
+    {
+        //prepare an empty list for NdefRecords
         _records = new ArrayList<>();
+        //pull in any passed in NdefMessages
         _message = getIntent().getParcelableExtra(getString(R.string.intent_ndef_message));
         if(_message != null)
         {
+            //add NdefRecords to our global list
             Collections.addAll(_records, _message.getRecords());
         }
 
+        //Get the UID of the implant we're currently operating on if applicable
         String UID = getIntent().getStringExtra(getString(R.string.intent_tag_uid));
         if(UID != null)
         {
+            //load in the working implant from the Room database if applicable
             ImplantDatabase database = ImplantDatabase.getInstance(this);
             IImplantDAO implantDAO = database.implantDAO();
             _implant = implantDAO.getImplantByUID(UID);
         }
+    }
 
+    //this creates a callback function following the new ActivityResult APIs google suggests rather than using startActivityForResult
+    private void setUpActivityResultLauncher()
+    {
+        _activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result ->
+                {
+                    if(result.getResultCode() == Activity.RESULT_OK)
+                    {
+                        Intent resultIntent = result.getData();
+                        if(resultIntent != null)
+                        {
+                            int requestCode = resultIntent.getIntExtra(getString(R.string.intent_request_code), -1);
+                            if(requestCode == REQ_CODE_RECORD)
+                            {
+                                NdefRecord record = Objects.requireNonNull(resultIntent.getExtras()).getParcelable(getString(R.string.intent_record));
+                                //This is a little messy. I'll probably come back to it later to optimize a bit
+                                try
+                                {
+                                    if(_records.get(_alteredIndex) != null)
+                                    {
+                                        _records.remove(_alteredIndex);
+                                        _records.add(_alteredIndex, record);
+                                    }
+                                }
+                                catch(Exception e)
+                                {
+                                    _records.add(_alteredIndex, record);
+                                }
+                                _recyclerAdapter.notifyDataSetChanged();
+                                _recordsEdited = true;
+                                mWriteButton.setVisibility(View.VISIBLE);
+                            }
+                            else if(requestCode == REQ_CODE_VIEW_RECORD)
+                            {
+                                onEditButtonClick();
+                            }
+                            else if(requestCode == REQ_CODE_WRITE_MESSAGE)
+                            {
+                                if(_implant != null)
+                                {
+                                    _implant.setNdefMessage(getNdefMessage());
+                                    ImplantDatabase database = ImplantDatabase.getInstance(this);
+                                    IImplantDAO implantDAO = database.implantDAO();
+                                    implantDAO.updateImplant(_implant);
+                                }
+                                finish();
+                                overridePendingTransition(0, 0);
+                            }
+                        }
+                    }
+                });
+    }
+
+    private void setUpViews()
+    {
         mRecyclerView = findViewById(R.id.view_records_recycler);
         mBackButton = findViewById(R.id.view_records_button_back);
         mAddRecordButton = findViewById(R.id.view_records_button_add);
@@ -80,51 +152,6 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
         mBackButton.setOnClickListener(v -> onBackPressed());
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        if(resultCode == RESULT_OK)
-        {
-            if(requestCode == REQ_CODE_RECORD)
-            {
-                NdefRecord record = Objects.requireNonNull(data.getExtras()).getParcelable(getString(R.string.intent_record));
-                //This is a little messy. I'll probably come back to it later to optimize a bit
-                try
-                {
-                    if(_records.get(_alteredIndex) != null)
-                    {
-                        _records.remove(_alteredIndex);
-                        _records.add(_alteredIndex, record);
-                    }
-                }
-                catch(Exception e)
-                {
-                    _records.add(_alteredIndex, record);
-                }
-                _recyclerAdapter.notifyDataSetChanged();
-                _recordsEdited = true;
-                mWriteButton.setVisibility(View.VISIBLE);
-            }
-            else if(requestCode == REQ_CODE_VIEW_RECORD)
-            {
-                onEditButtonClick();
-            }
-            else if(requestCode == REQ_CODE_WRITE_MESSAGE)
-            {
-                if(_implant != null)
-                {
-                    _implant.setNdefMessage(getNdefMessage());
-                    ImplantDatabase database = ImplantDatabase.getInstance(this);
-                    IImplantDAO implantDAO = database.implantDAO();
-                    implantDAO.updateImplant(_implant);
-                }
-                finish();
-                overridePendingTransition(0, 0);
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
     private void onEditButtonClick()
     {
         Intent editRecord = new Intent(this, EditNdefActivity.class);
@@ -133,7 +160,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
         {
             editRecord.putExtra(getString(R.string.intent_ndef_capacity), _implant.getNdefCapacity());
         }
-        startActivityForResult(editRecord, REQ_CODE_RECORD);
+        openActivityForResult(editRecord, REQ_CODE_RECORD);
         overridePendingTransition(0, 0);
     }
 
@@ -144,7 +171,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
         {
             addRecord.putExtra(getString(R.string.intent_ndef_capacity), _implant.getNdefCapacity());
         }
-        startActivityForResult(addRecord, REQ_CODE_RECORD);
+        openActivityForResult(addRecord, REQ_CODE_RECORD);
         overridePendingTransition(0, 0);
         _alteredIndex = _records.size();
     }
@@ -178,7 +205,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
         Intent viewRecordIntent = new Intent(this, ViewRecordActivity.class);
         viewRecordIntent.putExtra(getString(R.string.intent_record), _recyclerAdapter.getRecord(position));
         _alteredIndex = position;
-        startActivityForResult(viewRecordIntent, REQ_CODE_VIEW_RECORD);
+        openActivityForResult(viewRecordIntent, REQ_CODE_VIEW_RECORD);
         overridePendingTransition(0, 0);
     }
 
@@ -204,15 +231,14 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
     {
         Intent writeIntent = new Intent(this, ImplantInterfaceActivity.class);
         writeIntent.putExtra(getString(R.string.intent_ndef_message), getNdefMessage());
-        startActivityForResult(writeIntent, REQ_CODE_WRITE_MESSAGE);
+        openActivityForResult(writeIntent, REQ_CODE_WRITE_MESSAGE);
         overridePendingTransition(0, 0);
     }
 
-    @Override
-    public void startActivityForResult(Intent intent, int requestCode)
+    public void openActivityForResult(Intent intent, int requestCode)
     {
         intent.putExtra(getString(R.string.intent_request_code), requestCode);
-        super.startActivityForResult(intent, requestCode);
+        _activityResultLauncher.launch(intent);
     }
 
     private NdefMessage getNdefMessage()

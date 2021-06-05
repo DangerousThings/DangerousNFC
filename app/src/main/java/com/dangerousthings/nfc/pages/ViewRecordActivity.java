@@ -69,6 +69,7 @@ public class ViewRecordActivity extends BaseActivity
     private void editButtonClicked()
     {
         Intent result = new Intent();
+        result.putExtra(getString(R.string.intent_request_code), getIntent().getIntExtra(getString(R.string.intent_request_code), -1));
         setResult(ViewRecordsActivity.RESULT_OK, result);
         finish();
         overridePendingTransition(0, 0);

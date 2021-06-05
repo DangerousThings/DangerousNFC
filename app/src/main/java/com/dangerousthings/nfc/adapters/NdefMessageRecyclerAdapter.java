@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dangerousthings.nfc.R;
-import com.dangerousthings.nfc.interfaces.IItemClickListener;
 import com.dangerousthings.nfc.interfaces.IItemLongClickListener;
 
 import java.util.List;

@@ -24,7 +24,6 @@ import com.dangerousthings.nfc.interfaces.IEditFragment;
 import com.dangerousthings.nfc.interfaces.ITracksPayloadSize;
 import com.dangerousthings.nfc.utilities.NdefUtils;
 
-import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,7 +39,6 @@ public class EditMarkdownFragment extends Fragment implements IEditFragment
 
     LinearLayout mLinearLayout;
 
-    ImageButton mPreviewButton;
     ImageButton mBoldButton;
     ImageButton mItalicizeButton;
     ImageButton mCodeButton;

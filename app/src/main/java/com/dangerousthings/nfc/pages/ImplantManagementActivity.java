@@ -164,4 +164,11 @@ public class ImplantManagementActivity extends BaseActivity implements IClickLis
     {
         mDrawer.openDrawer(GravityCompat.END);
     }
+
+    @Override
+    public void onResume()
+    {
+        getImplantFromUid();
+        super.onResume();
+    }
 }

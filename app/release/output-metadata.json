@@ -5,7 +5,7 @@
     "kind": "Directory"
   },
   "applicationId": "com.dangerousthings.nfc",
-  "variantName": "processReleaseResources",
+  "variantName": "release",
   "elements": [
     {
       "type": "SINGLE",
