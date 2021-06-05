@@ -1,12 +1,13 @@
 package com.dangerousthings.nfc.utilities;
 
-import com.dangerousthings.nfc.enums.ImplantModel;
-import com.dangerousthings.nfc.enums.TagFamily;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.nfc.Tag;
+import android.nfc.tech.Ndef;
 
 public class TagUtils
 {
-
+    public static int getNdefCapacity(Tag tag)
+    {
+        Ndef ndef = Ndef.get(tag);
+        return ndef.getMaxSize();
+    }
 }

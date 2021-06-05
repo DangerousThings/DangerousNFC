@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dangerousthings.nfc.R;
-import com.dangerousthings.nfc.interfaces.IItemClickListener;
+import com.dangerousthings.nfc.interfaces.IItemLongClickListener;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class NdefMessageRecyclerAdapter extends RecyclerView.Adapter<NdefMessage
 {
     private final List<NdefRecord> _message;
     private final LayoutInflater _inflater;
-    private IItemClickListener _clickListener;
+    private IItemLongClickListener _clickListener;
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
@@ -35,6 +35,7 @@ public class NdefMessageRecyclerAdapter extends RecyclerView.Adapter<NdefMessage
             mRecordCountText = itemView.findViewById(R.id.message_text_record_number);
             mMimeTypeText = itemView.findViewById(R.id.message_text_mime);
             mView.setOnClickListener(v -> _clickListener.onItemClick(getAdapterPosition()));
+            mView.setOnLongClickListener(v -> _clickListener.onItemLongClick(getAdapterPosition()));
         }
     }
 
@@ -72,7 +73,7 @@ public class NdefMessageRecyclerAdapter extends RecyclerView.Adapter<NdefMessage
         return _message.get(position);
     }
 
-    public void setClickListener(IItemClickListener listener)
+    public void setClickListener(IItemLongClickListener listener)
     {
         _clickListener = listener;
     }

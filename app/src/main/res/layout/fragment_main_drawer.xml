@@ -23,70 +23,64 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:id="@+id/main_linear_settings"
+        <TextView
+            android:id="@+id/main_text_settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="16dp"
-            android:clickable="true"
-            android:orientation="horizontal"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/ibmplexmono_semibold"
+            android:gravity="center"
+            android:text="@string/settings"
+            android:textColor="?android:colorPrimaryDark"
+            android:textSize="18sp"
+            app:drawableStartCompat="@drawable/ic_settings"
+            app:drawableTint="?android:colorPrimaryDark"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent" />
 
-            <ImageView
-                android:id="@+id/main_image_settings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:background="@android:color/transparent"
-                app:tint="?android:colorPrimaryDark"
-                android:src="@drawable/ic_settings" />
-
-            <TextView
-                android:id="@+id/main_text_settings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="16dp"
-                android:textColor="?android:colorPrimaryDark"
-                android:fontFamily="@font/ibmplexmono_semibold"
-                android:text="Settings"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/main_linear_saved_implants"
+        <TextView
+            android:id="@+id/main_text_saved_implants"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
             android:background="@drawable/rounded_primary_dark"
-            android:orientation="horizontal"
+            android:drawablePadding="10dp"
+            android:gravity="center"
+            android:fontFamily="@font/ibmplexmono_semibold"
             android:padding="10dp"
+            android:text="@string/saved_implants"
+            android:textColor="?android:colorPrimary"
+            android:textSize="18sp"
+            app:drawableStartCompat="@drawable/ic_save"
+            app:drawableTint="?android:colorPrimary"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_text_title">
+            app:layout_constraintTop_toBottomOf="@+id/main_text_title" />
 
-            <ImageView
-                android:id="@+id/main_image_save"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:src="@drawable/ic_save"
-                app:tint="?android:colorPrimary" />
-
-            <TextView
-                android:id="@+id/main_text_saved_implants"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="16dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/ibmplexmono_semibold"
-                android:text="@string/saved_implants"
-                android:textColor="?android:colorPrimary"
-                android:textSize="18sp" />
-        </LinearLayout>
+        <TextView
+            android:id="@+id/main_text_new_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_primary_dark"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/ibmplexmono_semibold"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/new_ndef_message"
+            android:textColor="?android:colorPrimary"
+            android:textSize="18sp"
+            app:drawableStartCompat="@drawable/ic_add"
+            app:drawableTint="?android:colorPrimary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/main_text_saved_implants" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

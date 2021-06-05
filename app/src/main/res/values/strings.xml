@@ -3,12 +3,18 @@
     <!--Intent extra flags-->
     <string name="intent_ndef_message">com.dangerousthings.nfc.NDEF_MESSAGE</string>
     <string name="intent_tag_uid">com.dangerousthings.nfc.TAG_UID</string>
-    <string name="intent_oboard_flag">com.dangerousthings.nfc.ONBOARD_FLAG</string>
+    <string name="intent_onboard_flag">com.dangerousthings.nfc.ONBOARD_FLAG</string>
+    <string name="intent_record">com.dangerousthings.nfc.NDEF_RECORD</string>
+    <string name="intent_ndef_capacity">com.dangerousthings.nfc.NDEF_CAPACITY</string>
+    <string name="intent_start_edit_ndef">com.dangerousthings.nfc.START_EDIT_NDEF_ACTIVITY</string>
+    <string name="intent_request_code">com.dangerousthings.nfc.REQUEST_CODE</string>
     <!--Menu IDs-->
     <string name="menu_view_records">com.dangerousthings.nfc.VIEW_RECORDS</string>
     <string name="menu_memory_management">com.dangerousthings.nfc.MANAGE_MEMORY</string>
     <string name="menu_ndef_submenu">com.dangerousthings.nfc.NDEF_SUBMENU</string>
     <string name="menu_memory_submenu">com.dangerousthings.nfc.MEMORY_SUBMENU</string>
+    <!--Mime Types-->
+    <string name="mime_plaintext">text/plain</string>
     <!---->
     <string name="app_name">Dangerous NFC</string>
     <string name="ndef_operations">NDEF Operations</string>
@@ -31,8 +37,6 @@
     <string name="saved_theme">com.dangerousthings.nfc.SAVED_THEME</string>
     <string name="record_space">Record %1$d</string>
     <string name="ndef_records">NDEF Records:</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="scan_animation">scan animation</string>
     <string name="advanced">Advanced</string>
     <string name="back_button">back button</string>
@@ -49,4 +53,18 @@
     <string name="tag_family">Tag Family:</string>
     <string name="implant_model">Implant Model:</string>
     <string name="operations">Operations</string>
+    <string name="no_record_text_detected">No record text detected</string>
+    <string name="markdown">Markdown</string>
+    <string name="plain_text">Plain Text</string>
+    <string name="jpeg">JPEG</string>
+    <string name="uri">URI</string>
+    <string name="two_arguments">%1$d%2$s</string>
+    <string name="write_ndef_message_button">write ndef message button</string>
+    <string name="down_arrow">down arrow</string>
+    <string name="enter_text_message">Enter text message</string>
+    <string name="settings">Settings</string>
+    <string name="new_ndef_message">New NDEF Message</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_markdown_text">Enter markdown text</string>
 </resources>

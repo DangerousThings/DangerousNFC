@@ -25,6 +25,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.dangerousthings.nfc.R;
+import com.dangerousthings.nfc.controls.OnSwipeTouchListener;
 import com.dangerousthings.nfc.databases.ImplantDatabase;
 import com.dangerousthings.nfc.enums.MainActionBarState;
 import com.dangerousthings.nfc.fragments.MainDrawerFragment;
@@ -35,6 +36,7 @@ import com.dangerousthings.nfc.utilities.ColorUtils;
 import com.dangerousthings.nfc.utilities.FingerprintUtils;
 import com.dangerousthings.nfc.utilities.HexUtils;
 import com.dangerousthings.nfc.utilities.NdefUtils;
+import com.dangerousthings.nfc.utilities.TagUtils;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
@@ -112,7 +114,7 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
             {
                 if (message != null)
                 {
-                    Intent readMessageIntent = new Intent(this, NdefMessageActivity.class);
+                    Intent readMessageIntent = new Intent(this, ViewRecordsActivity.class);
                     readMessageIntent.putExtra(getString(R.string.intent_ndef_message), message);
                     startActivity(readMessageIntent);
                     overridePendingTransition(0, 0);
@@ -131,6 +133,7 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
                     Implant implant = new Implant();
                     implant.setUID(HexUtils.bytesToHex(tag.getId()));
                     implant.setTagFamily(FingerprintUtils.fingerprintNfcTag(tag));
+                    implant.setNdefCapacity(TagUtils.getNdefCapacity(tag));
                     if(message != null)
                     {
                         implant.setNdefMessage(message);
@@ -149,7 +152,7 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
 
                                 Intent onboardImplant = new Intent(this, ImplantManagementActivity.class);
                                 onboardImplant.putExtra(getString(R.string.intent_tag_uid), HexUtils.bytesToHex(tag.getId()));
-                                onboardImplant.putExtra(getString(R.string.intent_oboard_flag), true);
+                                onboardImplant.putExtra(getString(R.string.intent_onboard_flag), true);
                                 startActivity(onboardImplant);
                                 overridePendingTransition(0, 0);
                             }))
@@ -160,7 +163,7 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
                 {
                     Intent displayImplant = new Intent(this, ImplantManagementActivity.class);
                     displayImplant.putExtra(getString(R.string.intent_tag_uid), HexUtils.bytesToHex(tag.getId()));
-                    displayImplant.putExtra(getString(R.string.intent_oboard_flag), false);
+                    displayImplant.putExtra(getString(R.string.intent_onboard_flag), false);
                     startActivity(displayImplant);
                     overridePendingTransition(0, 0);
                 }
@@ -168,6 +171,7 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void setDrawer()
     {
         mDrawer = findViewById(R.id.main_drawer);
@@ -191,6 +195,18 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
         mDrawer.setDrawerElevation(0);
         mNavigation.setElevation(0);
         mDrawer.addDrawerListener(mDrawerToggle);
+        mDrawer.setOnTouchListener(new OnSwipeTouchListener(this)
+        {
+            public void onSwipeRight()
+            {
+                mDrawer.open();
+            }
+
+            public void onSwipeLeft()
+            {
+                mDrawer.close();
+            }
+        });
     }
 
     private void drawerButtonClicked()
@@ -274,6 +290,15 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
         mDrawer.close();
         Intent savedImplantsIntent = new Intent(this, SavedImplantsActivity.class);
         startActivity(savedImplantsIntent);
+        overridePendingTransition(0, 0);
+    }
+
+    @Override
+    public void onNewNdefMessageClicked()
+    {
+        mDrawer.close();
+        Intent emptyNdefMessage = new Intent(this, ViewRecordsActivity.class);
+        startActivity(emptyNdefMessage);
         overridePendingTransition(0, 0);
     }
 }

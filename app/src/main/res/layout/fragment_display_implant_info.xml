@@ -27,7 +27,8 @@
                 android:layout_marginTop="16dp"
                 android:src="@drawable/implant_placeholder"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/implant_image" />
 
             <TextView
                 android:id="@+id/display_implant_text_name"
@@ -136,7 +137,8 @@
                 android:tint="?android:colorPrimaryDark"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/back_button" />
 
             <Button
                 android:id="@+id/display_implant_button_operations"
@@ -146,6 +148,7 @@
                 android:background="@drawable/rounded_accent"
                 android:minHeight="35dp"
                 android:minWidth="120dp"
+                android:textColor="?android:colorPrimaryDark"
                 android:text="@string/operations"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -51,7 +51,9 @@
                     android:layout_weight="1"
                     android:background="@drawable/rounded_primary"
                     android:layout_gravity="center_vertical"
-                    android:minHeight="40dp"
+                    android:textColor="?android:colorPrimaryDark"
+                    android:minHeight="35dp"
+                    android:minWidth="120dp"
                     android:text="@string/change_theme" />
             </LinearLayout>
 

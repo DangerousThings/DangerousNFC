@@ -4,11 +4,12 @@ import android.content.Intent;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
+import android.nfc.Tag;
+import android.nfc.tech.Ndef;
 import android.os.Parcelable;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 public class NdefUtils
@@ -72,8 +73,44 @@ public class NdefUtils
         return new NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_TEXT, new byte[0], payload);
     }
 
-    public static List<NdefRecord> getNdefRecordList(NdefMessage message)
+    public static boolean writeNdefMessage(Tag tag, NdefMessage message)
     {
-        return Arrays.asList(message.getRecords());
+        Ndef ndef = Ndef.get(tag);
+        try
+        {
+            if(ndef != null)
+            {
+                ndef.connect();
+                if(ndef.isConnected())
+                {
+                    ndef.writeNdefMessage(message);
+                }
+            }
+        }
+        catch(Exception e)
+        {
+            try
+            {
+                ndef.close();
+                return false;
+            }
+            catch(IOException ex)
+            {
+                return false;
+            }
+        }
+        try
+        {
+            if(ndef != null)
+            {
+                ndef.close();
+                return true;
+            }
+        }
+        catch(IOException e)
+        {
+            return false;
+        }
+        return true;
     }
 }

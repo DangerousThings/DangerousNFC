@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: io.noties.markwon:editor:4.6.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/318fe729fa8c27d9d28a4e51d6c476f0/jetified-editor-4.6.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/318fe729fa8c27d9d28a4e51d6c476f0/jetified-editor-4.6.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/318fe729fa8c27d9d28a4e51d6c476f0/jetified-editor-4.6.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.noties.markwon/editor/4.6.0/b3f3741f5718a9466bc54c18120debaa5c97e4d1/editor-4.6.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.noties.markwon/editor/4.6.0/81d176e017c37165e1a12bebd8069a8906fac1d6/editor-4.6.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

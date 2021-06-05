@@ -1,17 +1,10 @@
 package com.dangerousthings.nfc.models;
 
-import android.content.ComponentName;
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.nfc.NdefMessage;
-import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.SubMenu;
-import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -19,20 +12,16 @@ import androidx.room.PrimaryKey;
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.enums.ImplantModel;
 import com.dangerousthings.nfc.enums.TagFamily;
-import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 @Entity(tableName = "implant")
 public class Implant
 {
     public Implant()
     {
-        UID = null;
+        UID = "";
     }
 
     //Device UID
@@ -144,6 +133,20 @@ public class Implant
                 break;
         }
         return modelList;
+    }
+
+    //Ndef Capacity
+    @ColumnInfo(name = "NdefCapacity")
+    private int ndefCapacity;
+
+    public int getNdefCapacity()
+    {
+        return ndefCapacity;
+    }
+
+    public void setNdefCapacity(int ndefCapacity)
+    {
+        this.ndefCapacity = ndefCapacity;
     }
 
     //Tag writing

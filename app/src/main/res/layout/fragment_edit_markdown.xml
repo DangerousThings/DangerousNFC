@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.EditMarkdownFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/edit_markdown_constraint_toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            android:layout_marginEnd="64dp"
+            android:maxHeight="?android:actionBarSize"
+            android:minHeight="?android:actionBarSize"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:background="@drawable/rounded_primary_dark"
+                android:scrollbars="none"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:dividerPadding="10dp"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/edit_markdown_button_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:scaleType="center"
+                        android:src="@drawable/ic_bold"
+                        app:tint="?android:colorPrimary" />
+
+                    <ImageButton
+                        android:id="@+id/edit_markdown_button_italicize"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_italic"
+                        app:tint="?android:colorPrimary" />
+
+                    <ImageButton
+                        android:id="@+id/edit_markdown_button_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_code"
+                        app:tint="?android:colorPrimary" />
+
+                    <ImageButton
+                        android:id="@+id/edit_markdown_button_link"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_link"
+                        app:tint="?android:colorPrimary" />
+
+                    <ImageButton
+                        android:id="@+id/edit_markdown_button_strikethrough"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_strikethrough"
+                        app:tint="?android:colorPrimary" />
+
+                    <ImageButton
+                        android:id="@+id/edit_markdown_button_bullet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_bullet_list"
+                        app:tint="?android:colorPrimary" />
+
+                    <ImageButton
+                        android:id="@+id/edit_markdown_button_quote"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_quote"
+                        app:tint="?android:colorPrimary" />
+
+                    <ImageButton
+                        android:id="@+id/edit_markdown_button_break"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_margin="8dp"
+                        android:layout_weight="1"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_horizontal_line"
+                        app:tint="?android:colorPrimary" />
+                </LinearLayout>
+            </HorizontalScrollView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/edit_markdown_constraint_main"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/rounded_bottom_primary_dark"
+            app:layout_constraintBottom_toTopOf="@+id/edit_markdown_constraint_toolbar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ScrollView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:fillViewport="true"
+                android:clickable="true"
+                android:focusable="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:id="@+id/edit_markdown_linear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/edit_markdown_edittext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/ibmplexmono_text"
+                        android:textColorHint="?android:colorPrimary"
+                        android:textColor="?android:colorPrimary"
+                        android:ems="10"
+                        android:hint="@string/enter_markdown_text"
+                        android:inputType="textPersonName|textMultiLine"/>
+                </LinearLayout>
+            </ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

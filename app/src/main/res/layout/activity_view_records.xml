@@ -5,29 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:colorPrimary"
-    tools:context=".pages.NdefMessageActivity">
+    tools:context=".pages.ViewRecordsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/message_constraint_base"
+        android:id="@+id/view_records_constraint_base"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/rounded_primary_dark"
-        app:layout_constraintBottom_toTopOf="@+id/message_constraint_toolbar"
+        app:layout_constraintBottom_toTopOf="@+id/view_records_constraint_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/message_recycler_ndef_records"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <TextView
             android:id="@+id/textView"
@@ -41,43 +32,64 @@
             android:textSize="36sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/view_records_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/message_constraint_toolbar"
+        android:id="@+id/view_records_constraint_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:minHeight="?attr/actionBarSize"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageButton
-            android:id="@+id/message_button_back"
+            android:id="@+id/view_records_button_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="24dp"
             android:background="@android:color/transparent"
-            app:tint="?android:colorPrimaryDark"
+            android:contentDescription="@string/back_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_back"
-            android:contentDescription="@string/back_button" />
+            app:tint="?android:colorPrimaryDark" />
 
         <ImageButton
-            android:id="@+id/message_button_add"
+            android:id="@+id/view_records_button_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="24dp"
             android:background="@android:color/transparent"
+            android:contentDescription="@string/add_button"
             android:src="@drawable/ic_add"
-            app:tint="?android:colorPrimaryDark"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/add_button" />
+            app:tint="?android:colorPrimaryDark" />
+
+        <ImageButton
+            android:id="@+id/view_records_button_write"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:background="@android:color/transparent"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/view_records_button_add"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_save"
+            app:tint="?android:colorPrimaryDark"
+            android:contentDescription="@string/write_ndef_message_button" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

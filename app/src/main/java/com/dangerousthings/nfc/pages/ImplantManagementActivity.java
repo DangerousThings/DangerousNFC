@@ -1,6 +1,5 @@
 package com.dangerousthings.nfc.pages;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
@@ -12,7 +11,6 @@ import androidx.fragment.app.FragmentTransaction;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -26,11 +24,17 @@ import com.dangerousthings.nfc.interfaces.IImplantDAO;
 import com.dangerousthings.nfc.models.Implant;
 import com.google.android.material.navigation.NavigationView;
 
-import static java.lang.Integer.parseInt;
+/**
+ * --------------REQUIRED ARGUMENTS----------------
+ * - String UID for the operating implant passed in under the R.string.intent_uid tag
+ * - boolean denoting onboarding status for the operating implant
+ *   passed in under the R.string.intent_onboard_flag tag
+ */
 
 public class ImplantManagementActivity extends BaseActivity implements IClickListener
 {
     Implant _implant;
+    String _uid;
     public boolean _onboardFlag = false;
 
     DrawerLayout mDrawer;
@@ -43,30 +47,37 @@ public class ImplantManagementActivity extends BaseActivity implements IClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_implant_management);
 
-
-        String UID = getIntent().getStringExtra(getString(R.string.intent_tag_uid));
-        ImplantDatabase database = ImplantDatabase.getInstance(this);
-        IImplantDAO implantDAO = database.implantDAO();
-        _implant = implantDAO.getImplantByUID(UID);
+        getImplantFromUid();
+        _onboardFlag = getIntent().getBooleanExtra(getString(R.string.intent_onboard_flag), false);
         setDrawer();
-
-        _onboardFlag = getIntent().getBooleanExtra(getString(R.string.intent_oboard_flag), false);
         lockDrawer(_onboardFlag);
+        loadFragment();
+    }
 
+    private void loadFragment()
+    {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         if(_onboardFlag)
         {
             //start onboard fragment
-            EditImplantInfoFragment onboardFragment = EditImplantInfoFragment.newInstance(UID);
+            EditImplantInfoFragment onboardFragment = EditImplantInfoFragment.newInstance(_uid);
             fragmentTransaction.replace(R.id.base_frame, onboardFragment);
         }
         else
         {
-            DisplayImplantInfoFragment displayFragment = DisplayImplantInfoFragment.newInstance(UID, this);
+            DisplayImplantInfoFragment displayFragment = DisplayImplantInfoFragment.newInstance(_uid, this);
             fragmentTransaction.replace(R.id.base_frame, displayFragment);
         }
         fragmentTransaction.commit();
+    }
+
+    private void getImplantFromUid()
+    {
+        _uid = getIntent().getStringExtra(getString(R.string.intent_tag_uid));
+        ImplantDatabase database = ImplantDatabase.getInstance(this);
+        IImplantDAO implantDAO = database.implantDAO();
+        _implant = implantDAO.getImplantByUID(_uid);
     }
 
     public void switchToDisplayFragment(String UID)
@@ -127,8 +138,9 @@ public class ImplantManagementActivity extends BaseActivity implements IClickLis
         if(id == R.string.menu_view_records)
         {
             //push to records
-            Intent readMessageIntent = new Intent(this, NdefMessageActivity.class);
+            Intent readMessageIntent = new Intent(this, ViewRecordsActivity.class);
             readMessageIntent.putExtra(getString(R.string.intent_ndef_message), _implant.getNdefMessage());
+            readMessageIntent.putExtra(getString(R.string.intent_tag_uid), _implant.getUID());
             startActivity(readMessageIntent);
             overridePendingTransition(0, 0);
             mDrawer.closeDrawer(GravityCompat.END);
@@ -151,5 +163,12 @@ public class ImplantManagementActivity extends BaseActivity implements IClickLis
     public void onClick()
     {
         mDrawer.openDrawer(GravityCompat.END);
+    }
+
+    @Override
+    public void onResume()
+    {
+        getImplantFromUid();
+        super.onResume();
     }
 }
