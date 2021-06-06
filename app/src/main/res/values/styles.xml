@@ -30,6 +30,11 @@
         <item name="colorPrimaryDark">#000000</item>
         <item name="colorAccent">#7F7F7F</item>
     </style>
+    <style name="Zytel" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">#FAC300</item>
+        <item name="colorPrimaryDark">#19403E</item>
+        <item name="colorAccent">#E885AA</item>
+    </style>
     <style name="ImplantModelSpinner" parent="@android:style/Widget.TextView.SpinnerItem">
         <item name="android:textColor">?android:colorPrimaryDark</item>
         <item name="backgroundColor">?android:colorPrimaryDark</item>
