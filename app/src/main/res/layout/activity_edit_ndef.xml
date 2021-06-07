@@ -5,7 +5,7 @@
     android:id="@+id/edit_ndef_drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:colorPrimary"
+    android:background="?attr/colorSecondary"
     tools:context=".pages.EditNdefActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -44,7 +44,7 @@
                 android:background="@drawable/record_size_background"
                 android:fontFamily="@font/ibmplexmono_text"
                 android:gravity="center"
-                android:textColor="?android:colorPrimary"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="18sp" />
 
             <Button
@@ -57,7 +57,7 @@
                 android:stateListAnimator="@null"
                 android:text="Plain Text"
                 android:textAllCaps="false"
-                android:textColor="?android:colorPrimaryDark"
+                android:textColor="?attr/colorPrimaryDark"
                 android:textSize="18sp" />
         </LinearLayout>
 
@@ -67,36 +67,36 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:background="@android:color/transparent"
+            android:contentDescription="@string/back_button"
             android:maxHeight="?android:actionBarSize"
             android:minHeight="?android:actionBarSize"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/ic_back"
-            app:tint="?android:colorPrimaryDark"
-            android:contentDescription="@string/back_button" />
+            app:tint="?attr/colorPrimaryDark" />
 
         <ImageButton
             android:id="@+id/edit_ndef_button_save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
-            android:minHeight="?android:actionBarSize"
-            android:maxHeight="?android:actionBarSize"
-            app:tint="?android:colorPrimaryDark"
             android:background="@android:color/transparent"
+            android:contentDescription="@string/save_button"
+            android:maxHeight="?android:actionBarSize"
+            android:minHeight="?android:actionBarSize"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_check"
-            android:contentDescription="@string/save_button" />
+            app:tint="?attr/colorPrimaryDark" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/edit_ndef_navigation"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:maxWidth="140dp"
         android:layout_gravity="end"
-        app:menu="@menu/ndef_payload_types"
-        android:background="?android:colorPrimary" />
+        android:background="?attr/colorSecondary"
+        android:maxWidth="140dp"
+        app:menu="@menu/ndef_payload_types" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

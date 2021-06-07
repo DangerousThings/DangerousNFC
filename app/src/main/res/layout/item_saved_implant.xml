@@ -26,7 +26,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/ibmplexmono_semibold"
-        android:textColor="?android:colorPrimaryDark"
+        android:textColor="?attr/colorPrimaryDark"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/item_saved_implants_image"
         app:layout_constraintTop_toTopOf="@+id/item_saved_implants_image" />
@@ -38,7 +38,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/ibmplexmono_text"
-        android:textColor="?android:colorPrimaryDark"
+        android:textColor="?attr/colorPrimaryDark"
         app:layout_constraintStart_toEndOf="@+id/item_saved_implants_image"
         app:layout_constraintTop_toBottomOf="@+id/item_saved_implants_text_name" />
 

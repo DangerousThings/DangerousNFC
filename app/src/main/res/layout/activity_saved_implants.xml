@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:colorPrimary"
+    android:background="?attr/colorSecondary"
     tools:context=".pages.SavedImplantsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,12 +22,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:background="@android:color/transparent"
-            android:tint="?android:colorPrimaryDark"
+            android:contentDescription="@string/back_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_back"
-            android:contentDescription="@string/back_button" />
+            app:tint="?attr/colorPrimaryDark" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

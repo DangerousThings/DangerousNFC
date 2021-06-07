@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:colorPrimary"
+    android:background="?attr/colorSecondary"
     tools:context=".pages.MainActivity"
     tools:ignore="Overdraw">
 
@@ -40,7 +39,7 @@
                     android:layout_height="2dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:background="?android:colorPrimary"
+                    android:background="?attr/colorPrimary"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,7 +48,7 @@
                     android:layout_width="2dp"
                     android:layout_height="60dp"
                     android:layout_marginStart="16dp"
-                    android:background="?android:colorPrimary"
+                    android:background="?attr/colorPrimary"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/main_div_1" />
 
@@ -59,7 +58,7 @@
                     android:layout_height="50dp"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
-                    android:background="?android:colorPrimary"
+                    android:background="?attr/colorPrimary"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
 
@@ -68,7 +67,7 @@
                     android:layout_width="140dp"
                     android:layout_height="2dp"
                     android:layout_marginBottom="16dp"
-                    android:background="?android:colorPrimary"
+                    android:background="?attr/colorPrimary"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/main_div_3" />
 
@@ -82,7 +81,7 @@
                     android:src="@drawable/hoker"
                     app:layout_constraintStart_toEndOf="@+id/main_image_cross"
                     app:layout_constraintTop_toBottomOf="@+id/main_div_1"
-                    app:tint="?android:colorPrimary" />
+                    app:tint="?attr/colorPrimary" />
 
                 <ImageView
                     android:id="@+id/main_image_dangerous"
@@ -94,7 +93,7 @@
                     android:src="@drawable/dangerous"
                     app:layout_constraintStart_toEndOf="@+id/main_div_2"
                     app:layout_constraintTop_toBottomOf="@+id/main_div_1"
-                    app:tint="?android:colorPrimary" />
+                    app:tint="?attr/colorPrimary" />
 
                 <ImageView
                     android:id="@+id/main_image_cross"
@@ -106,7 +105,7 @@
                     android:src="@drawable/cross"
                     app:layout_constraintStart_toEndOf="@+id/main_image_dangerous"
                     app:layout_constraintTop_toBottomOf="@+id/main_div_1"
-                    app:tint="?android:colorPrimary" />
+                    app:tint="?attr/colorPrimary" />
 
                 <TextView
                     android:id="@+id/main_text_version"
@@ -116,7 +115,7 @@
                     android:layout_marginBottom="8dp"
                     android:fontFamily="@font/ibmplexmono_text"
                     android:text="V 0.1"
-                    android:textColor="?android:colorPrimary"
+                    android:textColor="?attr/colorPrimary"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toTopOf="@+id/main_div_4"
                     app:layout_constraintEnd_toStartOf="@+id/main_div_3" />
@@ -125,12 +124,12 @@
                     android:id="@+id/main_image_scan_animation"
                     android:layout_width="150dp"
                     android:layout_height="300dp"
+                    android:contentDescription="@string/scan_animation"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="?android:colorPrimary"
-                    android:contentDescription="@string/scan_animation" />
+                    app:tint="?attr/colorPrimary" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -154,7 +153,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="?android:colorPrimaryDark" />
+                    app:tint="?attr/colorPrimaryDark" />
 
                 <Button
                     android:id="@+id/main_button_toggle_read"
@@ -164,7 +163,7 @@
                     android:minWidth="120dp"
                     android:minHeight="35dp"
                     android:text="@string/read_payload"
-                    android:textColor="?android:colorPrimaryDark"
+                    android:textColor="?attr/colorPrimaryDark"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/main_button_toggle_advanced"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -178,7 +177,7 @@
                     android:minWidth="120dp"
                     android:minHeight="35dp"
                     android:text="@string/advanced"
-                    android:textColor="?android:colorPrimary"
+                    android:textColor="?attr/colorPrimary"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -192,13 +191,13 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="?android:colorPrimary">
+        android:background="?attr/colorSecondary">
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/main_fragment_menu"
             android:name="com.dangerousthings.nfc.fragments.MainDrawerFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
     </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>

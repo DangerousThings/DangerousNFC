@@ -3,37 +3,44 @@
     <style name="DT" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/White</item>
         <item name="colorPrimaryDark">@color/Black</item>
+        <item name="colorSecondary">@color/White</item>
         <item name="colorAccent">#F56528</item>
     </style>
     <style name="DEOT" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">#008F78</item>
         <item name="colorPrimaryDark">#0A1017</item>
+        <item name="colorSecondary">#008F78</item>
         <item name="colorAccent">#BBC6C5</item>
     </style>
     <style name="OPZ" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">#BCBDC2</item>
         <item name="colorPrimaryDark">#4B4E5B</item>
+        <item name="colorSecondary">#BCBDC2</item>
         <item name="colorAccent">#E0B000</item>
     </style>
     <style name="Wog" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">#FFF6D8</item>
         <item name="colorPrimaryDark">#167D7F</item>
+        <item name="colorSecondary">#FFF6D8</item>
         <item name="colorAccent">#B5E5CF</item>
     </style>
     <style name="BlackOnWhite" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">#FFFFFF</item>
         <item name="colorPrimaryDark">#000000</item>
+        <item name="colorSecondary">#FFFFFF</item>
         <item name="colorAccent">#7F7F7F</item>
     </style>
     <style name="MurderedOut" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">#BEBEBE</item>
         <item name="colorPrimaryDark">#000000</item>
+        <item name="colorSecondary">#BEBEBE</item>
         <item name="colorAccent">#7F7F7F</item>
     </style>
     <style name="Zytel" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#FAC300</item>
-        <item name="colorPrimaryDark">#19403E</item>
-        <item name="colorAccent">#E885AA</item>
+        <item name="colorPrimary">#FBB518</item>
+        <item name="colorPrimaryDark">#143130</item>
+        <item name="colorSecondary">#C08A8E</item>
+        <item name="colorAccent">#D3DCF0</item>
     </style>
     <style name="ImplantModelSpinner" parent="@android:style/Widget.TextView.SpinnerItem">
         <item name="android:textColor">?android:colorPrimaryDark</item>

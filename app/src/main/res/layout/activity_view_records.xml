@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:colorPrimary"
+    android:background="?attr/colorSecondary"
     tools:context=".pages.ViewRecordsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,7 +28,7 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/ibmplexmono_semibold"
             android:text="@string/ndef_records"
-            android:textColor="?android:colorAccent"
+            android:textColor="?attr/colorAccent"
             android:textSize="36sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -62,7 +62,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_back"
-            app:tint="?android:colorPrimaryDark" />
+            app:tint="?attr/colorPrimaryDark" />
 
         <ImageButton
             android:id="@+id/view_records_button_add"
@@ -75,7 +75,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="?android:colorPrimaryDark" />
+            app:tint="?attr/colorPrimaryDark" />
 
         <ImageButton
             android:id="@+id/view_records_button_write"
@@ -83,13 +83,13 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
             android:background="@android:color/transparent"
+            android:contentDescription="@string/write_ndef_message_button"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/view_records_button_add"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_save"
-            app:tint="?android:colorPrimaryDark"
-            android:contentDescription="@string/write_ndef_message_button" />
+            app:tint="?attr/colorPrimaryDark" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
