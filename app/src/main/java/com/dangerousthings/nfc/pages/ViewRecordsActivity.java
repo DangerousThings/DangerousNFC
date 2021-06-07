@@ -118,11 +118,16 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
                             }
                             else if(requestCode == REQ_CODE_WRITE_MESSAGE)
                             {
+                                ImplantDatabase database = ImplantDatabase.getInstance(this);
+                                IImplantDAO implantDAO = database.implantDAO();
+                                if(_implant == null)
+                                {
+                                    String uid = resultIntent.getStringExtra(getString(R.string.intent_tag_uid));
+                                    _implant = implantDAO.getImplantByUID(uid);
+                                }
                                 if(_implant != null)
                                 {
                                     _implant.setNdefMessage(getNdefMessage());
-                                    ImplantDatabase database = ImplantDatabase.getInstance(this);
-                                    IImplantDAO implantDAO = database.implantDAO();
                                     implantDAO.updateImplant(_implant);
                                 }
                                 finish();

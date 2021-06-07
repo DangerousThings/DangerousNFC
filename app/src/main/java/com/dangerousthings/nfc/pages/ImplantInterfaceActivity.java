@@ -18,6 +18,7 @@ import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.utilities.ColorUtils;
+import com.dangerousthings.nfc.utilities.HexUtils;
 import com.dangerousthings.nfc.utilities.NdefUtils;
 
 public class ImplantInterfaceActivity extends BaseActivity
@@ -104,7 +105,7 @@ public class ImplantInterfaceActivity extends BaseActivity
             builder.setPositiveButton("OK", (dialog, which) ->
                     {
                         dialog.cancel();
-                        popOnSuccess();
+                        popOnWriteSuccess(tag);
                     });
             AlertDialog alert = builder.create();
             alert.show();
@@ -119,11 +120,12 @@ public class ImplantInterfaceActivity extends BaseActivity
         }
     }
 
-    private void popOnSuccess()
+    private void popOnWriteSuccess(Tag tag)
     {
         Intent result = new Intent();
         setResult(ViewRecordsActivity.RESULT_OK, result);
         result.putExtra(getString(R.string.intent_request_code), getIntent().getIntExtra(getString(R.string.intent_request_code), -1));
+        result.putExtra(getString(R.string.intent_tag_uid), HexUtils.bytesToHex(tag.getId()));
         finish();
         overridePendingTransition(0, 0);
     }
