@@ -5,7 +5,7 @@
     android:id="@+id/main_drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSecondary"
+    android:background="?attr/colorPrimaryVariant"
     tools:context=".pages.MainActivity"
     tools:ignore="Overdraw">
 
@@ -27,7 +27,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="@drawable/rounded_primary_dark"
+                android:background="@drawable/rounded_secondary"
                 app:layout_constraintBottom_toTopOf="@+id/main_toolbar_constraint"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -153,7 +153,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="?attr/colorPrimaryDark" />
+                    app:tint="?attr/colorSecondary" />
 
                 <Button
                     android:id="@+id/main_button_toggle_read"
@@ -163,7 +163,7 @@
                     android:minWidth="120dp"
                     android:minHeight="35dp"
                     android:text="@string/read_payload"
-                    android:textColor="?attr/colorPrimaryDark"
+                    android:textColor="?attr/colorSecondary"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/main_button_toggle_advanced"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -173,7 +173,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
-                    android:background="@drawable/right_pill_primary_dark"
+                    android:background="@drawable/right_pill_secondary"
                     android:minWidth="120dp"
                     android:minHeight="35dp"
                     android:text="@string/advanced"
@@ -191,7 +191,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="?attr/colorSecondary">
+        android:background="?attr/colorPrimaryVariant">
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/main_fragment_menu"

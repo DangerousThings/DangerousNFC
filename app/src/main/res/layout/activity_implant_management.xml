@@ -4,7 +4,7 @@
     android:id="@+id/implant_management_drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSecondary">
+    android:background="?attr/colorPrimaryVariant">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/implant_management_constraint"
@@ -32,5 +32,5 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="end"
-        android:background="?attr/colorSecondary" />
+        android:background="?attr/colorPrimaryVariant" />
 </androidx.drawerlayout.widget.DrawerLayout>

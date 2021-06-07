@@ -38,16 +38,16 @@ public class Theme
         this.colorPrimary = colorPrimary;
     }
 
-    private int colorPrimaryDark;
+    private int colorPrimaryVariant;
 
-    public int getColorPrimaryDark()
+    public int getColorPrimaryVariant()
     {
-        return colorPrimaryDark;
+        return colorPrimaryVariant;
     }
 
-    public void setColorPrimaryDark(int colorPrimaryDark)
+    public void setColorPrimaryVariant(int colorPrimaryVariant)
     {
-        this.colorPrimaryDark = colorPrimaryDark;
+        this.colorPrimaryVariant = colorPrimaryVariant;
     }
 
     private int colorSecondary;
@@ -74,12 +74,12 @@ public class Theme
         this.colorAccent = colorAccent;
     }
 
-    public Theme(int id, String themeName, int primary, int primaryDark,int secondary, int accent)
+    public Theme(int id, String themeName, int primary,int secondary, int primaryVariant, int accent)
     {
         themeId = id;
         themeTitle = themeName;
         colorPrimary = primary;
-        colorPrimaryDark = primaryDark;
+        colorPrimaryVariant = primaryVariant;
         colorSecondary = secondary;
         colorAccent = accent;
     }

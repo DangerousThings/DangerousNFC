@@ -67,7 +67,7 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
         mToggleReadButton = findViewById(R.id.main_button_toggle_read);
         mToggleAdvancedButton = findViewById(R.id.main_button_toggle_advanced);
         mToggleReadButton.setOnClickListener(v -> toggleReadPressed());
-        mToggleAdvancedButton.setOnClickListener(v -> toggleSyncPressed());
+        mToggleAdvancedButton.setOnClickListener(v -> toggleAdvancedPressed());
 
         //set up menu fragments click listener
         MainDrawerFragment mMenuFragment = (MainDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.main_fragment_menu);
@@ -216,20 +216,20 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
 
     private void toggleReadPressed()
     {
-        mToggleAdvancedButton.setBackground(ContextCompat.getDrawable(this, R.drawable.right_pill_primary_dark));
+        mToggleAdvancedButton.setBackground(ContextCompat.getDrawable(this, R.drawable.right_pill_secondary));
         mToggleReadButton.setBackground(ContextCompat.getDrawable(this, R.drawable.left_pill_accent));
-        mToggleReadButton.setTextColor(ColorUtils.getPrimaryDarkColor(this));
+        mToggleReadButton.setTextColor(ColorUtils.getSecondaryColor(this));
         mToggleAdvancedButton.setTextColor(ColorUtils.getPrimaryColor(this));
 
         _actionBarState = MainActionBarState.ReadNDEF;
     }
 
-    private void toggleSyncPressed()
+    private void toggleAdvancedPressed()
     {
-        mToggleReadButton.setBackground(ContextCompat.getDrawable(this, R.drawable.left_pill_primary_dark));
+        mToggleReadButton.setBackground(ContextCompat.getDrawable(this, R.drawable.left_pill_secondary));
         mToggleAdvancedButton.setBackground(ContextCompat.getDrawable(this, R.drawable.right_pill_accent));
         mToggleReadButton.setTextColor(ColorUtils.getPrimaryColor(this));
-        mToggleAdvancedButton.setTextColor(ColorUtils.getPrimaryDarkColor(this));
+        mToggleAdvancedButton.setTextColor(ColorUtils.getSecondaryColor(this));
 
         _actionBarState = MainActionBarState.Advanced;
     }

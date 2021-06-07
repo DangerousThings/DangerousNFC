@@ -14,7 +14,7 @@ tools:context=".fragments.ThemeFragment">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@drawable/rounded_primary_dark"
+        android:background="@drawable/rounded_secondary"
         app:layout_constraintBottom_toTopOf="@+id/theme_actionbar_constraint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -52,7 +52,7 @@ tools:context=".fragments.ThemeFragment">
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:contentDescription="@string/back_button"
-            app:tint="?attr/colorPrimaryDark" />
+            app:tint="?attr/colorSecondary" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

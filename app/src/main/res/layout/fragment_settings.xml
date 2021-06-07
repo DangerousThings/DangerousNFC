@@ -14,7 +14,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@drawable/rounded_primary_dark"
+            android:background="@drawable/rounded_secondary"
             app:layout_constraintBottom_toTopOf="@+id/settings_constraint_actionbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -51,7 +51,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/rounded_primary"
                     android:layout_gravity="center_vertical"
-                    android:textColor="?attr/colorPrimaryDark"
+                    android:textColor="?attr/colorSecondary"
                     android:minHeight="35dp"
                     android:minWidth="120dp"
                     android:text="@string/change_theme" />
@@ -92,7 +92,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:contentDescription="@string/back_button"
-                app:tint="?attr/colorPrimaryDark" />
+                app:tint="?attr/colorSecondary" />
 
             <ImageButton
                 android:id="@+id/settings_button_confirm"
@@ -105,7 +105,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:contentDescription="@string/confirm_button"
-                app:tint="?attr/colorPrimaryDark" />
+                app:tint="?attr/colorSecondary" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

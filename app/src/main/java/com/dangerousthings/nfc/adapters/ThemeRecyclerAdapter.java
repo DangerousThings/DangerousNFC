@@ -27,7 +27,7 @@ public class ThemeRecyclerAdapter extends RecyclerView.Adapter<ThemeRecyclerAdap
         public final View mView;
         public final TextView mThemeName;
         public final View mBoxPrimary;
-        public final View mBoxPrimaryDark;
+        public final View mBoxPrimaryVariant;
         public final View mBoxSecondary;
         public final View mBoxAccent;
 
@@ -37,7 +37,7 @@ public class ThemeRecyclerAdapter extends RecyclerView.Adapter<ThemeRecyclerAdap
             mView = itemView;
             mThemeName = itemView.findViewById(R.id.theme_text_name);
             mBoxPrimary = itemView.findViewById(R.id.theme_box_primary);
-            mBoxPrimaryDark = itemView.findViewById(R.id.theme_box_primary_dark);
+            mBoxPrimaryVariant = itemView.findViewById(R.id.theme_box_primary_variant);
             mBoxSecondary = itemView.findViewById(R.id.theme_box_secondary);
             mBoxAccent = itemView.findViewById(R.id.theme_box_accent);
             itemView.setOnClickListener(v -> _clickListener.onItemClick(getAdapterPosition()));
@@ -70,10 +70,10 @@ public class ThemeRecyclerAdapter extends RecyclerView.Adapter<ThemeRecyclerAdap
         primaryShape.setColor(theme.getColorPrimary());
         holder.mBoxPrimary.setBackground(primaryShape);
 
-        GradientDrawable primaryDarkShape = new GradientDrawable();
-        primaryDarkShape.setCornerRadii(new float[]{0,0,0,0,0,0,30,30});
-        primaryDarkShape.setColor(theme.getColorPrimaryDark());
-        holder.mBoxPrimaryDark.setBackground(primaryDarkShape);
+        GradientDrawable primaryVariantShape = new GradientDrawable();
+        primaryVariantShape.setCornerRadii(new float[]{0,0,0,0,0,0,30,30});
+        primaryVariantShape.setColor(theme.getColorPrimaryVariant());
+        holder.mBoxPrimaryVariant.setBackground(primaryVariantShape);
 
         GradientDrawable accentShape = new GradientDrawable();
         accentShape.setCornerRadii(new float[]{0,0,0,0,30,30,0,0});

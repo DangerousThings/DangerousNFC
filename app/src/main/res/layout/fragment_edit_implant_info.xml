@@ -13,7 +13,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@drawable/rounded_primary_dark"
+            android:background="@drawable/rounded_secondary"
             app:layout_constraintBottom_toTopOf="@+id/edit_implant_constraint_actionbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -163,7 +163,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="?attr/colorPrimaryDark" />
+                app:tint="?attr/colorSecondary" />
 
             <ImageButton
                 android:id="@+id/edit_implant_button_save"
@@ -176,7 +176,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="?attr/colorPrimaryDark" />
+                app:tint="?attr/colorSecondary" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

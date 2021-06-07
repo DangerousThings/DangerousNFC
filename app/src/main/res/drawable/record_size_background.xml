@@ -14,7 +14,7 @@
 
         <shape>
 
-        <solid android:color="?attr/colorPrimaryDark" />
+        <solid android:color="?attr/colorSecondary" />
 
         <padding
             android:left="0dp"

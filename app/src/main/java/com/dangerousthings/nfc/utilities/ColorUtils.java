@@ -22,10 +22,10 @@ public class ColorUtils
         return color;
     }
 
-    public static int getPrimaryDarkColor(Context context)
+    public static int getPrimaryVariantColor(Context context)
     {
         TypedValue typedValue = new TypedValue();
-        TypedArray a = context.obtainStyledAttributes(typedValue.data, new int[] {R.attr.colorPrimaryDark});
+        TypedArray a = context.obtainStyledAttributes(typedValue.data, new int[] {R.attr.colorPrimaryVariant});
         int color = a.getColor(0, 0);
         a.recycle();
         return color;
@@ -58,7 +58,8 @@ public class ColorUtils
         themes.add(new Theme(R.style.Wog, "Wog", Color.parseColor("#FFF6D8"), Color.parseColor("#167D7F"), Color.parseColor("#FFF6D8"), Color.parseColor("#B5E5CF")));
         themes.add(new Theme(R.style.BlackOnWhite, "Black on White", Color.parseColor("#FFFFFF"), Color.parseColor("#000000"), Color.parseColor("#FFFFFF"), Color.parseColor("#7F7F7F")));
         themes.add(new Theme(R.style.MurderedOut, "Murdered Out", Color.parseColor("#BEBEBE"), Color.parseColor("#000000"), Color.parseColor("#BEBEBE"), Color.parseColor("#7F7F7F")));
-        themes.add(new Theme(R.style.Zytel, "Zytel", Color.parseColor("#FBB518"), Color.parseColor("#143130"), Color.parseColor("#C08A8E"), Color.parseColor("#DFDCF0")));
+        themes.add(new Theme(R.style.Zytel, "Zytel", Color.parseColor("#FBB518"), Color.parseColor("#0D1313"), Color.parseColor("#2B5C55"), Color.parseColor("#DFDCF0")));
+        themes.add(new Theme(R.style.Brigador, "Brigador", Color.parseColor("#21B8C5"), Color.parseColor("#3C2226"), Color.parseColor("#CA273E"), Color.parseColor("#2A3DAB")));
         return themes;
     }
 }

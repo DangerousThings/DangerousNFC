@@ -50,7 +50,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
-            android:id="@+id/theme_box_primary_dark"
+            android:id="@+id/theme_box_primary_variant"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:background="?attr/colorPrimaryDark"

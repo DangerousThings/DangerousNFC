@@ -5,7 +5,7 @@
     android:id="@+id/edit_ndef_drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSecondary"
+    android:background="?attr/colorPrimaryVariant"
     tools:context=".pages.EditNdefActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -55,9 +55,9 @@
                 android:background="@drawable/record_type_background"
                 android:fontFamily="@font/ibmplexmono_semibold"
                 android:stateListAnimator="@null"
-                android:text="Plain Text"
+                android:text="@string/plain_text"
                 android:textAllCaps="false"
-                android:textColor="?attr/colorPrimaryDark"
+                android:textColor="?attr/colorSecondary"
                 android:textSize="18sp" />
         </LinearLayout>
 
@@ -73,7 +73,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/ic_back"
-            app:tint="?attr/colorPrimaryDark" />
+            app:tint="?attr/colorSecondary" />
 
         <ImageButton
             android:id="@+id/edit_ndef_button_save"
@@ -87,7 +87,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_check"
-            app:tint="?attr/colorPrimaryDark" />
+            app:tint="?attr/colorSecondary" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -95,7 +95,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="end"
-        android:background="?attr/colorSecondary"
+        android:background="?attr/colorPrimaryVariant"
         android:maxWidth="140dp"
         app:menu="@menu/ndef_payload_types" />
 

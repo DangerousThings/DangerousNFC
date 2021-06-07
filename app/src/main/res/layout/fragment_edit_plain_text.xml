@@ -27,7 +27,7 @@
             android:id="@+id/edit_plaintext_constraint_edit"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@drawable/rounded_bottom_primary_dark"
+            android:background="@drawable/rounded_bottom_secondary"
             app:layout_constraintBottom_toTopOf="@+id/edit_plaintext_constraint_toolbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

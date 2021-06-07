@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSecondary"
+    android:background="?attr/colorPrimaryVariant"
     tools:context=".pages.ViewRecordActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,7 +28,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_back"
-            app:tint="?attr/colorPrimaryDark" />
+            app:tint="?attr/colorSecondary" />
 
         <ImageButton
             android:id="@+id/view_record_button_edit"
@@ -41,7 +41,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_edit"
-            app:tint="?attr/colorPrimaryDark" />
+            app:tint="?attr/colorSecondary" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout

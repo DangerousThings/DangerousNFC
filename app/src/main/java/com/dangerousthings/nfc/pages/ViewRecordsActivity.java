@@ -91,7 +91,9 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
                         Intent resultIntent = result.getData();
                         if(resultIntent != null)
                         {
+                            //fetch the request code of the result intent
                             int requestCode = resultIntent.getIntExtra(getString(R.string.intent_request_code), -1);
+                            //if the intent is returning a new or edited record
                             if(requestCode == REQ_CODE_RECORD)
                             {
                                 NdefRecord record = Objects.requireNonNull(resultIntent.getExtras()).getParcelable(getString(R.string.intent_record));
@@ -112,21 +114,28 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
                                 _recordsEdited = true;
                                 mWriteButton.setVisibility(View.VISIBLE);
                             }
+                            //if the edit button was clicked from the view record activity
                             else if(requestCode == REQ_CODE_VIEW_RECORD)
                             {
                                 onEditButtonClick();
                             }
+                            //if an NDEF message has been written
                             else if(requestCode == REQ_CODE_WRITE_MESSAGE)
                             {
                                 ImplantDatabase database = ImplantDatabase.getInstance(this);
                                 IImplantDAO implantDAO = database.implantDAO();
+                                //checks to see if we have a loaded implant
                                 if(_implant == null)
                                 {
+                                    //if we don't, then we try and see if one with the same UID of
+                                    //the written tag exists in the database
                                     String uid = resultIntent.getStringExtra(getString(R.string.intent_tag_uid));
                                     _implant = implantDAO.getImplantByUID(uid);
                                 }
+                                //now we see if the tag is still null
                                 if(_implant != null)
                                 {
+                                    //if its not, then we update the device's listing in database
                                     _implant.setNdefMessage(getNdefMessage());
                                     implantDAO.updateImplant(_implant);
                                 }
@@ -147,14 +156,13 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
         mWriteButton.setOnClickListener(v -> writeRecords());
 
         mAddRecordButton.setOnClickListener(v -> onNewRecordClick());
+        mBackButton.setOnClickListener(v -> onBackPressed());
 
         //set up recyclerview
         _recyclerAdapter = new NdefMessageRecyclerAdapter(this, _records);
         _recyclerAdapter.setClickListener(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(_recyclerAdapter);
-
-        mBackButton.setOnClickListener(v -> onBackPressed());
     }
 
     private void onEditButtonClick()
@@ -163,6 +171,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
         editRecord.putExtra(getString(R.string.intent_record), _recyclerAdapter.getRecord(_alteredIndex));
         if(_implant != null)
         {
+            //if there is an implant loaded from the database that we are altering, pass on it's capacity
             editRecord.putExtra(getString(R.string.intent_ndef_capacity), _implant.getNdefCapacity());
         }
         openActivityForResult(editRecord, REQ_CODE_RECORD);
@@ -178,6 +187,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
         }
         openActivityForResult(addRecord, REQ_CODE_RECORD);
         overridePendingTransition(0, 0);
+        //index gets set to the list size as the new record is placed at the end
         _alteredIndex = _records.size();
     }
 
@@ -209,6 +219,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
     {
         Intent viewRecordIntent = new Intent(this, ViewRecordActivity.class);
         viewRecordIntent.putExtra(getString(R.string.intent_record), _recyclerAdapter.getRecord(position));
+        //stores the index of the selected item in the case that it is to be edited
         _alteredIndex = position;
         openActivityForResult(viewRecordIntent, REQ_CODE_VIEW_RECORD);
         overridePendingTransition(0, 0);
@@ -242,6 +253,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
 
     public void openActivityForResult(Intent intent, int requestCode)
     {
+        //store our result code for later retrieval
         intent.putExtra(getString(R.string.intent_request_code), requestCode);
         _activityResultLauncher.launch(intent);
     }
