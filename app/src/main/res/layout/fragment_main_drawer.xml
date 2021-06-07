@@ -18,7 +18,7 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/ibmplexmono_semibold"
             android:text="@string/dangerousnfc"
-            android:textColor="?android:colorPrimaryDark"
+            android:textColor="?attr/colorPrimaryDark"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -34,10 +34,10 @@
             android:fontFamily="@font/ibmplexmono_semibold"
             android:gravity="center"
             android:text="@string/settings"
-            android:textColor="?android:colorPrimaryDark"
+            android:textColor="?attr/colorPrimaryDark"
             android:textSize="18sp"
             app:drawableStartCompat="@drawable/ic_settings"
-            app:drawableTint="?android:colorPrimaryDark"
+            app:drawableTint="?attr/colorPrimaryDark"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -55,10 +55,10 @@
             android:fontFamily="@font/ibmplexmono_semibold"
             android:padding="10dp"
             android:text="@string/saved_implants"
-            android:textColor="?android:colorPrimary"
+            android:textColor="?attr/colorPrimary"
             android:textSize="18sp"
             app:drawableStartCompat="@drawable/ic_save"
-            app:drawableTint="?android:colorPrimary"
+            app:drawableTint="?attr/colorPrimary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/main_text_title" />
 
@@ -76,10 +76,10 @@
             android:gravity="center"
             android:padding="10dp"
             android:text="@string/new_ndef_message"
-            android:textColor="?android:colorPrimary"
+            android:textColor="?attr/colorPrimary"
             android:textSize="18sp"
             app:drawableStartCompat="@drawable/ic_add"
-            app:drawableTint="?android:colorPrimary"
+            app:drawableTint="?attr/colorPrimary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/main_text_saved_implants" />
     </androidx.constraintlayout.widget.ConstraintLayout>

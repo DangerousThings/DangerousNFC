@@ -3,7 +3,7 @@
     <item>
         <shape>
 
-            <solid android:color="?android:colorPrimaryDark"/>
+            <solid android:color="?attr/colorPrimaryDark"/>
 
             <corners
                 android:topRightRadius="10dp" />
@@ -14,7 +14,7 @@
 
         <shape>
 
-            <solid android:color="?android:colorAccent" />
+            <solid android:color="?attr/colorAccent" />
 
             <padding
                 android:left="0dp"

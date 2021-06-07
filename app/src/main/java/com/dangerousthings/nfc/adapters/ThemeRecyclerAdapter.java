@@ -28,6 +28,7 @@ public class ThemeRecyclerAdapter extends RecyclerView.Adapter<ThemeRecyclerAdap
         public final TextView mThemeName;
         public final View mBoxPrimary;
         public final View mBoxPrimaryDark;
+        public final View mBoxSecondary;
         public final View mBoxAccent;
 
         public ViewHolder(@NonNull View itemView)
@@ -37,6 +38,7 @@ public class ThemeRecyclerAdapter extends RecyclerView.Adapter<ThemeRecyclerAdap
             mThemeName = itemView.findViewById(R.id.theme_text_name);
             mBoxPrimary = itemView.findViewById(R.id.theme_box_primary);
             mBoxPrimaryDark = itemView.findViewById(R.id.theme_box_primary_dark);
+            mBoxSecondary = itemView.findViewById(R.id.theme_box_secondary);
             mBoxAccent = itemView.findViewById(R.id.theme_box_accent);
             itemView.setOnClickListener(v -> _clickListener.onItemClick(getAdapterPosition()));
         }
@@ -60,13 +62,28 @@ public class ThemeRecyclerAdapter extends RecyclerView.Adapter<ThemeRecyclerAdap
     public void onBindViewHolder(@NonNull ViewHolder holder, int position)
     {
         Theme theme = _themes.get(position);
+
         holder.mThemeName.setText(theme.getThemeTitle());
-        GradientDrawable shape = new GradientDrawable();
-        shape.setCornerRadii(new float[]{30,30,30,30,0,0,0,0});
-        shape.setColor(theme.getColorPrimary());
-        holder.mBoxPrimary.setBackground(shape);
-        holder.mBoxPrimaryDark.setBackgroundColor(theme.getColorPrimaryDark());
-        holder.mBoxAccent.setBackgroundColor(theme.getColorAccent());
+
+        GradientDrawable primaryShape = new GradientDrawable();
+        primaryShape.setCornerRadii(new float[]{30,30,0,0,0,0,0,0});
+        primaryShape.setColor(theme.getColorPrimary());
+        holder.mBoxPrimary.setBackground(primaryShape);
+
+        GradientDrawable primaryDarkShape = new GradientDrawable();
+        primaryDarkShape.setCornerRadii(new float[]{0,0,0,0,0,0,30,30});
+        primaryDarkShape.setColor(theme.getColorPrimaryDark());
+        holder.mBoxPrimaryDark.setBackground(primaryDarkShape);
+
+        GradientDrawable accentShape = new GradientDrawable();
+        accentShape.setCornerRadii(new float[]{0,0,0,0,30,30,0,0});
+        accentShape.setColor(theme.getColorAccent());
+        holder.mBoxAccent.setBackground(accentShape);
+
+        GradientDrawable secondaryShape = new GradientDrawable();
+        secondaryShape.setCornerRadii(new float[]{0,0,30,30,0,0,0,0});
+        secondaryShape.setColor(theme.getColorSecondary());
+        holder.mBoxSecondary.setBackground(secondaryShape);
     }
 
     @Override

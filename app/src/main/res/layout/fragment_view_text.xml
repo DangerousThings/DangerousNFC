@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ibmplexmono_text"
                 android:text="@string/no_record_text_detected"
-                android:textColor="?android:colorPrimary"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="18sp" />
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>

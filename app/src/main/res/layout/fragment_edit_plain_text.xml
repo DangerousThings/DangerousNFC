@@ -60,8 +60,8 @@
                         android:hint="@string/enter_text_message"
                         android:fontFamily="@font/ibmplexmono_text"
                         android:inputType="textMultiLine|textPersonName"
-                        android:textColor="?android:colorPrimary"
-                        android:textColorHint="?android:colorPrimary"
+                        android:textColor="?attr/colorPrimary"
+                        android:textColorHint="?attr/colorPrimary"
                         android:importantForAutofill="no" />
                 </LinearLayout>
             </ScrollView>

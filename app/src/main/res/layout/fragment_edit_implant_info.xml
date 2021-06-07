@@ -39,8 +39,8 @@
                 android:fontFamily="@font/ibmplexmono_semibold"
                 android:hint="@string/implantname"
                 android:inputType="text"
-                android:textColor="?android:colorPrimary"
-                android:textColorHint="?android:colorPrimary"
+                android:textColor="?attr/colorPrimary"
+                android:textColorHint="?attr/colorPrimary"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="@+id/edit_implant_image"
                 app:layout_constraintStart_toEndOf="@+id/edit_implant_image"
@@ -54,7 +54,7 @@
                 android:layout_marginTop="32dp"
                 android:fontFamily="@font/ibmplexmono_semibold"
                 android:text="@string/uid"
-                android:textColor="?android:colorPrimary"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="@+id/edit_implant_image"
                 app:layout_constraintTop_toBottomOf="@+id/edit_implant_image" />
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:fontFamily="@font/ibmplexmono_text"
-                android:textColor="?android:colorPrimary"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="@+id/edit_implant_text_uid_label"
                 app:layout_constraintStart_toEndOf="@+id/edit_implant_text_uid_label"
@@ -79,7 +79,7 @@
                 android:layout_marginTop="24dp"
                 android:fontFamily="@font/ibmplexmono_semibold"
                 android:text="@string/tag_family"
-                android:textColor="?android:colorPrimary"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_implant_text_uid_label" />
@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:fontFamily="@font/ibmplexmono_text"
-                android:textColor="?android:colorPrimary"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="@+id/edit_implant_text_family_label"
                 app:layout_constraintStart_toEndOf="@+id/edit_implant_text_family_label"
@@ -104,7 +104,7 @@
                 android:layout_marginTop="24dp"
                 android:fontFamily="@font/ibmplexmono_semibold"
                 android:text="@string/implant_model"
-                android:textColor="?android:colorPrimary"
+                android:textColor="?attr/colorPrimary"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edit_implant_text_family_label" />
@@ -139,7 +139,7 @@
                     android:adjustViewBounds="true"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_drop"
-                    app:tint="?android:colorPrimary"
+                    app:tint="?attr/colorPrimary"
                     android:contentDescription="@string/down_arrow" />
             </LinearLayout>
 
@@ -163,7 +163,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="?android:colorPrimaryDark" />
+                app:tint="?attr/colorPrimaryDark" />
 
             <ImageButton
                 android:id="@+id/edit_implant_button_save"
@@ -176,7 +176,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="?android:colorPrimaryDark" />
+                app:tint="?attr/colorPrimaryDark" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
