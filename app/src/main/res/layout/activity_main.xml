@@ -153,7 +153,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:tint="?attr/colorSecondary" />
+                    app:tint="?attr/colorSecondaryVariant" />
 
                 <Button
                     android:id="@+id/main_button_toggle_read"

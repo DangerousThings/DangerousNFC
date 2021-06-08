@@ -2,7 +2,6 @@ package com.dangerousthings.nfc.models;
 
 import android.nfc.NdefMessage;
 import android.view.Menu;
-import android.view.SubMenu;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
@@ -162,12 +161,16 @@ public class Implant
         switch(tagFamily)
         {
             case NTAG_Standard: case NTAG_I2C: case DESFire: case Vivokey: case UNKNOWN:
-                menu.addSubMenu(Menu.NONE, R.string.menu_ndef_submenu, Menu.NONE, "NDEF Operations");
-                SubMenu ndefMenu = menu.findItem(R.string.menu_ndef_submenu).getSubMenu();
-                ndefMenu.add(0, R.string.menu_view_records, 0, "View NDEF Records");
-                menu.addSubMenu(Menu.NONE, R.string.menu_memory_submenu, Menu.NONE, "Memory Operations");
-                SubMenu memoryMenu = menu.findItem(R.string.menu_memory_submenu).getSubMenu();
-                memoryMenu.add(0, R.string.menu_memory_management, 0, "Manage Implant Memory");
+                //menu.addSubMenu(Menu.NONE, R.string.menu_ndef_submenu, Menu.NONE, "NDEF Operations");
+                //TODO: Change the color of these submenus and add them back eventually
+                //SubMenu ndefMenu = menu.findItem(R.string.menu_ndef_submenu).getSubMenu();
+                //ndefMenu.add(0, R.string.menu_view_records, 0, "View NDEF Records");
+                //menu.addSubMenu(Menu.NONE, R.string.menu_memory_submenu, Menu.NONE, "Memory Operations");
+                //TODO: Change the color of these submenus and add them back eventually
+                //SubMenu memoryMenu = menu.findItem(R.string.menu_memory_submenu).getSubMenu();
+                //memoryMenu.add(0, R.string.menu_memory_management, 0, "Manage Implant Memory");
+                menu.add(0, R.string.menu_view_records, 0, "View NDEF Records");
+                menu.add(0, R.string.menu_memory_management, 0, "Manage Implant Memory");
         }
     }
 }

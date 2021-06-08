@@ -50,7 +50,8 @@
                         android:background="@android:color/transparent"
                         android:scaleType="center"
                         android:src="@drawable/ic_bold"
-                        app:tint="?attr/colorPrimary" />
+                        app:tint="?attr/colorPrimary"
+                        android:contentDescription="@string/bold_button" />
 
                     <ImageButton
                         android:id="@+id/edit_markdown_button_italicize"
@@ -60,7 +61,8 @@
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:src="@drawable/ic_italic"
-                        app:tint="?attr/colorPrimary" />
+                        app:tint="?attr/colorPrimary"
+                        android:contentDescription="@string/italicize_button" />
 
                     <ImageButton
                         android:id="@+id/edit_markdown_button_code"
@@ -70,7 +72,8 @@
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:src="@drawable/ic_code"
-                        app:tint="?attr/colorPrimary" />
+                        app:tint="?attr/colorPrimary"
+                        android:contentDescription="@string/code_button" />
 
                     <ImageButton
                         android:id="@+id/edit_markdown_button_link"
@@ -80,7 +83,8 @@
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:src="@drawable/ic_link"
-                        app:tint="?attr/colorPrimary" />
+                        app:tint="?attr/colorPrimary"
+                        android:contentDescription="@string/link_button" />
 
                     <ImageButton
                         android:id="@+id/edit_markdown_button_strikethrough"
@@ -90,7 +94,8 @@
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:src="@drawable/ic_strikethrough"
-                        app:tint="?attr/colorPrimary" />
+                        app:tint="?attr/colorPrimary"
+                        android:contentDescription="@string/strikethrough_button" />
 
                     <ImageButton
                         android:id="@+id/edit_markdown_button_bullet"
@@ -100,7 +105,8 @@
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:src="@drawable/ic_bullet_list"
-                        app:tint="?attr/colorPrimary" />
+                        app:tint="?attr/colorPrimary"
+                        android:contentDescription="@string/bullet_button" />
 
                     <ImageButton
                         android:id="@+id/edit_markdown_button_quote"
@@ -110,7 +116,8 @@
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:src="@drawable/ic_quote"
-                        app:tint="?attr/colorPrimary" />
+                        app:tint="?attr/colorPrimary"
+                        android:contentDescription="@string/quote_button" />
 
                     <ImageButton
                         android:id="@+id/edit_markdown_button_break"
@@ -120,7 +127,8 @@
                         android:layout_weight="1"
                         android:background="@android:color/transparent"
                         android:src="@drawable/ic_horizontal_line"
-                        app:tint="?attr/colorPrimary" />
+                        app:tint="?attr/colorPrimary"
+                        android:contentDescription="@string/break_button" />
                 </LinearLayout>
             </HorizontalScrollView>
 

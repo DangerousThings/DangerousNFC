@@ -65,4 +65,12 @@
     <string name="settings">Settings</string>
     <string name="new_ndef_message">New NDEF Message</string>
     <string name="enter_markdown_text">Enter markdown text</string>
+    <string name="bold_button">bold button</string>
+    <string name="italicize_button">italicize button</string>
+    <string name="code_button">code button</string>
+    <string name="link_button">link button</string>
+    <string name="strikethrough_button">strikethrough button</string>
+    <string name="bullet_button">bullet button</string>
+    <string name="quote_button">quote button</string>
+    <string name="break_button">break button</string>
 </resources>

@@ -28,7 +28,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_back"
-            app:tint="?attr/colorSecondary" />
+            app:tint="?attr/colorSecondaryVariant" />
 
         <ImageButton
             android:id="@+id/view_record_button_edit"
@@ -41,7 +41,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_edit"
-            app:tint="?attr/colorSecondary" />
+            app:tint="?attr/colorSecondaryVariant" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <FrameLayout
