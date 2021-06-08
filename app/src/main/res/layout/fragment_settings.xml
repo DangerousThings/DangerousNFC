@@ -38,6 +38,7 @@
                     android:id="@+id/settings_text_theme"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_weight="2"
                     android:fontFamily="@font/proxima_nova_bold"
                     android:text="@string/theme"

@@ -57,7 +57,7 @@ public class SavedImplantRecyclerAdapter extends RecyclerView.Adapter<SavedImpla
     {
         Implant implant = _savedImplants.get(position);
         holder.mNameText.setText(implant.getImplantName());
-        holder.mTypeText.setText(implant.getTagFamily().toString());
+        holder.mTypeText.setText(implant.getImplantModelAsString());
     }
 
     @Override
