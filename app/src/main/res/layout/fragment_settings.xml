@@ -39,7 +39,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:fontFamily="@font/ibmplexmono_text"
+                    android:fontFamily="@font/proxima_nova_bold"
                     android:text="@string/theme"
                     android:textColor="?attr/colorPrimary"
                     android:textSize="24sp" />
@@ -48,13 +48,15 @@
                     android:id="@+id/settings_button_change_theme"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/rounded_primary"
                     android:layout_gravity="center_vertical"
-                    android:textColor="?attr/colorSecondary"
-                    android:minHeight="35dp"
+                    android:layout_weight="1"
+                    android:textAllCaps="false"
+                    android:background="@drawable/rounded_primary"
+                    android:fontFamily="@font/proxima_nova_bold"
                     android:minWidth="120dp"
-                    android:text="@string/change_theme" />
+                    android:minHeight="35dp"
+                    android:text="@string/change_theme"
+                    android:textColor="?attr/colorSecondary" />
             </LinearLayout>
 
             <View

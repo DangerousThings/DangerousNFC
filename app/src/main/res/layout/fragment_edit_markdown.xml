@@ -157,12 +157,12 @@
                         android:id="@+id/edit_markdown_edittext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/ibmplexmono_text"
-                        android:textColorHint="?attr/colorPrimary"
-                        android:textColor="?attr/colorPrimary"
                         android:ems="10"
+                        android:fontFamily="@font/proxima_nova_regular"
                         android:hint="@string/enter_markdown_text"
-                        android:inputType="textPersonName|textMultiLine"/>
+                        android:inputType="textPersonName|textMultiLine"
+                        android:textColor="?attr/colorPrimary"
+                        android:textColorHint="?attr/colorPrimary" />
                 </LinearLayout>
             </ScrollView>
         </androidx.constraintlayout.widget.ConstraintLayout>

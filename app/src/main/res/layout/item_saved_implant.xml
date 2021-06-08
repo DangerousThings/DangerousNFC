@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:fontFamily="@font/ibmplexmono_semibold"
+        android:fontFamily="@font/proxima_nova_bold"
         android:textColor="?attr/colorSecondary"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/item_saved_implants_image"
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:fontFamily="@font/ibmplexmono_text"
+        android:fontFamily="@font/proxima_nova_regular"
         android:textColor="?attr/colorSecondary"
         app:layout_constraintStart_toEndOf="@+id/item_saved_implants_image"
         app:layout_constraintTop_toBottomOf="@+id/item_saved_implants_text_name" />

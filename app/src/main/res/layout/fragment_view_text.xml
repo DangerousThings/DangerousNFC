@@ -26,7 +26,7 @@
                 android:id="@+id/view_text_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/ibmplexmono_text"
+                android:fontFamily="@font/proxima_nova_regular"
                 android:text="@string/no_record_text_detected"
                 android:textColor="?attr/colorPrimary"
                 android:textSize="18sp" />

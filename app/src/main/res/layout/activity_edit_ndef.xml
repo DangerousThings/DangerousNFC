@@ -53,7 +53,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="3"
                 android:background="@drawable/record_type_background"
-                android:fontFamily="@font/ibmplexmono_semibold"
+                android:fontFamily="@font/proxima_nova_bold"
                 android:stateListAnimator="@null"
                 android:text="@string/plain_text"
                 android:textAllCaps="false"
