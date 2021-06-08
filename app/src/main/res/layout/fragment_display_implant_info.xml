@@ -133,12 +133,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:background="@android:color/transparent"
+                android:contentDescription="@string/back_button"
                 android:src="@drawable/ic_back"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="@string/back_button"
-                app:tint="?attr/colorSecondary" />
+                app:tint="?attr/colorSecondaryVariant" />
 
             <Button
                 android:id="@+id/display_implant_button_operations"

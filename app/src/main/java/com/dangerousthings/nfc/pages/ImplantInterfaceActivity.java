@@ -97,26 +97,28 @@ public class ImplantInterfaceActivity extends BaseActivity
     private void writeToTag(Intent intent, NdefMessage message)
     {
         Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        if(NdefUtils.writeNdefMessage(tag, message))
+        if(tag != null)
         {
-            builder.setMessage("NDEF write successful");
-            builder.setCancelable(false);
-            builder.setPositiveButton("OK", (dialog, which) ->
-                    {
-                        dialog.cancel();
-                        popOnWriteSuccess(tag);
-                    });
-            AlertDialog alert = builder.create();
-            alert.show();
-        }
-        else
-        {
-            builder.setMessage("NDEF write unsuccessful");
-            builder.setCancelable(false);
-            builder.setPositiveButton("OK", (dialog, which) -> dialog.cancel());
-            AlertDialog alert = builder.create();
-            alert.show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            if (NdefUtils.writeNdefMessage(tag, message))
+            {
+                builder.setMessage("NDEF write successful");
+                builder.setCancelable(false);
+                builder.setPositiveButton("OK", (dialog, which) ->
+                {
+                    dialog.cancel();
+                    popOnWriteSuccess(tag);
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
+            } else
+            {
+                builder.setMessage("NDEF write unsuccessful");
+                builder.setCancelable(false);
+                builder.setPositiveButton("OK", (dialog, which) -> dialog.cancel());
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
         }
     }
 

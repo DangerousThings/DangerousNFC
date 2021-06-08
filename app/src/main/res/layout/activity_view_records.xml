@@ -62,7 +62,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_back"
-            app:tint="?attr/colorSecondary" />
+            app:tint="?attr/colorSecondaryVariant" />
 
         <ImageButton
             android:id="@+id/view_records_button_add"
@@ -75,7 +75,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="?attr/colorSecondary" />
+            app:tint="?attr/colorSecondaryVariant" />
 
         <ImageButton
             android:id="@+id/view_records_button_write"
@@ -89,7 +89,7 @@
             app:layout_constraintEnd_toStartOf="@+id/view_records_button_add"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_save"
-            app:tint="?attr/colorSecondary" />
+            app:tint="?attr/colorSecondaryVariant" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

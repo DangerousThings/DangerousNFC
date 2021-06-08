@@ -73,7 +73,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/ic_back"
-            app:tint="?attr/colorSecondary" />
+            app:tint="?attr/colorSecondaryVariant" />
 
         <ImageButton
             android:id="@+id/edit_ndef_button_save"
@@ -87,7 +87,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_check"
-            app:tint="?attr/colorSecondary" />
+            app:tint="?attr/colorSecondaryVariant" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -95,6 +95,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="end"
+        app:itemTextColor="?attr/colorSecondaryVariant"
         android:background="?attr/colorPrimaryVariant"
         android:maxWidth="140dp"
         app:menu="@menu/ndef_payload_types" />

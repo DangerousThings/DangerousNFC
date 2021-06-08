@@ -74,7 +74,7 @@ public class Theme
         this.colorAccent = colorAccent;
     }
 
-    public Theme(int id, String themeName, int primary,int secondary, int primaryVariant, int accent)
+    public Theme(int id, String themeName, int primary, int primaryVariant, int secondary, int accent)
     {
         themeId = id;
         themeTitle = themeName;

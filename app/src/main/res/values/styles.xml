@@ -2,51 +2,45 @@
 <resources>
     <style name="DT" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/White</item>
-        <item name="colorSecondary">@color/Black</item>
         <item name="colorPrimaryVariant">@color/White</item>
+        <item name="colorSecondary">@color/Black</item>
+        <item name="colorSecondaryVariant">@color/Black</item>
         <item name="colorAccent">#F56528</item>
-    </style>
-    <style name="DEOT" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#008F78</item>
-        <item name="colorSecondary">#0A1017</item>
-        <item name="colorPrimaryVariant">#008F78</item>
-        <item name="colorAccent">#BBC6C5</item>
     </style>
     <style name="OPZ" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">#BCBDC2</item>
-        <item name="colorSecondary">#4B4E5B</item>
         <item name="colorPrimaryVariant">#BCBDC2</item>
+        <item name="colorSecondary">#4B4E5B</item>
+        <item name="colorSecondaryVariant">#4B4E5B</item>
         <item name="colorAccent">#E0B000</item>
     </style>
     <style name="Wog" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">#FFF6D8</item>
-        <item name="colorSecondary">#167D7F</item>
         <item name="colorPrimaryVariant">#FFF6D8</item>
+        <item name="colorSecondary">#167D7F</item>
+        <item name="colorSecondaryVariant">#167D7F</item>
         <item name="colorAccent">#B5E5CF</item>
     </style>
     <style name="BlackOnWhite" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">#FFFFFF</item>
-        <item name="colorSecondary">#000000</item>
         <item name="colorPrimaryVariant">#FFFFFF</item>
+        <item name="colorSecondary">#000000</item>
+        <item name="colorSecondaryVariant">#000000</item>
         <item name="colorAccent">#7F7F7F</item>
     </style>
     <style name="MurderedOut" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">#BEBEBE</item>
-        <item name="colorSecondary">#000000</item>
         <item name="colorPrimaryVariant">#BEBEBE</item>
+        <item name="colorSecondary">#000000</item>
+        <item name="colorSecondaryVariant">#000000</item>
         <item name="colorAccent">#7F7F7F</item>
     </style>
     <style name="Zytel" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">#FBB518</item>
-        <item name="colorSecondary">#0D1313</item>
-        <item name="colorPrimaryVariant">#2B5C55</item>
+        <item name="colorPrimaryVariant">#26544E</item>
+        <item name="colorSecondary">#0E1012</item>
+        <item name="colorSecondaryVariant">#FBB518</item>
         <item name="colorAccent">#D3DCF0</item>
-    </style>
-    <style name="Brigador" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">#21B8C5</item>
-        <item name="colorSecondary">#10161D</item>
-        <item name="colorPrimaryVariant">#852134</item>
-        <item name="colorAccent">#C50E25</item>
     </style>
     <style name="ImplantModelSpinner" parent="@android:style/Widget.TextView.SpinnerItem">
         <item name="android:textColor">?android:colorSecondary</item>
