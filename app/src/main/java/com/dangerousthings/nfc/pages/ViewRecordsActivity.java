@@ -10,12 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.icu.text.AlphabeticIndex;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageButton;
 
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.adapters.NdefMessageRecyclerAdapter;
@@ -118,7 +115,6 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
                                 }
                                 _recyclerAdapter.notifyDataSetChanged();
                                 _recordsEdited = true;
-                                _toolbar.setWriteButtonVisible();
                             }
                             //if the edit button was clicked from the view record activity
                             else if(requestCode == REQ_CODE_VIEW_RECORD)
@@ -302,7 +298,6 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
                     _records.remove(_alteredIndex);
                     _recyclerAdapter.notifyDataSetChanged();
                     _recordsEdited = true;
-                    _toolbar.setWriteButtonVisible();
                 }))
                 .setNegativeButton("No", ((dialog, which) -> dialog.cancel()))
                 .show();

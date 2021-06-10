@@ -44,11 +44,6 @@ public class ViewRecordsToolbar extends Fragment
         mWriteButton.setOnClickListener(v -> _clickListener.onClick(OnClickType.write));
     }
 
-    public void setWriteButtonVisible()
-    {
-        mWriteButton.setVisibility(View.VISIBLE);
-    }
-
     public void setClickListener(IClickListener listener)
     {
         _clickListener = listener;
