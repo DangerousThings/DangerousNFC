@@ -80,7 +80,7 @@ public class DisplayImplantInfoFragment extends Fragment
         mFamilyText.setText(_implant.getTagFamily().toString());
         mModelText.setText(_implant.getImplantModelAsString());
         mBackButton.setOnClickListener(v -> requireActivity().onBackPressed());
-        mOperationsButton.setOnClickListener(v -> _clickListener.onClick());
+        mOperationsButton.setOnClickListener(v -> _clickListener.onClick(null));
     }
 
     public void setClickListener(IClickListener listener)

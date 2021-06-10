@@ -2,12 +2,15 @@ package com.dangerousthings.nfc.pages;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.icu.text.AlphabeticIndex;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.os.Bundle;
@@ -17,6 +20,10 @@ import android.widget.ImageButton;
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.adapters.NdefMessageRecyclerAdapter;
 import com.dangerousthings.nfc.databases.ImplantDatabase;
+import com.dangerousthings.nfc.enums.OnClickType;
+import com.dangerousthings.nfc.fragments.RecordOptionsToolbar;
+import com.dangerousthings.nfc.fragments.ViewRecordsToolbar;
+import com.dangerousthings.nfc.interfaces.IClickListener;
 import com.dangerousthings.nfc.interfaces.IImplantDAO;
 import com.dangerousthings.nfc.interfaces.IItemLongClickListener;
 import com.dangerousthings.nfc.models.Implant;
@@ -25,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 
-public class ViewRecordsActivity extends BaseActivity implements IItemLongClickListener
+public class ViewRecordsActivity extends BaseActivity implements IItemLongClickListener, IClickListener
 {
     public final static int REQ_CODE_RECORD = 1;
     public final static int REQ_CODE_VIEW_RECORD = 2;
@@ -36,14 +43,12 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
     int _alteredIndex = 0;
     boolean _recordsEdited = false;
     Implant _implant;
+    ViewRecordsToolbar _toolbar;
     NdefMessageRecyclerAdapter _recyclerAdapter;
     ActivityResultLauncher<Intent> _activityResultLauncher;
 
     //UI elements
     RecyclerView mRecyclerView;
-    ImageButton mBackButton;
-    ImageButton mAddRecordButton;
-    ImageButton mWriteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -54,6 +59,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
         prepareActivity();
         setUpViews();
         setUpActivityResultLauncher();
+        startViewRecordsToolbar();
     }
 
     private void prepareActivity()
@@ -112,7 +118,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
                                 }
                                 _recyclerAdapter.notifyDataSetChanged();
                                 _recordsEdited = true;
-                                mWriteButton.setVisibility(View.VISIBLE);
+                                _toolbar.setWriteButtonVisible();
                             }
                             //if the edit button was clicked from the view record activity
                             else if(requestCode == REQ_CODE_VIEW_RECORD)
@@ -150,13 +156,6 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
     private void setUpViews()
     {
         mRecyclerView = findViewById(R.id.view_records_recycler);
-        mBackButton = findViewById(R.id.view_records_button_back);
-        mAddRecordButton = findViewById(R.id.view_records_button_add);
-        mWriteButton = findViewById(R.id.view_records_button_write);
-        mWriteButton.setOnClickListener(v -> writeRecords());
-
-        mAddRecordButton.setOnClickListener(v -> onNewRecordClick());
-        mBackButton.setOnClickListener(v -> onBackPressed());
 
         //set up recyclerview
         _recyclerAdapter = new NdefMessageRecyclerAdapter(this, _records);
@@ -228,18 +227,14 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
     @Override
     public boolean onItemLongClick(int position)
     {
-        new AlertDialog.Builder(this)
-                .setTitle("Delete Record?")
-                .setMessage("Are you sure you want to delete this record?")
-                .setPositiveButton("Yes", ((dialog, which) ->
-                {
-                    _records.remove(position);
-                    _recyclerAdapter.notifyDataSetChanged();
-                    _recordsEdited = true;
-                    mWriteButton.setVisibility(View.VISIBLE);
-                }))
-                .setNegativeButton("No", ((dialog, which) -> dialog.cancel()))
-                .show();
+        _alteredIndex = position;
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        RecordOptionsToolbar optionsToolbar = RecordOptionsToolbar.newInstance(false);
+        optionsToolbar.setClickListener(this);
+        fragmentTransaction.replace(R.id.view_records_frame_toolbar, optionsToolbar);
+        fragmentTransaction.addToBackStack("options_toolbar");
+        fragmentTransaction.commit();
         return true;
     }
 
@@ -263,5 +258,64 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
         NdefRecord[] records = new NdefRecord[_records.size()];
         records = _records.toArray(records);
         return new NdefMessage(records);
+    }
+
+    private void popFragmentStack()
+    {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.popBackStack();
+    }
+
+    @Override
+    public void onClick(OnClickType clickType)
+    {
+        if(clickType != null)
+        {
+            switch(clickType)
+            {
+                case back:
+                    onBackPressed();
+                    break;
+                case new_record:
+                    onNewRecordClick();
+                    break;
+                case write:
+                    writeRecords();
+                    break;
+                case delete:
+                    deleteRecord();
+                    break;
+                case cancel:
+                    popFragmentStack();
+                    break;
+            }
+        }
+    }
+
+    private void deleteRecord()
+    {
+        new AlertDialog.Builder(this)
+                .setTitle("Delete Record?")
+                .setMessage("Are you sure you want to delete this record?")
+                .setPositiveButton("Yes", ((dialog, which) ->
+                {
+                    _records.remove(_alteredIndex);
+                    _recyclerAdapter.notifyDataSetChanged();
+                    _recordsEdited = true;
+                    _toolbar.setWriteButtonVisible();
+                }))
+                .setNegativeButton("No", ((dialog, which) -> dialog.cancel()))
+                .show();
+        popFragmentStack();
+    }
+
+    private void startViewRecordsToolbar()
+    {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        _toolbar = new ViewRecordsToolbar();
+        _toolbar.setClickListener(this);
+        fragmentTransaction.replace(R.id.view_records_frame_toolbar, _toolbar);
+        fragmentTransaction.commit();
     }
 }
