@@ -16,6 +16,7 @@ import android.os.Bundle;
 
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.adapters.NdefMessageRecyclerAdapter;
+import com.dangerousthings.nfc.controls.EncryptionPasswordDialog;
 import com.dangerousthings.nfc.databases.ImplantDatabase;
 import com.dangerousthings.nfc.enums.OnClickType;
 import com.dangerousthings.nfc.fragments.RecordOptionsToolbar;
@@ -284,8 +285,20 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
                 case cancel:
                     popFragmentStack();
                     break;
+                case encrypt_record:
+                    break;
+                case prompt_encryption_password:
+                    encryptRecord();
+                    break;
             }
         }
+    }
+
+    private void encryptRecord()
+    {
+        EncryptionPasswordDialog dialog = new EncryptionPasswordDialog();
+        dialog.setClickListener(this);
+        dialog.show(getSupportFragmentManager(), "EncryptionDialog");
     }
 
     private void deleteRecord()
@@ -298,10 +311,10 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
                     _records.remove(_alteredIndex);
                     _recyclerAdapter.notifyDataSetChanged();
                     _recordsEdited = true;
+                    popFragmentStack();
                 }))
                 .setNegativeButton("No", ((dialog, which) -> dialog.cancel()))
                 .show();
-        popFragmentStack();
     }
 
     private void startViewRecordsToolbar()

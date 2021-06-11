@@ -6,6 +6,7 @@ public enum OnClickType
     back,
     write,
     encrypt_record,
+    prompt_encryption_password,
     decrypt_record,
     cancel,
     delete

@@ -58,7 +58,7 @@ public class RecordOptionsToolbar extends Fragment
         mEncryptButton = view.findViewById(R.id.record_options_button_encrypt);
         mCloseButton.setOnClickListener(v -> _clickListener.onClick(OnClickType.cancel));
         mDeleteButton.setOnClickListener(v -> _clickListener.onClick(OnClickType.delete));
-        mEncryptButton.setOnClickListener(v -> _clickListener.onClick(OnClickType.encrypt_record));
+        mEncryptButton.setOnClickListener(v -> _clickListener.onClick(OnClickType.prompt_encryption_password));
     }
 
     public void setClickListener(IClickListener listener)
