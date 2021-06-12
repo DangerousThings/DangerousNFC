@@ -289,6 +289,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
                     break;
                 case encrypt_record:
                     encryptRecord();
+                    popFragmentStack();
                     break;
                 case prompt_encryption_password:
                     promptForEncryption();
@@ -304,7 +305,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
         {
             NdefRecord unencryptedRecord = _recyclerAdapter.getRecord(_alteredIndex);
             byte[] encryptedBytes = EncryptionUtils.encryptDataWithAES128(encryptionPassword, unencryptedRecord.getPayload());
-            NdefRecord encryptedRecord = NdefRecord.createMime(EncryptionUtils.getEncryptedMimeTypeFromMimeType(unencryptedRecord.toMimeType()), encryptedBytes);
+            NdefRecord encryptedRecord = NdefRecord.createMime(EncryptionUtils.getEncryptedMimeType(unencryptedRecord.toMimeType()), encryptedBytes);
 
             _records.remove(_alteredIndex);
             _records.add(_alteredIndex, encryptedRecord);

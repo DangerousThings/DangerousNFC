@@ -88,11 +88,13 @@ public class EncryptionUtils
         return cipher.doFinal(cipherBytes);
     }
 
-    public static String getEncryptedMimeTypeFromMimeType(String mimeType)
+    public static String getEncryptedMimeType(String mimeType)
     {
-        String encryptedMimeType = mimeType.substring(mimeType.indexOf("/"));
-        encryptedMimeType = encryptedMimeType.trim();
-        encryptedMimeType = "encrypted" + encryptedMimeType;
-        return encryptedMimeType;
+        return "encrypted_" + mimeType;
+    }
+
+    public static String getDecryptedMimeType(String encryptedMimeType)
+    {
+        return encryptedMimeType.substring(encryptedMimeType.indexOf("_")+1).trim();
     }
 }

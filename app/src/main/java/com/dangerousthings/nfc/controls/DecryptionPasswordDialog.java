@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -22,13 +21,11 @@ import com.dangerousthings.nfc.interfaces.IClickListener;
 
 import java.util.Objects;
 
-public class EncryptionPasswordDialog extends DialogFragment
+public class DecryptionPasswordDialog extends DialogFragment
 {
     IClickListener _clickListener;
 
     EditText mPasswordEntry;
-    EditText mPasswordConfirmEntry;
-    TextView mPasswordMismatchText;
 
     @NonNull
     @Override
@@ -37,16 +34,14 @@ public class EncryptionPasswordDialog extends DialogFragment
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         @SuppressLint("InflateParams")
-        View view = inflater.inflate(R.layout.dialog_encryption_password, null);
+        View view = inflater.inflate(R.layout.dialog_decryption_password, null);
         setStyle(DialogFragment.STYLE_NO_FRAME, android.R.style.Theme);
 
-        mPasswordEntry = view.findViewById(R.id.encryption_password_edittext);
-        mPasswordConfirmEntry = view.findViewById(R.id.encryption_password_edittext_confirm);
-        mPasswordMismatchText = view.findViewById(R.id.encryption_password_text_password_mismatch);
-        Button mOKButton = view.findViewById(R.id.encryption_password_button_ok);
-        Button mCancelButton = view.findViewById(R.id.encryption_password_button_cancel);
-        mOKButton.setOnClickListener(v -> checkPasswords());
-        mCancelButton.setOnClickListener(v -> Objects.requireNonNull(getDialog()).cancel());
+        mPasswordEntry = view.findViewById(R.id.decryption_password_edittext);
+        Button mOKButton = view.findViewById(R.id.decryption_password_button_ok);
+        Button mCancelButton = view.findViewById(R.id.decryption_password_button_cancel);
+        mOKButton.setOnClickListener(v -> okButtonClicked());
+        mCancelButton.setOnClickListener(v -> _clickListener.onClick(OnClickType.cancel));
 
         builder.setView(view);
         Dialog dialog = builder.create();
@@ -58,20 +53,13 @@ public class EncryptionPasswordDialog extends DialogFragment
         return dialog;
     }
 
-    private void checkPasswords()
+    private void okButtonClicked()
     {
-        if(!(mPasswordEntry.getText().toString().equals(mPasswordConfirmEntry.getText().toString())))
-        {
-            mPasswordMismatchText.setVisibility(View.VISIBLE);
-        }
-        else
-        {
-            _clickListener.onClick(OnClickType.encrypt_record);
-            Objects.requireNonNull(getDialog()).cancel();
-        }
+        _clickListener.onClick(OnClickType.decrypt_record);
+        Objects.requireNonNull(getDialog()).cancel();
     }
 
-    public String getEncryptionPassword()
+    public String getDecryptionPassword()
     {
         return mPasswordEntry.getText().toString();
     }
