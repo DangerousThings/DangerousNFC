@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.adapters.NdefMessageRecyclerAdapter;
@@ -25,6 +26,7 @@ import com.dangerousthings.nfc.interfaces.IClickListener;
 import com.dangerousthings.nfc.interfaces.IImplantDAO;
 import com.dangerousthings.nfc.interfaces.IItemLongClickListener;
 import com.dangerousthings.nfc.models.Implant;
+import com.dangerousthings.nfc.utilities.EncryptionUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,8 +46,8 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
     ViewRecordsToolbar _toolbar;
     NdefMessageRecyclerAdapter _recyclerAdapter;
     ActivityResultLauncher<Intent> _activityResultLauncher;
+    EncryptionPasswordDialog _dialog;
 
-    //UI elements
     RecyclerView mRecyclerView;
 
     @Override
@@ -286,9 +288,10 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
                     popFragmentStack();
                     break;
                 case encrypt_record:
+                    encryptRecord();
                     break;
                 case prompt_encryption_password:
-                    encryptRecord();
+                    promptForEncryption();
                     break;
             }
         }
@@ -296,9 +299,29 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
 
     private void encryptRecord()
     {
-        EncryptionPasswordDialog dialog = new EncryptionPasswordDialog();
-        dialog.setClickListener(this);
-        dialog.show(getSupportFragmentManager(), "EncryptionDialog");
+        String encryptionPassword = _dialog.getEncryptionPassword();
+        try
+        {
+            NdefRecord unencryptedRecord = _recyclerAdapter.getRecord(_alteredIndex);
+            byte[] encryptedBytes = EncryptionUtils.encryptDataWithAES128(encryptionPassword, unencryptedRecord.getPayload());
+            NdefRecord encryptedRecord = NdefRecord.createMime(EncryptionUtils.getEncryptedMimeTypeFromMimeType(unencryptedRecord.toMimeType()), encryptedBytes);
+
+            _records.remove(_alteredIndex);
+            _records.add(_alteredIndex, encryptedRecord);
+            _recyclerAdapter.notifyDataSetChanged();
+            _recordsEdited = true;
+        }
+        catch(Exception e)
+        {
+            Log.d("Encryption Error:", e.toString());
+        }
+    }
+
+    private void promptForEncryption()
+    {
+        _dialog = new EncryptionPasswordDialog();
+        _dialog.setClickListener(this);
+        _dialog.show(getSupportFragmentManager(), "EncryptionDialog");
     }
 
     private void deleteRecord()

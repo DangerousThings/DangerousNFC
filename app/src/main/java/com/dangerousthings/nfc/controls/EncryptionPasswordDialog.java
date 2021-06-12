@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -25,20 +26,26 @@ public class EncryptionPasswordDialog extends DialogFragment
 {
     IClickListener _clickListener;
 
+    EditText mPasswordEntry;
+    EditText mPasswordConfirmEntry;
+    TextView mPasswordMismatchText;
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
+        LayoutInflater inflater = requireActivity().getLayoutInflater();
         @SuppressLint("InflateParams")
         View view = inflater.inflate(R.layout.dialog_encryption_password, null);
         setStyle(DialogFragment.STYLE_NO_FRAME, android.R.style.Theme);
 
-        EditText mPasswordEntry = view.findViewById(R.id.encryption_password_edittext);
+        mPasswordEntry = view.findViewById(R.id.encryption_password_edittext);
+        mPasswordConfirmEntry = view.findViewById(R.id.encryption_password_edittext_confirm);
+        mPasswordMismatchText = view.findViewById(R.id.encryption_password_text_password_mismatch);
         Button mOKButton = view.findViewById(R.id.encryption_password_button_ok);
         Button mCancelButton = view.findViewById(R.id.encryption_password_button_cancel);
-        mOKButton.setOnClickListener(v -> _clickListener.onClick(OnClickType.encrypt_record));
+        mOKButton.setOnClickListener(v -> checkPasswords());
         mCancelButton.setOnClickListener(v -> Objects.requireNonNull(getDialog()).cancel());
 
         builder.setView(view);
@@ -49,6 +56,24 @@ public class EncryptionPasswordDialog extends DialogFragment
             window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         }
         return dialog;
+    }
+
+    private void checkPasswords()
+    {
+        if(!(mPasswordEntry.getText().toString().equals(mPasswordConfirmEntry.getText().toString())))
+        {
+            mPasswordMismatchText.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            _clickListener.onClick(OnClickType.encrypt_record);
+            getDialog().cancel();
+        }
+    }
+
+    public String getEncryptionPassword()
+    {
+        return mPasswordEntry.getText().toString();
     }
 
     public void setClickListener(IClickListener listener)
