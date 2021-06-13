@@ -29,6 +29,7 @@ import com.dangerousthings.nfc.interfaces.IImplantDAO;
 import com.dangerousthings.nfc.interfaces.IItemLongClickListener;
 import com.dangerousthings.nfc.models.Implant;
 import com.dangerousthings.nfc.utilities.EncryptionUtils;
+import com.dangerousthings.nfc.utilities.NdefUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -220,6 +221,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
     {
         //mark the selected record's index
         _alteredIndex = position;
+        popFragmentStack();
         //get the clicked record
         NdefRecord record = _recyclerAdapter.getRecord(position);
         String mimeType = record.toMimeType();
@@ -291,9 +293,17 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
 
     private NdefMessage getNdefMessage()
     {
-        NdefRecord[] records = new NdefRecord[_records.size()];
-        records = _records.toArray(records);
-        return new NdefMessage(records);
+        if(_records.size()>0)
+        {
+            NdefRecord[] records = new NdefRecord[_records.size()];
+            records = _records.toArray(records);
+            return new NdefMessage(records);
+        }
+        else
+        {
+            NdefRecord ndefRecord = new NdefRecord(NdefRecord.TNF_EMPTY, null, null, null);
+            return new NdefMessage(ndefRecord);
+        }
     }
 
     //pops the current fragment off.
@@ -374,6 +384,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
                 _records.remove(_alteredIndex);
                 _records.add(_alteredIndex, record);
                 _recyclerAdapter.notifyDataSetChanged();
+                popFragmentStack();
             }
         }
         catch(Exception e)
@@ -395,6 +406,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
             _records.add(_alteredIndex, encryptedRecord);
             _recyclerAdapter.notifyDataSetChanged();
             _recordsEdited = true;
+            popFragmentStack();
         }
         catch(Exception e)
         {
