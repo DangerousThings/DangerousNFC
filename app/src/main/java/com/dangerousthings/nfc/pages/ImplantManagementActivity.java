@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.databases.ImplantDatabase;
+import com.dangerousthings.nfc.enums.OnClickType;
 import com.dangerousthings.nfc.fragments.DisplayImplantInfoFragment;
 import com.dangerousthings.nfc.fragments.EditImplantInfoFragment;
 import com.dangerousthings.nfc.interfaces.IClickListener;
@@ -160,7 +161,7 @@ public class ImplantManagementActivity extends BaseActivity implements IClickLis
     }
 
     @Override
-    public void onClick()
+    public void onClick(OnClickType clickType)
     {
         mDrawer.openDrawer(GravityCompat.END);
     }

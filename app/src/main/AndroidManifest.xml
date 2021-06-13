@@ -55,6 +55,8 @@
 
                 <data android:mimeType="text/plain" />
                 <data android:mimeType="text/markdown" />
+                <data android:mimeType="encrypted_text/markdown" />
+                <data android:mimeType="encrypted_text/plain" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.nfc.action.TECH_DISCOVERED" />

@@ -2,6 +2,9 @@ package com.dangerousthings.nfc.pages;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,21 +14,28 @@ import android.content.Intent;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageButton;
+import android.util.Log;
 
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.adapters.NdefMessageRecyclerAdapter;
+import com.dangerousthings.nfc.controls.DecryptionPasswordDialog;
+import com.dangerousthings.nfc.controls.EncryptionPasswordDialog;
 import com.dangerousthings.nfc.databases.ImplantDatabase;
+import com.dangerousthings.nfc.enums.OnClickType;
+import com.dangerousthings.nfc.fragments.RecordOptionsToolbar;
+import com.dangerousthings.nfc.fragments.ViewRecordsToolbar;
+import com.dangerousthings.nfc.interfaces.IClickListener;
 import com.dangerousthings.nfc.interfaces.IImplantDAO;
 import com.dangerousthings.nfc.interfaces.IItemLongClickListener;
 import com.dangerousthings.nfc.models.Implant;
+import com.dangerousthings.nfc.utilities.EncryptionUtils;
+import com.dangerousthings.nfc.utilities.NdefUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 
-public class ViewRecordsActivity extends BaseActivity implements IItemLongClickListener
+public class ViewRecordsActivity extends BaseActivity implements IItemLongClickListener, IClickListener
 {
     public final static int REQ_CODE_RECORD = 1;
     public final static int REQ_CODE_VIEW_RECORD = 2;
@@ -36,14 +46,12 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
     int _alteredIndex = 0;
     boolean _recordsEdited = false;
     Implant _implant;
+    ViewRecordsToolbar _toolbar;
     NdefMessageRecyclerAdapter _recyclerAdapter;
     ActivityResultLauncher<Intent> _activityResultLauncher;
+    DialogFragment _dialog;
 
-    //UI elements
     RecyclerView mRecyclerView;
-    ImageButton mBackButton;
-    ImageButton mAddRecordButton;
-    ImageButton mWriteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -54,6 +62,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
         prepareActivity();
         setUpViews();
         setUpActivityResultLauncher();
+        startViewRecordsToolbar();
     }
 
     private void prepareActivity()
@@ -112,12 +121,12 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
                                 }
                                 _recyclerAdapter.notifyDataSetChanged();
                                 _recordsEdited = true;
-                                mWriteButton.setVisibility(View.VISIBLE);
                             }
                             //if the edit button was clicked from the view record activity
                             else if(requestCode == REQ_CODE_VIEW_RECORD)
                             {
-                                onEditButtonClick();
+                                NdefRecord record = Objects.requireNonNull(resultIntent.getExtras()).getParcelable(getString(R.string.intent_record));
+                                onEditButtonClick(record);
                             }
                             //if an NDEF message has been written
                             else if(requestCode == REQ_CODE_WRITE_MESSAGE)
@@ -150,13 +159,6 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
     private void setUpViews()
     {
         mRecyclerView = findViewById(R.id.view_records_recycler);
-        mBackButton = findViewById(R.id.view_records_button_back);
-        mAddRecordButton = findViewById(R.id.view_records_button_add);
-        mWriteButton = findViewById(R.id.view_records_button_write);
-        mWriteButton.setOnClickListener(v -> writeRecords());
-
-        mAddRecordButton.setOnClickListener(v -> onNewRecordClick());
-        mBackButton.setOnClickListener(v -> onBackPressed());
 
         //set up recyclerview
         _recyclerAdapter = new NdefMessageRecyclerAdapter(this, _records);
@@ -165,10 +167,10 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
         mRecyclerView.setAdapter(_recyclerAdapter);
     }
 
-    private void onEditButtonClick()
+    private void onEditButtonClick(NdefRecord record)
     {
         Intent editRecord = new Intent(this, EditNdefActivity.class);
-        editRecord.putExtra(getString(R.string.intent_record), _recyclerAdapter.getRecord(_alteredIndex));
+        editRecord.putExtra(getString(R.string.intent_record), record);
         if(_implant != null)
         {
             //if there is an implant loaded from the database that we are altering, pass on it's capacity
@@ -217,10 +219,41 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
     @Override
     public void onItemClick(int position)
     {
-        Intent viewRecordIntent = new Intent(this, ViewRecordActivity.class);
-        viewRecordIntent.putExtra(getString(R.string.intent_record), _recyclerAdapter.getRecord(position));
-        //stores the index of the selected item in the case that it is to be edited
+        //mark the selected record's index
         _alteredIndex = position;
+        popFragmentStack();
+        //get the clicked record
+        NdefRecord record = _recyclerAdapter.getRecord(position);
+        String mimeType = record.toMimeType();
+        //first condition for encrypted mimetype
+        if(mimeType.contains("_"))
+        {
+            String type = mimeType.substring(0, mimeType.indexOf("_"));
+            //second condition
+            if(type.equals("encrypted"))
+            {
+                //prompt for decryption password
+                _dialog = DecryptionPasswordDialog.newInstance(true);
+                ((DecryptionPasswordDialog)_dialog).setClickListener(this);
+                _dialog.show(getSupportFragmentManager(), "DecryptionDialog");
+            }
+            else
+            {
+                viewRecord(record);
+            }
+        }
+        else
+        {
+            viewRecord(record);
+        }
+    }
+
+    //opens the record for viewing
+    private void viewRecord(NdefRecord record)
+    {
+        Intent viewRecordIntent = new Intent(this, ViewRecordActivity.class);
+        viewRecordIntent.putExtra(getString(R.string.intent_record), record);
+        //opens for result so it can listen for the edit button
         openActivityForResult(viewRecordIntent, REQ_CODE_VIEW_RECORD);
         overridePendingTransition(0, 0);
     }
@@ -228,18 +261,18 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
     @Override
     public boolean onItemLongClick(int position)
     {
-        new AlertDialog.Builder(this)
-                .setTitle("Delete Record?")
-                .setMessage("Are you sure you want to delete this record?")
-                .setPositiveButton("Yes", ((dialog, which) ->
-                {
-                    _records.remove(position);
-                    _recyclerAdapter.notifyDataSetChanged();
-                    _recordsEdited = true;
-                    mWriteButton.setVisibility(View.VISIBLE);
-                }))
-                .setNegativeButton("No", ((dialog, which) -> dialog.cancel()))
-                .show();
+        //stores the selected record's location
+        _alteredIndex = position;
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        //opens the options toolbar over the top of the viewrecords toolbar
+        RecordOptionsToolbar optionsToolbar = RecordOptionsToolbar.newInstance(EncryptionUtils.isRecordEncrypted(_recyclerAdapter.getRecord(position)));
+        //set the IClickListener interface
+        optionsToolbar.setClickListener(this);
+        fragmentTransaction.replace(R.id.view_records_frame_toolbar, optionsToolbar);
+        //adds to back stack so it can be popped off back to the viewrecords toolbar
+        fragmentTransaction.addToBackStack("options_toolbar");
+        fragmentTransaction.commit();
         return true;
     }
 
@@ -260,8 +293,164 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
 
     private NdefMessage getNdefMessage()
     {
-        NdefRecord[] records = new NdefRecord[_records.size()];
-        records = _records.toArray(records);
-        return new NdefMessage(records);
+        if(_records.size()>0)
+        {
+            NdefRecord[] records = new NdefRecord[_records.size()];
+            records = _records.toArray(records);
+            return new NdefMessage(records);
+        }
+        else
+        {
+            NdefRecord ndefRecord = new NdefRecord(NdefRecord.TNF_EMPTY, null, null, null);
+            return new NdefMessage(ndefRecord);
+        }
+    }
+
+    //pops the current fragment off.
+    //used to pop the RecordOptions toolbar off the ViewRecords toolbar
+    private void popFragmentStack()
+    {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.popBackStack();
+    }
+
+    //cases for the different IClickListener interface conditions
+    @Override
+    public void onClick(OnClickType clickType)
+    {
+        if(clickType != null)
+        {
+            switch(clickType)
+            {
+                //back button is pressed from a fragment
+                case back:
+                    onBackPressed();
+                    break;
+                //the new record button is pressed from the ViewRecords toolbar
+                case new_record:
+                    onNewRecordClick();
+                    break;
+                //the write button is pressed from the ViewRecords toolbar
+                case write:
+                    writeRecords();
+                    break;
+                //the delete button is pressed from the RecordOptions toolbar
+                case delete:
+                    deleteRecord();
+                    break;
+                //the cancel button is pressed from one of the password prompt dialogs
+                case cancel:
+                    popFragmentStack();
+                    break;
+                //the ok button is pressed from the EncryptionPasswordDialog
+                case encrypt_record:
+                    encryptRecord();
+                    popFragmentStack();
+                    break;
+                //the lock button is pressed from the RecordOptions toolbar
+                case prompt_encryption_password:
+                    promptForEncryption();
+                    break;
+                case prompt_decryption_password:
+                //the unlock button is pressed from the RecordOptions toolbar
+                    promptForDecryption(false);
+                    break;
+                //the ok button is pressed from the DecryptionPasswordDialog when told not to view the result
+                case decrypt_record:
+                    decryptRecord(false);
+                    break;
+                //the ok button is pressed from the DecryptionPasswordDialog when told TO view the result
+                case decrypt_and_view:
+                    decryptRecord(true);
+                    break;
+            }
+        }
+    }
+
+    private void decryptRecord(boolean view)
+    {
+        String decryptionPassword = ((DecryptionPasswordDialog)_dialog).getDecryptionPassword();
+        NdefRecord record = _recyclerAdapter.getRecord(_alteredIndex);
+        try
+        {
+            byte[] decryptedBytes = EncryptionUtils.decryptAES128Data(decryptionPassword, record.getPayload());
+            record = NdefRecord.createMime(EncryptionUtils.getDecryptedMimeType(record.toMimeType()), decryptedBytes);
+            if(view)
+            {
+                viewRecord(record);
+            }
+            else
+            {
+                _records.remove(_alteredIndex);
+                _records.add(_alteredIndex, record);
+                _recyclerAdapter.notifyDataSetChanged();
+                popFragmentStack();
+            }
+        }
+        catch(Exception e)
+        {
+            Log.d("Decryption Error:", e.toString());
+        }
+    }
+
+    private void encryptRecord()
+    {
+        String encryptionPassword = ((EncryptionPasswordDialog)_dialog).getEncryptionPassword();
+        try
+        {
+            NdefRecord unencryptedRecord = _recyclerAdapter.getRecord(_alteredIndex);
+            byte[] encryptedBytes = EncryptionUtils.encryptDataWithAES128(encryptionPassword, unencryptedRecord.getPayload());
+            NdefRecord encryptedRecord = NdefRecord.createMime(EncryptionUtils.getEncryptedMimeType(unencryptedRecord.toMimeType()), encryptedBytes);
+
+            _records.remove(_alteredIndex);
+            _records.add(_alteredIndex, encryptedRecord);
+            _recyclerAdapter.notifyDataSetChanged();
+            _recordsEdited = true;
+            popFragmentStack();
+        }
+        catch(Exception e)
+        {
+            Log.d("Encryption Error:", e.toString());
+        }
+    }
+
+    private void promptForEncryption()
+    {
+        _dialog = new EncryptionPasswordDialog();
+        ((EncryptionPasswordDialog)_dialog).setClickListener(this);
+        _dialog.show(getSupportFragmentManager(), "EncryptionDialog");
+    }
+
+    private void promptForDecryption(boolean viewDecryption)
+    {
+        _dialog = DecryptionPasswordDialog.newInstance(viewDecryption);
+        ((DecryptionPasswordDialog)_dialog).setClickListener(this);
+        _dialog.show(getSupportFragmentManager(), "DecryptionDialog");
+    }
+
+    private void deleteRecord()
+    {
+        new AlertDialog.Builder(this)
+                .setTitle("Delete Record?")
+                .setMessage("Are you sure you want to delete this record?")
+                .setPositiveButton("Yes", ((dialog, which) ->
+                {
+                    _records.remove(_alteredIndex);
+                    _recyclerAdapter.notifyDataSetChanged();
+                    _recordsEdited = true;
+                    popFragmentStack();
+                }))
+                .setNegativeButton("No", ((dialog, which) -> dialog.cancel()))
+                .show();
+    }
+
+    private void startViewRecordsToolbar()
+    {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        _toolbar = new ViewRecordsToolbar();
+        _toolbar.setClickListener(this);
+        fragmentTransaction.replace(R.id.view_records_frame_toolbar, _toolbar);
+        fragmentTransaction.commit();
     }
 }
