@@ -92,8 +92,9 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
         {
             //add any additional NDEF related mimetypes here
             ndef.addDataType("text/plain");
-            ndef.addDataType("image/jpeg");
             ndef.addDataType("text/markdown");
+            ndef.addDataType("encrypted_text/markdown");
+            ndef.addDataType("encrypted_text/plain");
         }
         catch(IntentFilter.MalformedMimeTypeException e)
         {

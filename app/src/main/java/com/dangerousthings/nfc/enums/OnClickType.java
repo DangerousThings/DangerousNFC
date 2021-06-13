@@ -9,5 +9,7 @@ public enum OnClickType
     prompt_encryption_password,
     decrypt_record,
     cancel,
-    delete
+    delete,
+    decrypt_and_view,
+    prompt_decryption_password
 }

@@ -339,7 +339,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/lock/baseline_lock_24.xml" />
+                                      <entry key="url" value="file:/$USER_HOME$/AppData/Local/Android/Sdk/icons/material/materialicons/lock_open/baseline_lock_open_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -349,7 +349,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_lock" />
+                            <entry key="outputName" value="ic_unlock" />
                             <entry key="sourceFile" value="C:\Users\z_ser\StudioProjects\DangerousNFC" />
                           </map>
                         </option>

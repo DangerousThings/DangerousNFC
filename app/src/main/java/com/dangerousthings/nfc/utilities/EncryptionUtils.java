@@ -1,5 +1,7 @@
 package com.dangerousthings.nfc.utilities;
 
+import android.nfc.NdefRecord;
+
 import java.nio.ByteBuffer;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -95,6 +97,23 @@ public class EncryptionUtils
 
     public static String getDecryptedMimeType(String encryptedMimeType)
     {
-        return encryptedMimeType.substring(encryptedMimeType.indexOf("_")+1).trim();
+        if(encryptedMimeType.contains("_"))
+        {
+            return encryptedMimeType.substring(encryptedMimeType.indexOf("_")+1).trim();
+        }
+        else
+        {
+            return encryptedMimeType;
+        }
+    }
+
+    public static boolean isRecordEncrypted(NdefRecord record)
+    {
+        String mimeType = record.toMimeType();
+        if(mimeType.contains("_"))
+        {
+            return mimeType.substring(0, mimeType.indexOf("_")).equals("encrypted");
+        }
+        return false;
     }
 }

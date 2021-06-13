@@ -24,6 +24,7 @@ public class RecordOptionsToolbar extends Fragment
     ImageButton mCloseButton;
     ImageButton mDeleteButton;
     ImageButton mEncryptButton;
+    ImageButton mDecryptButton;
 
     public static RecordOptionsToolbar newInstance(boolean isEncrypted)
     {
@@ -56,9 +57,17 @@ public class RecordOptionsToolbar extends Fragment
         mCloseButton = view.findViewById(R.id.record_options_button_close);
         mDeleteButton = view.findViewById(R.id.record_options_button_delete);
         mEncryptButton = view.findViewById(R.id.record_options_button_encrypt);
+        mDecryptButton = view.findViewById(R.id.record_options_button_decrypt);
         mCloseButton.setOnClickListener(v -> _clickListener.onClick(OnClickType.cancel));
         mDeleteButton.setOnClickListener(v -> _clickListener.onClick(OnClickType.delete));
         mEncryptButton.setOnClickListener(v -> _clickListener.onClick(OnClickType.prompt_encryption_password));
+        mDecryptButton.setOnClickListener(v -> _clickListener.onClick(OnClickType.prompt_decryption_password));
+
+        if(_isEncrypted)
+        {
+            mEncryptButton.setVisibility(View.GONE);
+            mDecryptButton.setVisibility(View.VISIBLE);
+        }
     }
 
     public void setClickListener(IClickListener listener)

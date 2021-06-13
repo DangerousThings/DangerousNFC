@@ -21,12 +21,11 @@ import com.dangerousthings.nfc.fragments.ViewPlainTextFragment;
 import com.dangerousthings.nfc.interfaces.IClickListener;
 import com.dangerousthings.nfc.utilities.EncryptionUtils;
 
-public class ViewRecordActivity extends BaseActivity implements IClickListener
+public class ViewRecordActivity extends BaseActivity
 {
     ImageButton mBackButton;
     ImageButton mEditButton;
 
-    DecryptionPasswordDialog _dialog;
     NdefRecord _record;
 
     @Override
@@ -37,27 +36,7 @@ public class ViewRecordActivity extends BaseActivity implements IClickListener
 
         setupViews();
         _record = getIntent().getParcelableExtra(getString(R.string.intent_record));
-        if(_record != null)
-        {
-            try
-            {
-                String type = _record.toMimeType().substring(0, _record.toMimeType().indexOf("_"));
-                if(type.equals("encrypted"))
-                {
-                    _dialog = new DecryptionPasswordDialog();
-                    _dialog.setClickListener(this);
-                    _dialog.show(getSupportFragmentManager(), "DecryptionDialog");
-                }
-                else
-                {
-                    loadFragment();
-                }
-            }
-            catch(Exception e)
-            {
-                loadFragment();
-            }
-        }
+        loadFragment();
     }
 
     private void setupViews()
@@ -90,7 +69,6 @@ public class ViewRecordActivity extends BaseActivity implements IClickListener
             finish();
             overridePendingTransition(0, 0);
         }
-
         if(fragment != null)
         {
             fragmentTransaction.replace(R.id.view_record_frame, fragment);
@@ -102,38 +80,9 @@ public class ViewRecordActivity extends BaseActivity implements IClickListener
     {
         Intent result = new Intent();
         result.putExtra(getString(R.string.intent_request_code), getIntent().getIntExtra(getString(R.string.intent_request_code), -1));
+        result.putExtra(getString(R.string.intent_record), _record);
         setResult(ViewRecordsActivity.RESULT_OK, result);
         finish();
         overridePendingTransition(0, 0);
-    }
-
-    @Override
-    public void onClick(OnClickType clickType)
-    {
-        switch(clickType)
-        {
-            case cancel:
-                finish();
-                break;
-            case decrypt_record:
-                decryptRecord();
-                break;
-        }
-    }
-
-    private void decryptRecord()
-    {
-        String decryptionPassword = _dialog.getDecryptionPassword();
-        try
-        {
-            byte[] decryptedBytes = EncryptionUtils.decryptAES128Data(decryptionPassword, _record.getPayload());
-            String temp = EncryptionUtils.getDecryptedMimeType(_record.toMimeType());
-            _record = NdefRecord.createMime(EncryptionUtils.getDecryptedMimeType(_record.toMimeType()), decryptedBytes);
-            loadFragment();
-        }
-        catch(Exception e)
-        {
-            Log.d("Decryption Error:", e.toString());
-        }
     }
 }
