@@ -15,6 +15,7 @@ import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.adapters.NdefMessageRecyclerAdapter;
@@ -389,7 +390,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
         }
         catch(Exception e)
         {
-            Log.d("Decryption Error:", e.toString());
+            Toast.makeText(this, "ERROR: Decryption password is incorrect", Toast.LENGTH_SHORT).show();
         }
     }
 
