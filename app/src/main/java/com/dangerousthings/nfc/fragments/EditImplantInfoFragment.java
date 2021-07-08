@@ -19,7 +19,7 @@ import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.databases.ImplantDatabase;
 import com.dangerousthings.nfc.interfaces.IImplantDAO;
 import com.dangerousthings.nfc.models.Implant;
-import com.dangerousthings.nfc.pages.ImplantManagementActivity;
+import com.dangerousthings.nfc.pages.ManageImplantActivity;
 import com.dangerousthings.nfc.utilities.ColorUtils;
 import com.dangerousthings.nfc.utilities.Converters;
 
@@ -111,6 +111,6 @@ public class EditImplantInfoFragment extends Fragment
         ImplantDatabase database = ImplantDatabase.getInstance(requireActivity());
         IImplantDAO implantDAO = database.implantDAO();
         implantDAO.updateImplant(_implant);
-        ((ImplantManagementActivity)requireActivity()).switchToDisplayFragment(_implant.getUID());
+        ((ManageImplantActivity)requireActivity()).switchToDisplayFragment(_implant.getUID());
     }
 }

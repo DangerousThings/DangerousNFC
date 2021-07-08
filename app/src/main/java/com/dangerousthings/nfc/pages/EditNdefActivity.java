@@ -95,7 +95,7 @@ public class EditNdefActivity extends BaseActivity implements ITracksPayloadSize
         NdefRecord resultRecord = _fragment.getNdefRecord();
         result.putExtra(getString(R.string.intent_record), resultRecord);
         result.putExtra(getString(R.string.intent_request_code), getIntent().getIntExtra(getString(R.string.intent_request_code), -1));
-        setResult(ViewRecordsActivity.RESULT_OK, result);
+        setResult(ManageRecordsActivity.RESULT_OK, result);
         finish();
         overridePendingTransition(0, 0);
     }

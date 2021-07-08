@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.databases.ImplantDatabase;
-import com.dangerousthings.nfc.enums.OnClickType;
+import com.dangerousthings.nfc.enums.OnClickActionType;
 import com.dangerousthings.nfc.fragments.DisplayImplantInfoFragment;
 import com.dangerousthings.nfc.fragments.EditImplantInfoFragment;
 import com.dangerousthings.nfc.interfaces.IClickListener;
@@ -32,7 +32,7 @@ import com.google.android.material.navigation.NavigationView;
  *   passed in under the R.string.intent_onboard_flag tag
  */
 
-public class ImplantManagementActivity extends BaseActivity implements IClickListener
+public class ManageImplantActivity extends BaseActivity implements IClickListener
 {
     Implant _implant;
     String _uid;
@@ -139,7 +139,7 @@ public class ImplantManagementActivity extends BaseActivity implements IClickLis
         if(id == R.string.menu_view_records)
         {
             //push to records
-            Intent readMessageIntent = new Intent(this, ViewRecordsActivity.class);
+            Intent readMessageIntent = new Intent(this, ManageRecordsActivity.class);
             readMessageIntent.putExtra(getString(R.string.intent_ndef_message), _implant.getNdefMessage());
             readMessageIntent.putExtra(getString(R.string.intent_tag_uid), _implant.getUID());
             startActivity(readMessageIntent);
@@ -161,7 +161,7 @@ public class ImplantManagementActivity extends BaseActivity implements IClickLis
     }
 
     @Override
-    public void onClick(OnClickType clickType)
+    public void onClick(OnClickActionType clickType)
     {
         mDrawer.openDrawer(GravityCompat.END);
     }

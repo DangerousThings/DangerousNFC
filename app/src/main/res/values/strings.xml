@@ -73,7 +73,6 @@
     <string name="bullet_button">bullet button</string>
     <string name="quote_button">quote button</string>
     <string name="break_button">break button</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
@@ -81,4 +80,6 @@
     <string name="re_enter_password">Re-enter Password</string>
     <string name="enter_encryption_passphrase">Enter Encryption Passphrase:</string>
     <string name="enter_decryption_password">Enter Decryption Password:</string>
+    <string name="you_have_no_saved_implants">You have no saved implants</string>
+    <string name="no_ndef_records_detected">No NDEF records detected</string>
 </resources>

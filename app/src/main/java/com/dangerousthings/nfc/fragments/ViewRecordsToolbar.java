@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.dangerousthings.nfc.R;
-import com.dangerousthings.nfc.enums.OnClickType;
+import com.dangerousthings.nfc.enums.OnClickActionType;
 import com.dangerousthings.nfc.interfaces.IClickListener;
 
 public class ViewRecordsToolbar extends Fragment
@@ -39,9 +39,9 @@ public class ViewRecordsToolbar extends Fragment
         mAddRecordButton = view.findViewById(R.id.view_records_button_add);
         mBackButton = view.findViewById(R.id.view_records_button_back);
         mWriteButton = view.findViewById(R.id.view_records_button_write);
-        mAddRecordButton.setOnClickListener(v -> _clickListener.onClick(OnClickType.new_record));
-        mBackButton.setOnClickListener(v -> _clickListener.onClick(OnClickType.back));
-        mWriteButton.setOnClickListener(v -> _clickListener.onClick(OnClickType.write));
+        mAddRecordButton.setOnClickListener(v -> _clickListener.onClick(OnClickActionType.new_record));
+        mBackButton.setOnClickListener(v -> _clickListener.onClick(OnClickActionType.back));
+        mWriteButton.setOnClickListener(v -> _clickListener.onClick(OnClickActionType.write));
     }
 
     public void setClickListener(IClickListener listener)

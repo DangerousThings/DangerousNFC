@@ -15,6 +15,8 @@ import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dangerousthings.nfc.R;
@@ -22,7 +24,7 @@ import com.dangerousthings.nfc.adapters.NdefMessageRecyclerAdapter;
 import com.dangerousthings.nfc.controls.DecryptionPasswordDialog;
 import com.dangerousthings.nfc.controls.EncryptionPasswordDialog;
 import com.dangerousthings.nfc.databases.ImplantDatabase;
-import com.dangerousthings.nfc.enums.OnClickType;
+import com.dangerousthings.nfc.enums.OnClickActionType;
 import com.dangerousthings.nfc.fragments.RecordOptionsToolbar;
 import com.dangerousthings.nfc.fragments.ViewRecordsToolbar;
 import com.dangerousthings.nfc.interfaces.IClickListener;
@@ -30,13 +32,12 @@ import com.dangerousthings.nfc.interfaces.IImplantDAO;
 import com.dangerousthings.nfc.interfaces.IItemLongClickListener;
 import com.dangerousthings.nfc.models.Implant;
 import com.dangerousthings.nfc.utilities.EncryptionUtils;
-import com.dangerousthings.nfc.utilities.NdefUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 
-public class ViewRecordsActivity extends BaseActivity implements IItemLongClickListener, IClickListener
+public class ManageRecordsActivity extends BaseActivity implements IItemLongClickListener, IClickListener
 {
     public final static int REQ_CODE_RECORD = 1;
     public final static int REQ_CODE_VIEW_RECORD = 2;
@@ -52,6 +53,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
     ActivityResultLauncher<Intent> _activityResultLauncher;
     DialogFragment _dialog;
 
+    TextView mNoRecordsText;
     RecyclerView mRecyclerView;
 
     @Override
@@ -68,6 +70,8 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
 
     private void prepareActivity()
     {
+        mNoRecordsText = findViewById(R.id.view_records_text_no_records);
+
         //prepare an empty list for NdefRecords
         _records = new ArrayList<>();
         //pull in any passed in NdefMessages
@@ -76,6 +80,20 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
         {
             //add NdefRecords to our global list
             Collections.addAll(_records, _message.getRecords());
+            //accounts for empty tags
+            _records.removeIf(record -> (record.toMimeType() == null));
+            if(_records.size() > 0)
+            {
+                mNoRecordsText.setVisibility(View.GONE);
+            }
+            else
+            {
+                mNoRecordsText.setVisibility(View.VISIBLE);
+            }
+        }
+        else
+        {
+            mNoRecordsText.setVisibility(View.VISIBLE);
         }
 
         //Get the UID of the implant we're currently operating on if applicable
@@ -120,8 +138,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
                                 {
                                     _records.add(_alteredIndex, record);
                                 }
-                                _recyclerAdapter.notifyDataSetChanged();
-                                _recordsEdited = true;
+                                updateRecords();
                             }
                             //if the edit button was clicked from the view record activity
                             else if(requestCode == REQ_CODE_VIEW_RECORD)
@@ -192,6 +209,20 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
         overridePendingTransition(0, 0);
         //index gets set to the list size as the new record is placed at the end
         _alteredIndex = _records.size();
+    }
+
+    private void updateRecords()
+    {
+        _recyclerAdapter.notifyDataSetChanged();
+        if(_records.size() > 0)
+        {
+            mNoRecordsText.setVisibility(View.GONE);
+        }
+        else
+        {
+            mNoRecordsText.setVisibility(View.VISIBLE);
+        }
+        _recordsEdited = true;
     }
 
     @Override
@@ -317,7 +348,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
 
     //cases for the different IClickListener interface conditions
     @Override
-    public void onClick(OnClickType clickType)
+    public void onClick(OnClickActionType clickType)
     {
         if(clickType != null)
         {
@@ -405,8 +436,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
 
             _records.remove(_alteredIndex);
             _records.add(_alteredIndex, encryptedRecord);
-            _recyclerAdapter.notifyDataSetChanged();
-            _recordsEdited = true;
+            updateRecords();
             popFragmentStack();
         }
         catch(Exception e)
@@ -437,8 +467,7 @@ public class ViewRecordsActivity extends BaseActivity implements IItemLongClickL
                 .setPositiveButton("Yes", ((dialog, which) ->
                 {
                     _records.remove(_alteredIndex);
-                    _recyclerAdapter.notifyDataSetChanged();
-                    _recordsEdited = true;
+                    updateRecords();
                     popFragmentStack();
                 }))
                 .setNegativeButton("No", ((dialog, which) -> dialog.cancel()))

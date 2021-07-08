@@ -1,6 +1,6 @@
 package com.dangerousthings.nfc.enums;
 
-public enum OnClickType
+public enum OnClickActionType
 {
     new_record,
     back,

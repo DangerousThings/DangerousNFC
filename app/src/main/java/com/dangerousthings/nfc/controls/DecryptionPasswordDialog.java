@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.nfc.NdefRecord;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import com.dangerousthings.nfc.R;
-import com.dangerousthings.nfc.enums.OnClickType;
-import com.dangerousthings.nfc.fragments.EditMarkdownFragment;
+import com.dangerousthings.nfc.enums.OnClickActionType;
 import com.dangerousthings.nfc.interfaces.IClickListener;
 
 import java.util.Objects;
@@ -76,11 +74,11 @@ public class DecryptionPasswordDialog extends DialogFragment
     {
         if(_showDecryption)
         {
-            _clickListener.onClick(OnClickType.decrypt_and_view);
+            _clickListener.onClick(OnClickActionType.decrypt_and_view);
         }
         else
         {
-            _clickListener.onClick(OnClickType.decrypt_record);
+            _clickListener.onClick(OnClickActionType.decrypt_record);
         }
         Objects.requireNonNull(getDialog()).cancel();
     }

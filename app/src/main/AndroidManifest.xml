@@ -28,11 +28,11 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".pages.ImplantManagementActivity"
+            android:name=".pages.ManageImplantActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".pages.ViewRecordsActivity"
+            android:name=".pages.ManageRecordsActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity

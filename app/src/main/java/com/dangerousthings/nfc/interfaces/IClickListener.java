@@ -1,8 +1,8 @@
 package com.dangerousthings.nfc.interfaces;
 
-import com.dangerousthings.nfc.enums.OnClickType;
+import com.dangerousthings.nfc.enums.OnClickActionType;
 
 public interface IClickListener
 {
-    void onClick(OnClickType clickType);
+    void onClick(OnClickActionType clickType);
 }

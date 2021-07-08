@@ -10,4 +10,9 @@ public class TagUtils
         Ndef ndef = Ndef.get(tag);
         return ndef.getMaxSize();
     }
+
+    public static boolean validateUidMatch(Tag tag, String uid)
+    {
+        return HexUtils.bytesToHex(tag.getId()).equals(uid);
+    }
 }

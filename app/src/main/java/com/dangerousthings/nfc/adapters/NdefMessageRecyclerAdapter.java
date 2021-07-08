@@ -63,7 +63,7 @@ public class NdefMessageRecyclerAdapter extends RecyclerView.Adapter<NdefMessage
     public void onBindViewHolder(@NonNull ViewHolder holder, int position)
     {
         NdefRecord record = _message.get(position);
-        if(record.toMimeType().contains("_"))
+        if (record.toMimeType().contains("_"))
         {
             if (record.toMimeType().substring(0, record.toMimeType().indexOf("_")).trim().equals("encrypted"))
             {

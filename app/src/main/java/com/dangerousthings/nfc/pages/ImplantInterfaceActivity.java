@@ -87,7 +87,7 @@ public class ImplantInterfaceActivity extends BaseActivity
 
     private void handleActionDiscovered(Intent intent)
     {
-        if(_requestCode == ViewRecordsActivity.REQ_CODE_WRITE_MESSAGE)
+        if(_requestCode == ManageRecordsActivity.REQ_CODE_WRITE_MESSAGE)
         {
             NdefMessage message = _originalIntent.getParcelableExtra(getString(R.string.intent_ndef_message));
             writeToTag(intent, message);
@@ -125,7 +125,7 @@ public class ImplantInterfaceActivity extends BaseActivity
     private void popOnWriteSuccess(Tag tag)
     {
         Intent result = new Intent();
-        setResult(ViewRecordsActivity.RESULT_OK, result);
+        setResult(ManageRecordsActivity.RESULT_OK, result);
         result.putExtra(getString(R.string.intent_request_code), getIntent().getIntExtra(getString(R.string.intent_request_code), -1));
         result.putExtra(getString(R.string.intent_tag_uid), HexUtils.bytesToHex(tag.getId()));
         finish();

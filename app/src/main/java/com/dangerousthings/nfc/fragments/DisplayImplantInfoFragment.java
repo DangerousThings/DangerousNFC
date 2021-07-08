@@ -17,7 +17,7 @@ import com.dangerousthings.nfc.databases.ImplantDatabase;
 import com.dangerousthings.nfc.interfaces.IClickListener;
 import com.dangerousthings.nfc.interfaces.IImplantDAO;
 import com.dangerousthings.nfc.models.Implant;
-import com.dangerousthings.nfc.pages.ImplantManagementActivity;
+import com.dangerousthings.nfc.pages.ManageImplantActivity;
 
 public class DisplayImplantInfoFragment extends Fragment
 {
@@ -37,7 +37,7 @@ public class DisplayImplantInfoFragment extends Fragment
     {
     }
 
-    public static DisplayImplantInfoFragment newInstance(String implantUID, ImplantManagementActivity activity)
+    public static DisplayImplantInfoFragment newInstance(String implantUID, ManageImplantActivity activity)
     {
         DisplayImplantInfoFragment fragment = new DisplayImplantInfoFragment();
         Bundle args = new Bundle();

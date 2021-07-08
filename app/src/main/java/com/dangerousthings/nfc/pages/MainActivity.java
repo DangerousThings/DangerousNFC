@@ -115,7 +115,7 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
             {
                 if (message != null)
                 {
-                    Intent readMessageIntent = new Intent(this, ViewRecordsActivity.class);
+                    Intent readMessageIntent = new Intent(this, ManageRecordsActivity.class);
                     readMessageIntent.putExtra(getString(R.string.intent_ndef_message), message);
                     startActivity(readMessageIntent);
                     overridePendingTransition(0, 0);
@@ -151,7 +151,7 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
 
                                 implantDAO.insertImplant(implant);
 
-                                Intent onboardImplant = new Intent(this, ImplantManagementActivity.class);
+                                Intent onboardImplant = new Intent(this, ManageImplantActivity.class);
                                 onboardImplant.putExtra(getString(R.string.intent_tag_uid), HexUtils.bytesToHex(tag.getId()));
                                 onboardImplant.putExtra(getString(R.string.intent_onboard_flag), true);
                                 startActivity(onboardImplant);
@@ -162,7 +162,7 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
                 }
                 else
                 {
-                    Intent displayImplant = new Intent(this, ImplantManagementActivity.class);
+                    Intent displayImplant = new Intent(this, ManageImplantActivity.class);
                     displayImplant.putExtra(getString(R.string.intent_tag_uid), HexUtils.bytesToHex(tag.getId()));
                     displayImplant.putExtra(getString(R.string.intent_onboard_flag), false);
                     startActivity(displayImplant);
@@ -298,7 +298,7 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
     public void onNewNdefMessageClicked()
     {
         mDrawer.close();
-        Intent emptyNdefMessage = new Intent(this, ViewRecordsActivity.class);
+        Intent emptyNdefMessage = new Intent(this, ManageRecordsActivity.class);
         startActivity(emptyNdefMessage);
         overridePendingTransition(0, 0);
     }

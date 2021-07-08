@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.adapters.SavedImplantRecyclerAdapter;
@@ -24,6 +26,7 @@ public class SavedImplantsActivity extends BaseActivity implements IItemLongClic
     ImageButton mBackButton;
     RecyclerView mRecyclerView;
     SavedImplantRecyclerAdapter _recyclerAdapter;
+    TextView mNoImplantsText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -33,12 +36,22 @@ public class SavedImplantsActivity extends BaseActivity implements IItemLongClic
 
         mRecyclerView = findViewById(R.id.saved_implants_recycler);
         mBackButton = findViewById(R.id.saved_implants_button_back);
+        mNoImplantsText = findViewById(R.id.saved_implants_text_no_implants);
 
         mBackButton.setOnClickListener(v -> onBackPressed());
 
         ImplantDatabase database = ImplantDatabase.getInstance(this);
         IImplantDAO implantDAO = database.implantDAO();
         _savedImplants = implantDAO.getImplantList();
+
+        if(_savedImplants.size() > 0)
+        {
+            mNoImplantsText.setVisibility(View.GONE);
+        }
+        else
+        {
+            mNoImplantsText.setVisibility(View.VISIBLE);
+        }
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         _recyclerAdapter = new SavedImplantRecyclerAdapter(this, _savedImplants);
@@ -49,7 +62,7 @@ public class SavedImplantsActivity extends BaseActivity implements IItemLongClic
     @Override
     public void onItemClick(int position)
     {
-        Intent displayImplant = new Intent(this, ImplantManagementActivity.class);
+        Intent displayImplant = new Intent(this, ManageImplantActivity.class);
         displayImplant.putExtra(getString(R.string.intent_tag_uid), _recyclerAdapter.getImplant(position).getUID());
         displayImplant.putExtra(getString(R.string.intent_onboard_flag), false);
         startActivity(displayImplant);

@@ -17,7 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import com.dangerousthings.nfc.R;
-import com.dangerousthings.nfc.enums.OnClickType;
+import com.dangerousthings.nfc.enums.OnClickActionType;
 import com.dangerousthings.nfc.interfaces.IClickListener;
 
 import java.util.Objects;
@@ -66,7 +66,7 @@ public class EncryptionPasswordDialog extends DialogFragment
         }
         else
         {
-            _clickListener.onClick(OnClickType.encrypt_record);
+            _clickListener.onClick(OnClickActionType.encrypt_record);
             Objects.requireNonNull(getDialog()).cancel();
         }
     }
