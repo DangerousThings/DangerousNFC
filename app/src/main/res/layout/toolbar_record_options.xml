@@ -58,5 +58,17 @@
             app:layout_constraintEnd_toStartOf="@+id/record_options_button_delete"
             app:layout_constraintTop_toTopOf="parent"
             app:tint="?attr/colorSecondaryVariant" />
+
+        <ImageButton
+            android:id="@+id/record_options_button_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_label"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/record_options_button_close"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="?attr/colorSecondaryVariant" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

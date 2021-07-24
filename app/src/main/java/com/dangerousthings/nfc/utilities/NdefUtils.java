@@ -113,4 +113,57 @@ public class NdefUtils
         }
         return true;
     }
+
+    public static NdefRecord generateLabeledRecord(String label, NdefRecord record)
+    {
+        String mimeType = record.toMimeType();
+        if(mimeType.contains("|"))
+        {
+            mimeType = mimeType.substring(0, mimeType.indexOf("|"));
+        }
+        if(!label.equals(""))
+        {
+            mimeType = mimeType + "|" + label;
+        }
+        return NdefRecord.createMime(mimeType, record.getPayload());
+    }
+
+    public static String getMimeTypeFromRecord(NdefRecord record)
+    {
+        String mimeType = record.toMimeType();
+        if(mimeType.contains("$"))
+        {
+            if(mimeType.length() > 1)
+            {
+                mimeType = mimeType.substring(1, mimeType.length());
+            }
+        }
+        if(mimeType.contains("|"))
+        {
+             mimeType = mimeType.substring(0, mimeType.indexOf("|"));
+        }
+        return mimeType;
+    }
+
+    public static boolean isRecordLabeled(NdefRecord record)
+    {
+        return record.toMimeType().contains("|");
+    }
+
+    public static String getRecordLabel(NdefRecord record)
+    {
+        String mimeType = record.toMimeType();
+        if(isRecordLabeled(record))
+        {
+            return mimeType.substring(mimeType.indexOf("|")+1, mimeType.length());
+        }
+        else
+        {
+            if(mimeType.contains("$"))
+            {
+                return mimeType.substring(1, mimeType.length());
+            }
+            return mimeType;
+        }
+    }
 }

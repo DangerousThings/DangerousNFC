@@ -26,6 +26,7 @@ import com.dangerousthings.nfc.fragments.EditPlainTextFragment;
 import com.dangerousthings.nfc.interfaces.IEditFragment;
 import com.dangerousthings.nfc.interfaces.ITracksPayloadSize;
 import com.dangerousthings.nfc.utilities.EncryptionUtils;
+import com.dangerousthings.nfc.utilities.NdefUtils;
 import com.google.android.material.navigation.NavigationView;
 
 /**
@@ -108,12 +109,12 @@ public class EditNdefActivity extends BaseActivity implements ITracksPayloadSize
         {
             _fragment = EditPlainTextFragment.newInstance();
         }
-        else if(EncryptionUtils.getDecryptedMimeType(_record.toMimeType()).equals(getString(R.string.mime_plaintext)))
+        else if(NdefUtils.getMimeTypeFromRecord(_record).equals(getString(R.string.mime_plaintext)))
         {
             _fragment = EditPlainTextFragment.newInstance(_record);
             mPayloadTypeButton.setText(R.string.plain_text);
         }
-        else if(EncryptionUtils.getDecryptedMimeType(_record.toMimeType()).equals("text/markdown"))
+        else if(NdefUtils.getMimeTypeFromRecord(_record).equals("text/markdown"))
         {
             _fragment = EditMarkdownFragment.newInstance(_record);
             mPayloadTypeButton.setText(R.string.markdown);

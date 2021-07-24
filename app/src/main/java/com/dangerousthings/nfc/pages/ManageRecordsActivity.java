@@ -23,6 +23,7 @@ import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.adapters.NdefMessageRecyclerAdapter;
 import com.dangerousthings.nfc.controls.DecryptionPasswordDialog;
 import com.dangerousthings.nfc.controls.EncryptionPasswordDialog;
+import com.dangerousthings.nfc.controls.EditRecordLabelDialog;
 import com.dangerousthings.nfc.databases.ImplantDatabase;
 import com.dangerousthings.nfc.enums.OnClickActionType;
 import com.dangerousthings.nfc.fragments.RecordOptionsToolbar;
@@ -32,6 +33,7 @@ import com.dangerousthings.nfc.interfaces.IImplantDAO;
 import com.dangerousthings.nfc.interfaces.IItemLongClickListener;
 import com.dangerousthings.nfc.models.Implant;
 import com.dangerousthings.nfc.utilities.EncryptionUtils;
+import com.dangerousthings.nfc.utilities.NdefUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -258,21 +260,12 @@ public class ManageRecordsActivity extends BaseActivity implements IItemLongClic
         NdefRecord record = _recyclerAdapter.getRecord(position);
         String mimeType = record.toMimeType();
         //first condition for encrypted mimetype
-        if(mimeType.contains("_"))
+        if(mimeType.contains("$"))
         {
-            String type = mimeType.substring(0, mimeType.indexOf("_"));
-            //second condition
-            if(type.equals("encrypted"))
-            {
-                //prompt for decryption password
-                _dialog = DecryptionPasswordDialog.newInstance(true);
-                ((DecryptionPasswordDialog)_dialog).setClickListener(this);
-                _dialog.show(getSupportFragmentManager(), "DecryptionDialog");
-            }
-            else
-            {
-                viewRecord(record);
-            }
+            //prompt for decryption password
+            _dialog = DecryptionPasswordDialog.newInstance(true);
+            ((DecryptionPasswordDialog)_dialog).setClickListener(this);
+            _dialog.show(getSupportFragmentManager(), "DecryptionDialog");
         }
         else
         {
@@ -395,8 +388,24 @@ public class ManageRecordsActivity extends BaseActivity implements IItemLongClic
                 case decrypt_and_view:
                     decryptRecord(true);
                     break;
+                case edit_label:
+                    promptForRecordLabel();
+                    break;
+                case set_label:
+                    setRecordLabel();
+                    break;
             }
         }
+    }
+
+    private void setRecordLabel()
+    {
+        NdefRecord record = _records.get(_alteredIndex);
+        record = NdefUtils.generateLabeledRecord(((EditRecordLabelDialog)_dialog).getRecordLabel(), record);
+        _records.remove(_alteredIndex);
+        _records.add(_alteredIndex, record);
+        updateRecords();
+        popFragmentStack();
     }
 
     private void decryptRecord(boolean view)
@@ -443,6 +452,13 @@ public class ManageRecordsActivity extends BaseActivity implements IItemLongClic
         {
             Log.d("Encryption Error:", e.toString());
         }
+    }
+
+    private void promptForRecordLabel()
+    {
+        _dialog = EditRecordLabelDialog.newInstance();
+        ((EditRecordLabelDialog)_dialog).setClickListener(this);
+        _dialog.show(getSupportFragmentManager(), "EditRecordLabelDialog");
     }
 
     private void promptForEncryption()

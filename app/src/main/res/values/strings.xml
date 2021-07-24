@@ -82,4 +82,6 @@
     <string name="enter_decryption_password">Enter Decryption Password:</string>
     <string name="you_have_no_saved_implants">You have no saved implants</string>
     <string name="no_ndef_records_detected">No NDEF records detected</string>
+    <string name="enter_a_label_for_this_ndef_record">Enter a Label for this NDEF Record</string>
+    <string name="enter_record_label">Enter Record Label</string>
 </resources>

@@ -92,14 +92,14 @@ public class EncryptionUtils
 
     public static String getEncryptedMimeType(String mimeType)
     {
-        return "encrypted_" + mimeType;
+        return "$" + mimeType;
     }
 
     public static String getDecryptedMimeType(String encryptedMimeType)
     {
-        if(encryptedMimeType.contains("_"))
+        if(encryptedMimeType.contains("$"))
         {
-            return encryptedMimeType.substring(encryptedMimeType.indexOf("_")+1).trim();
+            return encryptedMimeType.substring(encryptedMimeType.indexOf("$")+1).trim();
         }
         else
         {
@@ -110,10 +110,6 @@ public class EncryptionUtils
     public static boolean isRecordEncrypted(NdefRecord record)
     {
         String mimeType = record.toMimeType();
-        if(mimeType.contains("_"))
-        {
-            return mimeType.substring(0, mimeType.indexOf("_")).equals("encrypted");
-        }
-        return false;
+        return mimeType.contains("$");
     }
 }

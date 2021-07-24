@@ -11,5 +11,7 @@ public enum OnClickActionType
     cancel,
     delete,
     decrypt_and_view,
-    prompt_decryption_password
+    prompt_decryption_password,
+    edit_label,
+    set_label
 }

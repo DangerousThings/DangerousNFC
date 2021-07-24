@@ -28,7 +28,7 @@ public class NdefMessageRecyclerAdapter extends RecyclerView.Adapter<NdefMessage
     public class ViewHolder extends RecyclerView.ViewHolder
     {
         public final View mView;
-        public final TextView mMimeTypeText;
+        public final TextView mLabelText;
         public final TextView mSizeText;
         public final ImageView mEncrypted;
 
@@ -36,9 +36,9 @@ public class NdefMessageRecyclerAdapter extends RecyclerView.Adapter<NdefMessage
         {
             super(itemView);
             mView = itemView;
-            mMimeTypeText = itemView.findViewById(R.id.message_text_mimetype);
-            mSizeText = itemView.findViewById(R.id.message_text_size);
-            mEncrypted = itemView.findViewById(R.id.message_image_encrypted);
+            mLabelText = itemView.findViewById(R.id.record_text_label);
+            mSizeText = itemView.findViewById(R.id.record_text_size);
+            mEncrypted = itemView.findViewById(R.id.record_image_encrypted);
             mView.setOnClickListener(v -> _clickListener.onItemClick(getAdapterPosition()));
             mView.setOnLongClickListener(v -> _clickListener.onItemLongClick(getAdapterPosition()));
         }
@@ -63,9 +63,9 @@ public class NdefMessageRecyclerAdapter extends RecyclerView.Adapter<NdefMessage
     public void onBindViewHolder(@NonNull ViewHolder holder, int position)
     {
         NdefRecord record = _message.get(position);
-        if (record.toMimeType().contains("_"))
+        if (record.toMimeType().contains("$"))
         {
-            if (record.toMimeType().substring(0, record.toMimeType().indexOf("_")).trim().equals("encrypted"))
+            if (EncryptionUtils.isRecordEncrypted(record))
             {
                 holder.mEncrypted.setVisibility(View.VISIBLE);
             }
@@ -79,7 +79,7 @@ public class NdefMessageRecyclerAdapter extends RecyclerView.Adapter<NdefMessage
             holder.mEncrypted.setVisibility(View.GONE);
         }
         holder.mSizeText.setText(record.getPayload().length + " Bytes");
-        holder.mMimeTypeText.setText(EncryptionUtils.getDecryptedMimeType(record.toMimeType()));
+        holder.mLabelText.setText(NdefUtils.getRecordLabel(record));
     }
 
     @Override
