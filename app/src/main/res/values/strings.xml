@@ -85,4 +85,9 @@
     <string name="enter_a_label_for_this_ndef_record">Enter a Label for this NDEF Record</string>
     <string name="enter_record_label">Enter Record Label</string>
     <string name="passwords_do_not_match_try_again">Passwords do not match. Try again.</string>
+    <string name="encrypt_record">Encrypt Record</string>
+    <string name="remove_record_encryption">Remove Record Encryption</string>
+    <string name="edit_record_label">Edit Record Label</string>
+    <string name="delete_record">Delete Record</string>
+    <string name="record_options">Record Options</string>
 </resources>
