@@ -18,7 +18,7 @@
         app:layout_constraintStart_toEndOf="@+id/constraintLayout4"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_lock"
-        app:tint="?attr/colorSecondaryVariant" />
+        app:tint="?attr/colorPrimary" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout4"

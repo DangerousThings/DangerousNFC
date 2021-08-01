@@ -24,9 +24,9 @@ import com.dangerousthings.nfc.adapters.NdefMessageRecyclerAdapter;
 import com.dangerousthings.nfc.controls.DecryptionPasswordDialog;
 import com.dangerousthings.nfc.controls.EncryptionPasswordDialog;
 import com.dangerousthings.nfc.controls.EditRecordLabelDialog;
+import com.dangerousthings.nfc.controls.RecordOptionsDialog;
 import com.dangerousthings.nfc.databases.ImplantDatabase;
 import com.dangerousthings.nfc.enums.OnClickActionType;
-import com.dangerousthings.nfc.fragments.RecordOptionsToolbar;
 import com.dangerousthings.nfc.fragments.ViewRecordsToolbar;
 import com.dangerousthings.nfc.interfaces.IClickListener;
 import com.dangerousthings.nfc.interfaces.IImplantDAO;
@@ -286,18 +286,10 @@ public class ManageRecordsActivity extends BaseActivity implements IItemLongClic
     @Override
     public boolean onItemLongClick(int position)
     {
-        //stores the selected record's location
         _alteredIndex = position;
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        //opens the options toolbar over the top of the viewrecords toolbar
-        RecordOptionsToolbar optionsToolbar = RecordOptionsToolbar.newInstance(EncryptionUtils.isRecordEncrypted(_recyclerAdapter.getRecord(position)));
-        //set the IClickListener interface
-        optionsToolbar.setClickListener(this);
-        fragmentTransaction.replace(R.id.view_records_frame_toolbar, optionsToolbar);
-        //adds to back stack so it can be popped off back to the viewrecords toolbar
-        fragmentTransaction.addToBackStack("options_toolbar");
-        fragmentTransaction.commit();
+        _dialog = RecordOptionsDialog.newInstance(EncryptionUtils.isRecordEncrypted(_recyclerAdapter.getRecord(position)));
+        ((RecordOptionsDialog)_dialog).setClickListener(this);
+        _dialog.show(getSupportFragmentManager(), "RecordOptionsDialog");
         return true;
     }
 
