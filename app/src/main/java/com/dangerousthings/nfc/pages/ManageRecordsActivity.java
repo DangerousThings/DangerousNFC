@@ -128,19 +128,30 @@ public class ManageRecordsActivity extends BaseActivity implements IItemLongClic
                             {
                                 NdefRecord record = Objects.requireNonNull(resultIntent.getExtras()).getParcelable(getString(R.string.intent_record));
                                 //This is a little messy. I'll probably come back to it later to optimize a bit
-                                try
+                                if(record != null)
                                 {
-                                    if(_records.get(_alteredIndex) != null)
+                                    try
                                     {
-                                        _records.remove(_alteredIndex);
+                                        if (_records.get(_alteredIndex) != null)
+                                        {
+                                            NdefRecord previousRecord = _records.get(_alteredIndex);
+                                            //if a label has been set on this record
+                                            if (NdefUtils.isRecordLabeled(previousRecord))
+                                            {
+                                                String label = NdefUtils.getRecordLabel(previousRecord);
+                                                record = NdefUtils.generateLabeledRecord(label, record);
+                                            }
+
+                                            //update record at altered location
+                                            _records.remove(_alteredIndex);
+                                            _records.add(_alteredIndex, record);
+                                        }
+                                    } catch (Exception e)
+                                    {
                                         _records.add(_alteredIndex, record);
                                     }
+                                    updateRecords();
                                 }
-                                catch(Exception e)
-                                {
-                                    _records.add(_alteredIndex, record);
-                                }
-                                updateRecords();
                             }
                             //if the edit button was clicked from the view record activity
                             else if(requestCode == REQ_CODE_VIEW_RECORD)
@@ -189,7 +200,7 @@ public class ManageRecordsActivity extends BaseActivity implements IItemLongClic
 
     private void onEditButtonClick(NdefRecord record)
     {
-        Intent editRecord = new Intent(this, EditNdefActivity.class);
+        Intent editRecord = new Intent(this, EditRecordActivity.class);
         editRecord.putExtra(getString(R.string.intent_record), record);
         if(_implant != null)
         {
@@ -202,7 +213,7 @@ public class ManageRecordsActivity extends BaseActivity implements IItemLongClic
 
     public void onNewRecordClick()
     {
-        Intent addRecord = new Intent(this, EditNdefActivity.class);
+        Intent addRecord = new Intent(this, EditRecordActivity.class);
         if(_implant != null)
         {
             addRecord.putExtra(getString(R.string.intent_ndef_capacity), _implant.getNdefCapacity());

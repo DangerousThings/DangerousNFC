@@ -36,7 +36,7 @@ import com.google.android.material.navigation.NavigationView;
  *   a stringExtra under the R.string.intent_ndef_capacity tag
  */
 
-public class EditNdefActivity extends BaseActivity implements ITracksPayloadSize
+public class EditRecordActivity extends BaseActivity implements ITracksPayloadSize
 {
     NdefRecord _record;
     String _ndefCapacityText;

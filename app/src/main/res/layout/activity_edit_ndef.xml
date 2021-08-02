@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorPrimaryVariant"
-    tools:context=".pages.EditNdefActivity">
+    tools:context=".pages.EditRecordActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/edit_ndef_constraint"
