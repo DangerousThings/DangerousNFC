@@ -10,20 +10,44 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.interfaces.IItemLongClickListener;
+import com.dangerousthings.nfc.interfaces.ItemTouchHelperAdapter;
 import com.dangerousthings.nfc.utilities.EncryptionUtils;
 import com.dangerousthings.nfc.utilities.NdefUtils;
 
+import java.util.Collections;
 import java.util.List;
 
-public class NdefMessageRecyclerAdapter extends RecyclerView.Adapter<NdefMessageRecyclerAdapter.ViewHolder>
+public class NdefMessageRecyclerAdapter extends RecyclerView.Adapter<NdefMessageRecyclerAdapter.ViewHolder> implements ItemTouchHelperAdapter
 {
     private final List<NdefRecord> _message;
     private final LayoutInflater _inflater;
     private IItemLongClickListener _clickListener;
+
+    @Override
+    public boolean onItemMove(int fromPosition, int toPosition)
+    {
+        if(fromPosition < toPosition)
+        {
+            for(int i = fromPosition; i < toPosition; i++)
+            {
+                Collections.swap(_message, i, i + 1);
+            }
+        }
+        else
+        {
+            for(int i = fromPosition; i > toPosition; i++)
+            {
+                Collections.swap(_message, i, i - 1);
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition);
+        return true;
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
