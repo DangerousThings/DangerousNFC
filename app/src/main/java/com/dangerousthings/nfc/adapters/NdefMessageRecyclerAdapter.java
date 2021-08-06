@@ -35,20 +35,7 @@ public class NdefMessageRecyclerAdapter extends RecyclerView.Adapter<NdefMessage
     @Override
     public boolean onItemMove(int fromPosition, int toPosition)
     {
-        if(fromPosition < toPosition)
-        {
-            for(int i = fromPosition; i < toPosition; i++)
-            {
-                Collections.swap(_message, i, i + 1);
-            }
-        }
-        else
-        {
-            for(int i = fromPosition; i > toPosition && i < _message.size(); i++)
-            {
-                Collections.swap(_message, i, i - 1);
-            }
-        }
+        Collections.swap(_message, fromPosition, toPosition);
         notifyItemMoved(fromPosition, toPosition);
         return true;
     }

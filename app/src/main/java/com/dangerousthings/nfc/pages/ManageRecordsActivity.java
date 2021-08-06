@@ -2,7 +2,6 @@ package com.dangerousthings.nfc.pages;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -67,7 +66,7 @@ public class ManageRecordsActivity extends BaseActivity implements IItemLongClic
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_records);
+        setContentView(R.layout.activity_manage_records);
 
         prepareActivity();
         setUpViews();
