@@ -10,6 +10,7 @@ import android.os.Parcelable;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 import java.util.Random;
 
 public class NdefUtils

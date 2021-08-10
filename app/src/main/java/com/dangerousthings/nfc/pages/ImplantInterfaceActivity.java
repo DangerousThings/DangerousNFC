@@ -1,9 +1,7 @@
 package com.dangerousthings.nfc.pages;
 
 import android.app.AlertDialog;
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
@@ -23,10 +21,6 @@ import com.dangerousthings.nfc.utilities.NdefUtils;
 
 public class ImplantInterfaceActivity extends BaseActivity
 {
-    IntentFilter[] _intentFilters;
-    PendingIntent _pendingIntent;
-    NfcAdapter _nfcAdapter;
-
     Intent _originalIntent;
     int _requestCode;
 
@@ -39,53 +33,11 @@ public class ImplantInterfaceActivity extends BaseActivity
         _originalIntent = getIntent();
         _requestCode = getIntent().getIntExtra(getString(R.string.intent_request_code), -1);
 
-        nfcPrimer();
         setUpScanAnimation();
     }
 
-    private void nfcPrimer()
-    {
-        _nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-
-        _pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP) , 0);
-
-        IntentFilter ndef = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
-        IntentFilter tech = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
-        IntentFilter tag = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
-        try
-        {
-            ndef.addDataType("*/*");
-        }
-        catch(IntentFilter.MalformedMimeTypeException e)
-        {
-            throw new RuntimeException("ImplantInterfaceActivity:", e);
-        }
-
-        _intentFilters = new IntentFilter[] {ndef, tech, tag};
-    }
-
     @Override
-    public void onPause()
-    {
-        super.onPause();
-        _nfcAdapter.disableForegroundDispatch(this);
-    }
-
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-        _nfcAdapter.enableForegroundDispatch(this, _pendingIntent, _intentFilters, null);
-    }
-
-    @Override
-    public void onNewIntent(Intent intent)
-    {
-        super.onNewIntent(intent);
-        handleActionDiscovered(intent);
-    }
-
-    private void handleActionDiscovered(Intent intent)
+    public void handleActionDiscovered(Intent intent)
     {
         if(_requestCode == ManageRecordsActivity.REQ_CODE_WRITE_MESSAGE)
         {

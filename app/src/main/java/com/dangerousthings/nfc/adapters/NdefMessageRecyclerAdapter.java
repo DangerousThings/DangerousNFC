@@ -4,26 +4,41 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.nfc.NdefRecord;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.MotionEventCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.interfaces.IItemLongClickListener;
+import com.dangerousthings.nfc.interfaces.IOnStartDragListener;
+import com.dangerousthings.nfc.interfaces.ItemTouchHelperAdapter;
 import com.dangerousthings.nfc.utilities.EncryptionUtils;
 import com.dangerousthings.nfc.utilities.NdefUtils;
 
+import java.util.Collections;
 import java.util.List;
 
-public class NdefMessageRecyclerAdapter extends RecyclerView.Adapter<NdefMessageRecyclerAdapter.ViewHolder>
+public class NdefMessageRecyclerAdapter extends RecyclerView.Adapter<NdefMessageRecyclerAdapter.ViewHolder> implements ItemTouchHelperAdapter
 {
     private final List<NdefRecord> _message;
     private final LayoutInflater _inflater;
     private IItemLongClickListener _clickListener;
+    private final IOnStartDragListener _dragStartListener;
+
+    @Override
+    public boolean onItemMove(int fromPosition, int toPosition)
+    {
+        Collections.swap(_message, fromPosition, toPosition);
+        notifyItemMoved(fromPosition, toPosition);
+        return true;
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {
@@ -31,6 +46,7 @@ public class NdefMessageRecyclerAdapter extends RecyclerView.Adapter<NdefMessage
         public final TextView mLabelText;
         public final TextView mSizeText;
         public final ImageView mEncrypted;
+        public final ImageView mHandle;
 
         public ViewHolder(@NonNull View itemView)
         {
@@ -39,15 +55,17 @@ public class NdefMessageRecyclerAdapter extends RecyclerView.Adapter<NdefMessage
             mLabelText = itemView.findViewById(R.id.record_text_label);
             mSizeText = itemView.findViewById(R.id.record_text_size);
             mEncrypted = itemView.findViewById(R.id.record_image_encrypted);
+            mHandle = itemView.findViewById(R.id.record_image_handle);
             mView.setOnClickListener(v -> _clickListener.onItemClick(getAdapterPosition()));
             mView.setOnLongClickListener(v -> _clickListener.onItemLongClick(getAdapterPosition()));
         }
     }
 
-    public NdefMessageRecyclerAdapter(Context context, List<NdefRecord> message)
+    public NdefMessageRecyclerAdapter(Context context, List<NdefRecord> message, IOnStartDragListener dragStartListener)
     {
         _inflater = LayoutInflater.from(context);
         _message = message;
+        _dragStartListener = dragStartListener;
     }
 
     @NonNull
@@ -80,6 +98,18 @@ public class NdefMessageRecyclerAdapter extends RecyclerView.Adapter<NdefMessage
         }
         holder.mSizeText.setText(record.getPayload().length + " Bytes");
         holder.mLabelText.setText(NdefUtils.getRecordLabel(record));
+        holder.mHandle.setOnTouchListener(new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                if(MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN)
+                {
+                    _dragStartListener.onStartDrag(holder);
+                }
+                return false;
+            }
+        });
     }
 
     @Override

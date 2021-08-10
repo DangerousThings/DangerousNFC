@@ -5,6 +5,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.adapters.NdefMessageRecyclerAdapter;
+import com.dangerousthings.nfc.callbacks.DragItemTouchHelperCallback;
 import com.dangerousthings.nfc.controls.DecryptionPasswordDialog;
 import com.dangerousthings.nfc.controls.EncryptionPasswordDialog;
 import com.dangerousthings.nfc.controls.EditRecordLabelDialog;
@@ -31,6 +33,7 @@ import com.dangerousthings.nfc.fragments.ViewRecordsToolbar;
 import com.dangerousthings.nfc.interfaces.IClickListener;
 import com.dangerousthings.nfc.interfaces.IImplantDAO;
 import com.dangerousthings.nfc.interfaces.IItemLongClickListener;
+import com.dangerousthings.nfc.interfaces.IOnStartDragListener;
 import com.dangerousthings.nfc.models.Implant;
 import com.dangerousthings.nfc.utilities.EncryptionUtils;
 import com.dangerousthings.nfc.utilities.NdefUtils;
@@ -39,7 +42,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 
-public class ManageRecordsActivity extends BaseActivity implements IItemLongClickListener, IClickListener
+public class ManageRecordsActivity extends BaseActivity implements IItemLongClickListener, IClickListener, IOnStartDragListener
 {
     public final static int REQ_CODE_RECORD = 1;
     public final static int REQ_CODE_VIEW_RECORD = 2;
@@ -54,6 +57,7 @@ public class ManageRecordsActivity extends BaseActivity implements IItemLongClic
     NdefMessageRecyclerAdapter _recyclerAdapter;
     ActivityResultLauncher<Intent> _activityResultLauncher;
     DialogFragment _dialog;
+    ItemTouchHelper _itemTouchHelper;
 
     TextView mNoRecordsText;
     RecyclerView mRecyclerView;
@@ -62,7 +66,7 @@ public class ManageRecordsActivity extends BaseActivity implements IItemLongClic
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_records);
+        setContentView(R.layout.activity_manage_records);
 
         prepareActivity();
         setUpViews();
@@ -192,10 +196,13 @@ public class ManageRecordsActivity extends BaseActivity implements IItemLongClic
         mRecyclerView = findViewById(R.id.view_records_recycler);
 
         //set up recyclerview
-        _recyclerAdapter = new NdefMessageRecyclerAdapter(this, _records);
+        _recyclerAdapter = new NdefMessageRecyclerAdapter(this, _records, this);
         _recyclerAdapter.setClickListener(this);
+        ItemTouchHelper.Callback callback = new DragItemTouchHelperCallback(_recyclerAdapter);
+        _itemTouchHelper = new ItemTouchHelper(callback);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(_recyclerAdapter);
+        _itemTouchHelper.attachToRecyclerView(mRecyclerView);
     }
 
     private void onEditButtonClick(NdefRecord record)
@@ -501,5 +508,11 @@ public class ManageRecordsActivity extends BaseActivity implements IItemLongClic
         _toolbar.setClickListener(this);
         fragmentTransaction.replace(R.id.view_records_frame_toolbar, _toolbar);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onStartDrag(RecyclerView.ViewHolder viewHolder)
+    {
+        _itemTouchHelper.startDrag(viewHolder);
     }
 }
