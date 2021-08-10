@@ -9,9 +9,7 @@ import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
@@ -43,11 +41,6 @@ import java.util.Objects;
 
 public class MainActivity extends BaseActivity implements IMainMenuClickListener
 {
-    //NFC globals
-    IntentFilter[] _intentFilterArray;
-    PendingIntent _pendingIntent;
-    NfcAdapter _adapter;
-
     //UI variables
     private DrawerLayout mDrawer;
     private NavigationView mNavigation;
@@ -77,33 +70,11 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
         mDrawerButton.setOnClickListener(v -> drawerButtonClicked());
 
         setDrawer();
-        nfcPrimer();
         setUpScanAnimation();
     }
 
-    private void nfcPrimer()
-    {
-        _adapter = NfcAdapter.getDefaultAdapter(this);
-
-        _pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-
-        IntentFilter ndef = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
-        try
-        {
-            //add any additional NDEF related mimetypes here
-            ndef.addDataType("*/*");
-        }
-        catch(IntentFilter.MalformedMimeTypeException e)
-        {
-            throw new RuntimeException("fail", e);
-        }
-
-        _intentFilterArray = new IntentFilter[] {ndef};
-
-        handleActionDiscovered(this.getIntent());
-    }
-
-    private void handleActionDiscovered(Intent intent)
+    @Override
+    public void handleActionDiscovered(Intent intent)
     {
         if(Objects.equals(intent.getAction(), NfcAdapter.ACTION_NDEF_DISCOVERED) || Objects.equals(intent.getAction(), NfcAdapter.ACTION_TECH_DISCOVERED) || Objects.equals(intent.getAction(), NfcAdapter.ACTION_TAG_DISCOVERED))
         {
@@ -250,27 +221,6 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
             }
         });
         animation.start();
-    }
-
-    @Override
-    public void onPause()
-    {
-        super.onPause();
-        _adapter.disableForegroundDispatch(this);
-    }
-
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-        _adapter.enableForegroundDispatch(this, _pendingIntent, _intentFilterArray, null);
-    }
-
-    @Override
-    public void onNewIntent(Intent intent)
-    {
-        super.onNewIntent(intent);
-        handleActionDiscovered(intent);
     }
 
     @Override
