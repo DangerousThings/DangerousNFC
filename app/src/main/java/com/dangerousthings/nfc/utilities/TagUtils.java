@@ -1,6 +1,5 @@
 package com.dangerousthings.nfc.utilities;
 
-import android.nfc.NdefRecord;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 

@@ -10,7 +10,6 @@ import android.os.Parcelable;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Locale;
 import java.util.Random;
 
 public class NdefUtils
@@ -136,7 +135,7 @@ public class NdefUtils
         {
             if(mimeType.length() > 1)
             {
-                mimeType = mimeType.substring(1, mimeType.length());
+                mimeType = mimeType.substring(1);
             }
         }
         if(mimeType.contains("|"))
@@ -156,13 +155,13 @@ public class NdefUtils
         String mimeType = record.toMimeType();
         if(isRecordLabeled(record))
         {
-            return mimeType.substring(mimeType.indexOf("|")+1, mimeType.length());
+            return mimeType.substring(mimeType.indexOf("|")+1);
         }
         else
         {
             if(mimeType.contains("$"))
             {
-                return mimeType.substring(1, mimeType.length());
+                return mimeType.substring(1);
             }
             return mimeType;
         }

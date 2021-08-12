@@ -25,7 +25,6 @@ import com.dangerousthings.nfc.fragments.EditMarkdownFragment;
 import com.dangerousthings.nfc.fragments.EditPlainTextFragment;
 import com.dangerousthings.nfc.interfaces.IEditFragment;
 import com.dangerousthings.nfc.interfaces.ITracksPayloadSize;
-import com.dangerousthings.nfc.utilities.EncryptionUtils;
 import com.dangerousthings.nfc.utilities.NdefUtils;
 import com.google.android.material.navigation.NavigationView;
 

@@ -29,7 +29,8 @@
                 android:scaleType="fitCenter"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/implant_placeholder" />
+                app:tint="?attr/colorPrimary"
+                app:srcCompat="@drawable/ic_image_placeholder" />
 
             <EditText
                 android:id="@+id/edit_implant_edittext_name"

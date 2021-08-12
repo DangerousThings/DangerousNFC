@@ -25,7 +25,8 @@
                 android:layout_height="128dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:src="@drawable/implant_placeholder"
+                android:src="@drawable/ic_image_placeholder"
+                app:tint="?attr/colorPrimary"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:contentDescription="@string/implant_image" />

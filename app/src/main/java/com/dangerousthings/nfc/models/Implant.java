@@ -130,6 +130,8 @@ public class Implant
             case NTAG_I2C:
                 modelList.add(ImplantModel.xSIID.name());
                 break;
+            case UNKNOWN:
+                modelList.add(ImplantModel.flexMN.name());
         }
         return modelList;
     }

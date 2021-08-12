@@ -16,7 +16,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/implant_placeholder"
+        app:srcCompat="@drawable/ic_image_placeholder"
+        app:tint="?attr/colorSecondary"
         android:contentDescription="@string/implant_image" />
 
     <TextView

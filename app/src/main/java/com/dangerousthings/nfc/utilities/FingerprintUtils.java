@@ -15,6 +15,7 @@ public class FingerprintUtils
 {
     private static final String GET_VERSION_RESULT_NTAG_216 = "00 04 04 02 01 00 13 03";
     private static final String GET_VERSION_RESULT_DESFIRE_EV1_8K = "AF 04 01 02 01 00 1A 05";
+    private static final String GET_VERSION_RESULT_DESFIRE_EV2_8K = "AF 04 01 01 12 00 1A 05";
     private static final String GET_VERSION_RESULT_VIVOKEY_FLEX_ONE = "67 00";
     private static final String GET_VERSION_RESULT_NTAG_I2C_PLUS = "00 04 04 05 02 02 15 03";
 
@@ -36,6 +37,7 @@ public class FingerprintUtils
             case GET_VERSION_RESULT_NTAG_216:
                 return TagFamily.NTAG_Standard;
             case GET_VERSION_RESULT_DESFIRE_EV1_8K:
+            case GET_VERSION_RESULT_DESFIRE_EV2_8K:
                 return TagFamily.DESFire;
             case GET_VERSION_RESULT_VIVOKEY_FLEX_ONE:
                 return TagFamily.Vivokey;
@@ -76,20 +78,5 @@ public class FingerprintUtils
         {
             return null;
         }
-    }
-
-    public static List<Implant> getImplantListFromType(TagFamily tagFamily)
-    {
-        List<Implant> implantList = new ArrayList<>();
-        switch(tagFamily)
-        {
-            case NTAG_Standard:
-                break;
-            case DESFire:
-                break;
-            case NTAG_I2C:
-                break;
-        }
-        return implantList;
     }
 }

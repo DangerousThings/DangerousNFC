@@ -11,8 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.view.MotionEventCompat;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dangerousthings.nfc.R;
@@ -98,17 +96,13 @@ public class NdefMessageRecyclerAdapter extends RecyclerView.Adapter<NdefMessage
         }
         holder.mSizeText.setText(record.getPayload().length + " Bytes");
         holder.mLabelText.setText(NdefUtils.getRecordLabel(record));
-        holder.mHandle.setOnTouchListener(new View.OnTouchListener()
+        holder.mHandle.setOnTouchListener((v, event) ->
         {
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
+            if(event.getActionMasked() == MotionEvent.ACTION_DOWN)
             {
-                if(MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN)
-                {
-                    _dragStartListener.onStartDrag(holder);
-                }
-                return false;
+                _dragStartListener.onStartDrag(holder);
             }
+            return false;
         });
     }
 

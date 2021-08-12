@@ -107,7 +107,10 @@ public class EditImplantInfoFragment extends Fragment
     {
         //Pull values from page into implant and update
         _implant.setImplantName(mNameEdit.getText().toString());
-        _implant.setImplantModel(Converters.getImplantModelFromString(mModelSpinner.getSelectedItem().toString().replace(" ", "_")));
+        if(mModelSpinner.getSelectedItem() != null)
+        {
+            _implant.setImplantModel(Converters.getImplantModelFromString(mModelSpinner.getSelectedItem().toString().replace(" ", "_")));
+        }
         ImplantDatabase database = ImplantDatabase.getInstance(requireActivity());
         IImplantDAO implantDAO = database.implantDAO();
         implantDAO.updateImplant(_implant);

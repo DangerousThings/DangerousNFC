@@ -170,11 +170,6 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
             {
                 mDrawer.open();
             }
-
-            public void onSwipeLeft()
-            {
-                mDrawer.close();
-            }
         });
     }
 

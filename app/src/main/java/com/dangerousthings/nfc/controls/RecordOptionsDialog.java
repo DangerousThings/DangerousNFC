@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.icu.text.AlphabeticIndex;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
