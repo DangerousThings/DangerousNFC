@@ -1,5 +1,6 @@
 package com.dangerousthings.nfc.utilities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -7,6 +8,14 @@ import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.os.Parcelable;
+
+import androidx.fragment.app.Fragment;
+
+import com.dangerousthings.nfc.fragments.EditMarkdownFragment;
+import com.dangerousthings.nfc.fragments.EditPlainTextFragment;
+import com.dangerousthings.nfc.fragments.ViewMarkdownFragment;
+import com.dangerousthings.nfc.fragments.ViewPlainTextFragment;
+import com.dangerousthings.nfc.interfaces.IEditFragment;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -147,23 +156,96 @@ public class NdefUtils
 
     public static boolean isRecordLabeled(NdefRecord record)
     {
-        return record.toMimeType().contains("|");
+        if(record.getTnf() == 2)
+        {
+            return record.toMimeType().contains("|");
+        }
+        return false;
+    }
+
+    public static boolean isRecordEncrypted(NdefRecord record)
+    {
+        if(record.getTnf() == 2)
+        {
+            return record.toMimeType().contains("$");
+        }
+        return false;
     }
 
     public static String getRecordLabel(NdefRecord record)
     {
-        String mimeType = record.toMimeType();
-        if(isRecordLabeled(record))
+        if(isRecordEncryptionLabelSupported(record))
         {
-            return mimeType.substring(mimeType.indexOf("|")+1);
+            String mimeType = record.toMimeType();
+            if(isRecordLabeled(record))
+            {
+                return mimeType.substring(mimeType.indexOf("|")+1);
+            }
+            else
+            {
+                if(mimeType.contains("$"))
+                {
+                    return mimeType.substring(1);
+                }
+                return mimeType;
+            }
         }
         else
         {
-            if(mimeType.contains("$"))
+            short tnf = record.getTnf();
+            if(tnf == 1)
             {
-                return mimeType.substring(1);
+                return "RTD: " + new String(record.getType());
             }
-            return mimeType;
+            else
+            {
+                return "TNF: " + tnf;
+            }
         }
+    }
+
+    //Any new record types need to be added here!!!
+    public static IEditFragment getEditFragmentForRecord(NdefRecord record)
+    {
+        if(record == null)
+        {
+            return EditPlainTextFragment.newInstance();
+        }
+        else if(record.getTnf() == 2)
+        {
+            String mimeType = getMimeTypeFromRecord(record);
+            if(mimeType.equals("text/markdown"))
+            {
+                return EditMarkdownFragment.newInstance(record);
+            }
+            else if(mimeType.equals("text/plain"))
+            {
+                return EditPlainTextFragment.newInstance(record);
+            }
+        }
+        return null;
+    }
+
+    //Any new record types need to be added here!!!
+    public static Fragment getViewFragmentForRecord(NdefRecord record)
+    {
+        if(record.getTnf() == 2)
+        {
+            String mimeType = getMimeTypeFromRecord(record);
+            if(mimeType.equals("text/markdown"))
+            {
+                return ViewMarkdownFragment.newInstance(record);
+            }
+            else if(mimeType.equals("text/plain"))
+            {
+                return ViewPlainTextFragment.newInstance(record);
+            }
+        }
+        return null;
+    }
+
+    public static boolean isRecordEncryptionLabelSupported(NdefRecord record)
+    {
+        return record.getTnf() == 2;
     }
 }

@@ -61,6 +61,8 @@ public abstract class BaseActivity extends AppCompatActivity
 
         _pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
 
+        IntentFilter tag = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
+        IntentFilter tech = new IntentFilter(NfcAdapter.ACTION_TECH_DISCOVERED);
         IntentFilter ndef = new IntentFilter(NfcAdapter.ACTION_NDEF_DISCOVERED);
         try
         {
@@ -72,7 +74,7 @@ public abstract class BaseActivity extends AppCompatActivity
             throw new RuntimeException("fail", e);
         }
 
-        _intentFilterArray = new IntentFilter[] {ndef};
+        _intentFilterArray = new IntentFilter[] {ndef, tag, tech};
 
         handleActionDiscovered(this.getIntent());
     }

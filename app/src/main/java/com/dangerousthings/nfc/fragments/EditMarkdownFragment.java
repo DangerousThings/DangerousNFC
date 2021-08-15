@@ -222,4 +222,10 @@ public class EditMarkdownFragment extends Fragment implements IEditFragment
     {
         _tracker = tracker;
     }
+
+    @Override
+    public String getDataTypeName()
+    {
+        return "Markdown";
+    }
 }
