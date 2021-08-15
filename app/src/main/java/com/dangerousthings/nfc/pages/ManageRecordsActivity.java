@@ -87,7 +87,7 @@ public class ManageRecordsActivity extends BaseActivity implements IItemLongClic
             //add NdefRecords to our global list
             Collections.addAll(_records, _message.getRecords());
             //accounts for empty tags
-            _records.removeIf(record -> (record.toMimeType() == null));
+            _records.removeIf(record -> (record.getTnf() == 0));
             if(_records.size() > 0)
             {
                 mNoRecordsText.setVisibility(View.GONE);
@@ -278,7 +278,7 @@ public class ManageRecordsActivity extends BaseActivity implements IItemLongClic
         NdefRecord record = _recyclerAdapter.getRecord(position);
         String mimeType = record.toMimeType();
         //first condition for encrypted mimetype
-        if(mimeType.contains("$"))
+        if(NdefUtils.isRecordEncrypted(record))
         {
             //prompt for decryption password
             _dialog = DecryptionPasswordDialog.newInstance(true);
@@ -305,7 +305,7 @@ public class ManageRecordsActivity extends BaseActivity implements IItemLongClic
     public boolean onItemLongClick(int position)
     {
         _alteredIndex = position;
-        _dialog = RecordOptionsDialog.newInstance(EncryptionUtils.isRecordEncrypted(_recyclerAdapter.getRecord(position)));
+        _dialog = RecordOptionsDialog.newInstance(_recyclerAdapter.getRecord(position));
         ((RecordOptionsDialog)_dialog).setClickListener(this);
         _dialog.show(getSupportFragmentManager(), "RecordOptionsDialog");
         return true;

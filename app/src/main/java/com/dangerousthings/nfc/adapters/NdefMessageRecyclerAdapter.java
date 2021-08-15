@@ -74,14 +74,14 @@ public class NdefMessageRecyclerAdapter extends RecyclerView.Adapter<NdefMessage
         return new ViewHolder(view);
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "ClickableViewAccessibility"})
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position)
     {
         NdefRecord record = _message.get(position);
-        if (record.toMimeType().contains("$"))
+        if (NdefUtils.isRecordEncryptionLabelSupported(record))
         {
-            if (EncryptionUtils.isRecordEncrypted(record))
+            if (NdefUtils.isRecordEncrypted(record))
             {
                 holder.mEncrypted.setVisibility(View.VISIBLE);
             }

@@ -127,6 +127,12 @@ public class EditPlainTextFragment extends Fragment implements IEditFragment
     }
 
     @Override
+    public String getDataTypeName()
+    {
+        return "Plain Text";
+    }
+
+    @Override
     public NdefRecord getNdefRecord()
     {
         return NdefRecord.createTextRecord("en", mEditText.getText().toString());

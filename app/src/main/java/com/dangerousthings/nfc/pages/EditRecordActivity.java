@@ -108,19 +108,17 @@ public class EditRecordActivity extends BaseActivity implements ITracksPayloadSi
         {
             _fragment = EditPlainTextFragment.newInstance();
         }
-        else if(NdefUtils.getMimeTypeFromRecord(_record).equals(getString(R.string.mime_plaintext)))
+        else
         {
-            _fragment = EditPlainTextFragment.newInstance(_record);
-            mPayloadTypeButton.setText(R.string.plain_text);
+            _fragment = NdefUtils.getEditFragmentForRecord(_record);
         }
-        else if(NdefUtils.getMimeTypeFromRecord(_record).equals("text/markdown"))
+        if(_fragment != null)
         {
-            _fragment = EditMarkdownFragment.newInstance(_record);
-            mPayloadTypeButton.setText(R.string.markdown);
+            _fragment.setPayloadTrackingInterface(this);
+            transaction.replace(R.id.edit_ndef_frame, ((Fragment) _fragment));
+            transaction.commit();
+            mPayloadTypeButton.setText(_fragment.getDataTypeName());
         }
-        _fragment.setPayloadTrackingInterface(this);
-        transaction.replace(R.id.edit_ndef_frame, ((Fragment)_fragment));
-        transaction.commit();
     }
 
     private void setDrawer()

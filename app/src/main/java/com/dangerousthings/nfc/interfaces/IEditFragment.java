@@ -7,4 +7,5 @@ public interface IEditFragment
     NdefRecord getNdefRecord();
     int getPayloadSize();
     void setPayloadTrackingInterface(ITracksPayloadSize tracker);
+    String getDataTypeName();
 }

@@ -46,24 +46,14 @@ public class ViewRecordActivity extends BaseActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        Fragment fragment;
-        String mimeType = NdefUtils.getMimeTypeFromRecord(_record);
-        if(mimeType.equals("text/plain"))
+        Fragment fragment = NdefUtils.getViewFragmentForRecord(_record);
+        if(fragment == null)
         {
-            fragment = ViewPlainTextFragment.newInstance(_record);
-        }
-        else if(mimeType.equals("text/markdown"))
-        {
-            fragment = ViewMarkdownFragment.newInstance(_record);
-        }
-        else
-        {
-            fragment = null;
             Toast.makeText(this, "Mime type not currently supported", Toast.LENGTH_SHORT).show();
             finish();
             overridePendingTransition(0, 0);
         }
-        if(fragment != null)
+        else
         {
             fragmentTransaction.replace(R.id.view_record_frame, fragment);
             fragmentTransaction.commit();

@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/rounded_primary_variant">
+    android:background="@drawable/rounded_primary_variant"
+    android:paddingBottom="16dp">
 
     <TextView
         android:id="@+id/textView4"
@@ -28,8 +29,8 @@
         android:background="@drawable/rounded_secondary_variant"
         android:fontFamily="@font/proxima_nova_bold"
         android:text="@string/delete_record"
-        android:textColor="?attr/colorPrimaryVariant"
         android:textAllCaps="false"
+        android:textColor="?attr/colorPrimaryVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -41,11 +42,11 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
-        android:textColor="?attr/colorPrimaryVariant"
         android:background="@drawable/rounded_secondary_variant"
         android:fontFamily="@font/proxima_nova_bold"
         android:text="@string/edit_record_label"
         android:textAllCaps="false"
+        android:textColor="?attr/colorPrimaryVariant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/record_options_button_delete" />
@@ -57,14 +58,12 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="16dp"
-        android:textColor="?attr/colorPrimaryVariant"
         android:background="@drawable/rounded_secondary_variant"
         android:fontFamily="@font/proxima_nova_bold"
         android:text="@string/encrypt_record"
         android:textAllCaps="false"
+        android:textColor="?attr/colorPrimaryVariant"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/record_options_button_label" />
@@ -77,11 +76,11 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="16dp"
-        android:textColor="?attr/colorPrimaryVariant"
         android:background="@drawable/rounded_secondary_variant"
         android:fontFamily="@font/proxima_nova_bold"
         android:text="@string/remove_record_encryption"
         android:textAllCaps="false"
+        android:textColor="?attr/colorPrimaryVariant"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

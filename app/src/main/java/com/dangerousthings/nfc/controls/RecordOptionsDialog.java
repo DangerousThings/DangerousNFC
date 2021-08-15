@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.nfc.NdefRecord;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,15 +18,16 @@ import androidx.fragment.app.DialogFragment;
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.enums.OnClickActionType;
 import com.dangerousthings.nfc.interfaces.IClickListener;
+import com.dangerousthings.nfc.utilities.NdefUtils;
 
 import java.util.Objects;
 
 public class RecordOptionsDialog extends DialogFragment
 {
-    private static final String ARG_ENCRYPTED = "encryption_status";
+    private static final String ARG_RECORD = "ndef_record";
 
     IClickListener _clickListener;
-    boolean _isEncrypted;
+    NdefRecord _record;
 
     Button mEncryptButton;
     Button mDecryptButton;
@@ -38,7 +40,7 @@ public class RecordOptionsDialog extends DialogFragment
     {
         if(getArguments() != null)
         {
-            _isEncrypted = getArguments().getBoolean(ARG_ENCRYPTED);
+            _record = getArguments().getParcelable(ARG_RECORD);
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -72,15 +74,24 @@ public class RecordOptionsDialog extends DialogFragment
             Objects.requireNonNull(getDialog()).cancel();
         });
 
-        if(_isEncrypted)
+        if(NdefUtils.isRecordEncryptionLabelSupported(_record))
         {
-            mEncryptButton.setVisibility(View.GONE);
-            mDecryptButton.setVisibility(View.VISIBLE);
+            if(NdefUtils.isRecordEncrypted(_record))
+            {
+                mEncryptButton.setVisibility(View.GONE);
+                mDecryptButton.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                mEncryptButton.setVisibility(View.VISIBLE);
+                mDecryptButton.setVisibility(View.GONE);
+            }
         }
         else
         {
-            mEncryptButton.setVisibility(View.VISIBLE);
+            mEncryptButton.setVisibility(View.GONE);
             mDecryptButton.setVisibility(View.GONE);
+            mLabelButton.setVisibility(View.GONE);
         }
 
         builder.setView(view);
@@ -93,11 +104,11 @@ public class RecordOptionsDialog extends DialogFragment
         return dialog;
     }
 
-    public static RecordOptionsDialog newInstance(boolean isEncrypted)
+    public static RecordOptionsDialog newInstance(NdefRecord record)
     {
         RecordOptionsDialog dialog = new RecordOptionsDialog();
         Bundle args = new Bundle();
-        args.putBoolean(ARG_ENCRYPTED, isEncrypted);
+        args.putParcelable(ARG_RECORD, record);
         dialog.setArguments(args);
         return dialog;
     }
