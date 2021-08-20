@@ -8,5 +8,8 @@
         <item
             android:id="@+id/nav_markdown"
             android:title="@string/markdown"/>
+        <item
+            android:id="@+id/nav_url"
+            android:title="URL"/>
     </group>
 </menu>

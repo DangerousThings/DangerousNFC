@@ -11,8 +11,10 @@ import android.os.Parcelable;
 
 import androidx.fragment.app.Fragment;
 
+import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.fragments.EditMarkdownFragment;
 import com.dangerousthings.nfc.fragments.EditPlainTextFragment;
+import com.dangerousthings.nfc.fragments.EditUrlFragment;
 import com.dangerousthings.nfc.fragments.ViewMarkdownFragment;
 import com.dangerousthings.nfc.fragments.ViewPlainTextFragment;
 import com.dangerousthings.nfc.interfaces.IEditFragment;
@@ -221,6 +223,44 @@ public class NdefUtils
             else if(mimeType.equals("text/plain"))
             {
                 return EditPlainTextFragment.newInstance(record);
+            }
+        }
+        return null;
+    }
+
+    public static IEditFragment getEditFragmentForNav(NdefRecord record, int navId)
+    {
+        if(navId == R.id.nav_markdown)
+        {
+            if(record == null)
+            {
+                return EditMarkdownFragment.newInstance();
+            }
+            else
+            {
+                return EditMarkdownFragment.newInstance(record);
+            }
+        }
+        else if(navId == R.id.nav_plaintext)
+        {
+            if(record == null)
+            {
+                return EditPlainTextFragment.newInstance();
+            }
+            else
+            {
+                return EditPlainTextFragment.newInstance(record);
+            }
+        }
+        else if(navId == R.id.nav_url)
+        {
+            if(record == null)
+            {
+                return EditUrlFragment.newInstance();
+            }
+            else
+            {
+                return EditUrlFragment.newInstance(record);
             }
         }
         return null;
