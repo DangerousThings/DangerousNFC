@@ -20,6 +20,7 @@ import com.dangerousthings.nfc.fragments.ViewPlainTextFragment;
 import com.dangerousthings.nfc.interfaces.IEditFragment;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
@@ -197,7 +198,22 @@ public class NdefUtils
             short tnf = record.getTnf();
             if(tnf == 1)
             {
-                return "RTD: " + new String(record.getType());
+                String rtd = new String(record.getType());
+                if(rtd.equals("U"))
+                {
+                    byte[] payload = record.getPayload();
+                    String url =  new String(payload, 1, payload.length - 1, StandardCharsets.UTF_8);
+                    int index = url.indexOf("/");
+                    if(index > 1)
+                    {
+                        return url.substring(0, index);
+                    }
+                    else
+                    {
+                        return url.substring(0, url.length());
+                    }
+                }
+                return "RTD: " + rtd;
             }
             else
             {
