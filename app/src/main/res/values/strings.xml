@@ -90,4 +90,7 @@
     <string name="edit_record_label">Edit Record Label</string>
     <string name="delete_record">Delete Record</string>
     <string name="record_options">Record Options</string>
+    <string name="url">URL:</string>
+    <string name="type_url">Type URL</string>
+    <string name="ndef">NDEF</string>
 </resources>

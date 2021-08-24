@@ -163,7 +163,7 @@
                     android:fontFamily="@font/proxima_nova_bold"
                     android:minWidth="120dp"
                     android:minHeight="35dp"
-                    android:text="@string/read_payload"
+                    android:text="@string/ndef"
                     android:textColor="?attr/colorSecondary"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/main_button_toggle_advanced"
