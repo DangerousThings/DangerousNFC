@@ -17,6 +17,7 @@ import com.dangerousthings.nfc.fragments.EditPlainTextFragment;
 import com.dangerousthings.nfc.fragments.EditUrlFragment;
 import com.dangerousthings.nfc.fragments.ViewMarkdownFragment;
 import com.dangerousthings.nfc.fragments.ViewPlainTextFragment;
+import com.dangerousthings.nfc.fragments.ViewUrlFragment;
 import com.dangerousthings.nfc.interfaces.IEditFragment;
 
 import java.io.IOException;
@@ -26,6 +27,45 @@ import java.util.Random;
 
 public class NdefUtils
 {
+    public static final String[] URI_PREFIX = new String[] {
+            /* 0x00 */ "",
+            /* 0x01 */ "http://www.",
+            /* 0x02 */ "https://www.",
+            /* 0x03 */ "http://",
+            /* 0x04 */ "https://",
+            /* 0x05 */ "tel:",
+            /* 0x06 */ "mailto:",
+            /* 0x07 */ "ftp://anonymous:anonymous@",
+            /* 0x08 */ "ftp://ftp.",
+            /* 0x09 */ "ftps://",
+            /* 0x0A */ "sftp://",
+            /* 0x0B */ "smb://",
+            /* 0x0C */ "nfs://",
+            /* 0x0D */ "ftp://",
+            /* 0x0E */ "dav://",
+            /* 0x0F */ "news:",
+            /* 0x10 */ "telnet://",
+            /* 0x11 */ "imap:",
+            /* 0x12 */ "rtsp://",
+            /* 0x13 */ "urn:",
+            /* 0x14 */ "pop:",
+            /* 0x15 */ "sip:",
+            /* 0x16 */ "sips:",
+            /* 0x17 */ "tftp:",
+            /* 0x18 */ "btspp://",
+            /* 0x19 */ "btl2cap://",
+            /* 0x1A */ "btgoep://",
+            /* 0x1B */ "tcpobex://",
+            /* 0x1C */ "irdaobex://",
+            /* 0x1D */ "file://",
+            /* 0x1E */ "urn:epc:id:",
+            /* 0x1F */ "urn:epc:tag:",
+            /* 0x20 */ "urn:epc:pat:",
+            /* 0x21 */ "urn:epc:raw:",
+            /* 0x22 */ "urn:epc:",
+            /* 0x23 */ "urn:nfc:"
+    };
+
     public static String parseStringNdefPayloadFromIntent(Intent intent)
     {
         if(NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction()))
@@ -229,7 +269,8 @@ public class NdefUtils
         {
             return EditPlainTextFragment.newInstance();
         }
-        else if(record.getTnf() == 2)
+        int tnf = record.getTnf();
+        if(tnf == 2)
         {
             String mimeType = getMimeTypeFromRecord(record);
             if(mimeType.equals("text/markdown"))
@@ -239,6 +280,14 @@ public class NdefUtils
             else if(mimeType.equals("text/plain"))
             {
                 return EditPlainTextFragment.newInstance(record);
+            }
+        }
+        else if(tnf == 1)
+        {
+            String rtd = new String(record.getType());
+            if(rtd.equals("U"))
+            {
+                return EditUrlFragment.newInstance(record);
             }
         }
         return null;
@@ -285,7 +334,8 @@ public class NdefUtils
     //Any new record types need to be added here!!!
     public static Fragment getViewFragmentForRecord(NdefRecord record)
     {
-        if(record.getTnf() == 2)
+        int tnf = record.getTnf();
+        if(tnf == 2)
         {
             String mimeType = getMimeTypeFromRecord(record);
             if(mimeType.equals("text/markdown"))
@@ -295,6 +345,14 @@ public class NdefUtils
             else if(mimeType.equals("text/plain"))
             {
                 return ViewPlainTextFragment.newInstance(record);
+            }
+        }
+        else if(tnf == 1)
+        {
+            String rtd = new String(record.getType());
+            if(rtd.equals("U"))
+            {
+                return ViewUrlFragment.newInstance(record);
             }
         }
         return null;

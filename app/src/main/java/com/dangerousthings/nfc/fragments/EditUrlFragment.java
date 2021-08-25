@@ -102,17 +102,21 @@ public class EditUrlFragment extends Fragment implements IEditFragment
     private void setupPasteButton()
     {
         ClipboardManager clipboardManager = (ClipboardManager)requireActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData.Item item = clipboardManager.getPrimaryClip().getItemAt(0);
-        if(item != null)
+        ClipData clipboard = clipboardManager.getPrimaryClip();
+        if(clipboard != null)
         {
-            if(Patterns.WEB_URL.matcher(item.coerceToStyledText(requireActivity())).matches())
+            ClipData.Item item = clipboard.getItemAt(0);
+            if (item != null)
             {
-                mPasteButton.setVisibility(View.VISIBLE);
-                mPasteButton.setText(item.coerceToStyledText(requireActivity()));
-                mPasteButton.setOnClickListener(v ->
+                if (Patterns.WEB_URL.matcher(item.coerceToStyledText(requireActivity())).matches())
                 {
-                    mEditText.setText(item.coerceToStyledText(requireActivity()));
-                });
+                    mPasteButton.setVisibility(View.VISIBLE);
+                    mPasteButton.setText(item.coerceToStyledText(requireActivity()));
+                    mPasteButton.setOnClickListener(v ->
+                    {
+                        mEditText.setText(item.coerceToStyledText(requireActivity()));
+                    });
+                }
             }
         }
     }
