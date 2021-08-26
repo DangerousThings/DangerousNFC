@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment;
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.interfaces.IEditFragment;
 import com.dangerousthings.nfc.interfaces.ITracksPayloadSize;
+import com.dangerousthings.nfc.utilities.NdefUtils;
 
 public class EditUrlFragment extends Fragment implements IEditFragment
 {
@@ -33,7 +34,6 @@ public class EditUrlFragment extends Fragment implements IEditFragment
     ITracksPayloadSize _tracker;
 
     EditText mEditText;
-    TextView mPasteButton;
     ConstraintLayout mMainConstraint;
 
     public EditUrlFragment()
@@ -82,10 +82,18 @@ public class EditUrlFragment extends Fragment implements IEditFragment
             @Override
             public void afterTextChanged(Editable s) { }
         });
-        mPasteButton = view.findViewById(R.id.edit_url_textview_paste);
         mMainConstraint = view.findViewById(R.id.edit_url_constraint_main);
         mMainConstraint.setOnClickListener(v -> focusEntry());
-        setupPasteButton();
+
+        if(_record != null)
+        {
+            byte[] payload = _record.getPayload();
+            if(payload != null)
+            {
+                String uri = NdefUtils.getUrlStringFromRecord(_record);
+                mEditText.setText(uri);
+            }
+        }
     }
 
     private void focusEntry()
@@ -97,28 +105,6 @@ public class EditUrlFragment extends Fragment implements IEditFragment
         int position = mEditText.length();
         Editable editable = mEditText.getText();
         Selection.setSelection(editable, position);
-    }
-
-    private void setupPasteButton()
-    {
-        ClipboardManager clipboardManager = (ClipboardManager)requireActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clipboard = clipboardManager.getPrimaryClip();
-        if(clipboard != null)
-        {
-            ClipData.Item item = clipboard.getItemAt(0);
-            if (item != null)
-            {
-                if (Patterns.WEB_URL.matcher(item.coerceToStyledText(requireActivity())).matches())
-                {
-                    mPasteButton.setVisibility(View.VISIBLE);
-                    mPasteButton.setText(item.coerceToStyledText(requireActivity()));
-                    mPasteButton.setOnClickListener(v ->
-                    {
-                        mEditText.setText(item.coerceToStyledText(requireActivity()));
-                    });
-                }
-            }
-        }
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.dangerousthings.nfc.fragments;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.nfc.NdefRecord;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -61,17 +64,22 @@ public class ViewUrlFragment extends Fragment
         mUrlText = view.findViewById(R.id.view_url_textview_url);
         mOpenUrlButton = view.findViewById(R.id.view_url_button);
 
-        byte[] payload = _record.getPayload();
-        int prefixCode = payload[0] & 0x0FF;
-        if(prefixCode >= NdefUtils.URI_PREFIX.length)
-        {
-            prefixCode = 0;
-        }
-
-        String reducedUri = new String(payload, 1, payload.length - 1, StandardCharsets.UTF_8);
-
-        String uri = NdefUtils.URI_PREFIX[prefixCode] + reducedUri;
-
+        String uri = NdefUtils.getUrlStringFromRecord(_record);
         mUrlText.setText(uri);
+
+        mOpenUrlButton.setOnClickListener(v -> openUrl(uri));
+    }
+
+    private void openUrl(String uri)
+    {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+        try
+        {
+            startActivity(browserIntent);
+        }
+        catch(Exception e)
+        {
+            Toast.makeText(requireActivity(), "URL cannot be opened", Toast.LENGTH_SHORT).show();
+        }
     }
 }

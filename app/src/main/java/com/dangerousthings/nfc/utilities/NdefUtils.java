@@ -358,6 +358,20 @@ public class NdefUtils
         return null;
     }
 
+    public static String getUrlStringFromRecord(NdefRecord record)
+    {
+        byte[] payload = record.getPayload();
+        int prefixCode = payload[0] & 0x0FF;
+        if(prefixCode >= NdefUtils.URI_PREFIX.length)
+        {
+            prefixCode = 0;
+        }
+
+        String reducedUri = new String(payload, 1, payload.length - 1, StandardCharsets.UTF_8);
+
+        return NdefUtils.URI_PREFIX[prefixCode] + reducedUri;
+    }
+
     public static boolean isRecordEncryptionLabelSupported(NdefRecord record)
     {
         return record.getTnf() == 2;
