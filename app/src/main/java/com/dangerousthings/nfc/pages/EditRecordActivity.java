@@ -22,7 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dangerousthings.nfc.R;
-import com.dangerousthings.nfc.fragments.EditMarkdownFragment;
 import com.dangerousthings.nfc.fragments.EditPlainTextFragment;
 import com.dangerousthings.nfc.interfaces.IEditFragment;
 import com.dangerousthings.nfc.interfaces.ITracksPayloadSize;

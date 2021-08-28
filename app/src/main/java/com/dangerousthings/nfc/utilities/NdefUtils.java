@@ -1,6 +1,5 @@
 package com.dangerousthings.nfc.utilities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -21,7 +20,6 @@ import com.dangerousthings.nfc.fragments.ViewUrlFragment;
 import com.dangerousthings.nfc.interfaces.IEditFragment;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Random;
 

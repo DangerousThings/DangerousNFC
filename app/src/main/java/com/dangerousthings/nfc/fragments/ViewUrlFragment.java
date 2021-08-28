@@ -17,9 +17,6 @@ import androidx.fragment.app.Fragment;
 import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.utilities.NdefUtils;
 
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-
 public class ViewUrlFragment extends Fragment
 {
     private static final String ARG_RECORD = "record";
