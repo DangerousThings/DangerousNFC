@@ -19,9 +19,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dangerousthings.nfc.R;
-import com.dangerousthings.nfc.fragments.EditMarkdownFragment;
 import com.dangerousthings.nfc.fragments.EditPlainTextFragment;
 import com.dangerousthings.nfc.interfaces.IEditFragment;
 import com.dangerousthings.nfc.interfaces.ITracksPayloadSize;
@@ -91,13 +91,20 @@ public class EditRecordActivity extends BaseActivity implements ITracksPayloadSi
 
     private void returnRecordResult()
     {
-        Intent result = new Intent();
         NdefRecord resultRecord = _fragment.getNdefRecord();
-        result.putExtra(getString(R.string.intent_record), resultRecord);
-        result.putExtra(getString(R.string.intent_request_code), getIntent().getIntExtra(getString(R.string.intent_request_code), -1));
-        setResult(ManageRecordsActivity.RESULT_OK, result);
-        finish();
-        overridePendingTransition(0, 0);
+        if(resultRecord != null)
+        {
+            Intent result = new Intent();
+            result.putExtra(getString(R.string.intent_record), resultRecord);
+            result.putExtra(getString(R.string.intent_request_code), getIntent().getIntExtra(getString(R.string.intent_request_code), -1));
+            setResult(ManageRecordsActivity.RESULT_OK, result);
+            finish();
+            overridePendingTransition(0, 0);
+        }
+        else
+        {
+            Toast.makeText(this, "Record cannot be empty", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void startFragment()
@@ -157,63 +164,48 @@ public class EditRecordActivity extends BaseActivity implements ITracksPayloadSi
     private boolean drawerItemSelected(MenuItem item)
     {
         int id = item.getItemId();
-        if(id == R.id.nav_plaintext)
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        _fragment = NdefUtils.getEditFragmentForNav(_record, id);
+        if(_fragment != null)
         {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            if(_record != null)
-            {
-                _fragment = EditPlainTextFragment.newInstance(_record);
-            }
-            else
-            {
-                _fragment = EditPlainTextFragment.newInstance();
-            }
             _fragment.setPayloadTrackingInterface(this);
             transaction.replace(R.id.edit_ndef_frame, ((Fragment)_fragment));
             transaction.commit();
 
-            mPayloadTypeButton.setText(R.string.plain_text);
+            mPayloadTypeButton.setText(_fragment.getDataTypeName());
             mDrawer.closeDrawer(GravityCompat.END);
         }
-        else if(id == R.id.nav_markdown)
-        {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            if(_record != null)
-            {
-                _fragment = EditMarkdownFragment.newInstance(_record);
-            }
-            else
-            {
-                _fragment = EditMarkdownFragment.newInstance();
-            }
-            _fragment.setPayloadTrackingInterface(this);
-            transaction.replace(R.id.edit_ndef_frame, ((Fragment)_fragment));
-            transaction.commit();
 
-            mPayloadTypeButton.setText(R.string.markdown);
-            mDrawer.closeDrawer(GravityCompat.END);
-        }
         return true;
     }
 
     @Override
     public void onBackPressed()
     {
-        if(!_fragment.getNdefRecord().equals(_record))
+        NdefRecord record = _fragment.getNdefRecord();
+        if(record != null)
         {
-            new AlertDialog.Builder(this)
-                           .setTitle("Discard Unsaved Changes?")
-                           .setMessage("Are you sure you want to leave this page without saving this record?")
-                           .setPositiveButton("Yes", ((dialog, which) ->
-                           {
-                               setResult(RESULT_CANCELED);
-                               finish();
-                               overridePendingTransition(0, 0);
-                           }))
-                           .setNegativeButton("No", ((dialog, which) -> dialog.cancel()))
-                           .show();
+            if (!record.equals(_record))
+            {
+                new AlertDialog.Builder(this)
+                        .setTitle("Discard Unsaved Changes?")
+                        .setMessage("Are you sure you want to leave this page without saving this record?")
+                        .setPositiveButton("Yes", ((dialog, which) ->
+                        {
+                            setResult(RESULT_CANCELED);
+                            finish();
+                            overridePendingTransition(0, 0);
+                        }))
+                        .setNegativeButton("No", ((dialog, which) -> dialog.cancel()))
+                        .show();
+            }
+            else
+            {
+                finish();
+                overridePendingTransition(0, 0);
+            }
         }
         else
         {

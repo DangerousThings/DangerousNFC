@@ -72,7 +72,6 @@
                     app:layout_constraintEnd_toStartOf="@+id/main_div_3" />
 
                 <ImageView
-                    android:id="@+id/main_image_hoker"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginStart="8dp"
@@ -108,7 +107,6 @@
                     app:tint="?attr/colorPrimary" />
 
                 <TextView
-                    android:id="@+id/main_text_version"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
@@ -163,7 +161,7 @@
                     android:fontFamily="@font/proxima_nova_bold"
                     android:minWidth="120dp"
                     android:minHeight="35dp"
-                    android:text="@string/read_payload"
+                    android:text="@string/ndef"
                     android:textColor="?attr/colorSecondary"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/main_button_toggle_advanced"

@@ -5,11 +5,8 @@ import android.nfc.tech.IsoDep;
 import android.nfc.tech.NfcA;
 
 import com.dangerousthings.nfc.enums.TagFamily;
-import com.dangerousthings.nfc.models.Implant;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class FingerprintUtils
 {

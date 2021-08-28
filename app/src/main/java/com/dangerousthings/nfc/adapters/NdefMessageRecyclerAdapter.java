@@ -17,7 +17,6 @@ import com.dangerousthings.nfc.R;
 import com.dangerousthings.nfc.interfaces.IItemLongClickListener;
 import com.dangerousthings.nfc.interfaces.IOnStartDragListener;
 import com.dangerousthings.nfc.interfaces.ItemTouchHelperAdapter;
-import com.dangerousthings.nfc.utilities.EncryptionUtils;
 import com.dangerousthings.nfc.utilities.NdefUtils;
 
 import java.util.Collections;

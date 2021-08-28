@@ -8,7 +8,6 @@
     tools:context=".pages.ManageRecordsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/view_records_constraint_base"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"

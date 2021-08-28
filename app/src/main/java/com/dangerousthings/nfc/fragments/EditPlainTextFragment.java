@@ -23,6 +23,8 @@ import com.dangerousthings.nfc.interfaces.IEditFragment;
 import com.dangerousthings.nfc.interfaces.ITracksPayloadSize;
 import com.dangerousthings.nfc.utilities.NdefUtils;
 
+import java.nio.charset.StandardCharsets;
+
 public class EditPlainTextFragment extends Fragment implements IEditFragment
 {
     private static final String ARG_RECORD = "record";
@@ -135,7 +137,7 @@ public class EditPlainTextFragment extends Fragment implements IEditFragment
     @Override
     public NdefRecord getNdefRecord()
     {
-        return NdefRecord.createTextRecord("en", mEditText.getText().toString());
+        return NdefRecord.createMime("text/plain", mEditText.getText().toString().getBytes(StandardCharsets.UTF_8));
     }
 
     @Override

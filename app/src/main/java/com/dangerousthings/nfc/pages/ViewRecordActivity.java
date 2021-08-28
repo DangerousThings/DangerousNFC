@@ -11,8 +11,6 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.dangerousthings.nfc.R;
-import com.dangerousthings.nfc.fragments.ViewMarkdownFragment;
-import com.dangerousthings.nfc.fragments.ViewPlainTextFragment;
 import com.dangerousthings.nfc.utilities.NdefUtils;
 
 public class ViewRecordActivity extends BaseActivity
