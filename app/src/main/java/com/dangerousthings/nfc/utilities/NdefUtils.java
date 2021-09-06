@@ -287,6 +287,10 @@ public class NdefUtils
             {
                 return EditUrlFragment.newInstance(record);
             }
+            else if(rtd.equals("T"))
+            {
+                return EditPlainTextFragment.newInstance(record);
+            }
         }
         return null;
     }
@@ -351,6 +355,10 @@ public class NdefUtils
             if(rtd.equals("U"))
             {
                 return ViewUrlFragment.newInstance(record);
+            }
+            else if(rtd.equals("T"))
+            {
+                return ViewPlainTextFragment.newInstance(record);
             }
         }
         return null;

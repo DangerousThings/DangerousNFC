@@ -55,6 +55,13 @@ public class ViewPlainTextFragment extends Fragment
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState)
     {
         mPlainText = view.findViewById(R.id.view_text_textview);
-        mPlainText.setText(NdefUtils.getEnStringFromBytes(_record.getPayload()));
+        if(_record.getTnf() == 2)
+        {
+            mPlainText.setText(NdefUtils.getStringFromBytes(_record.getPayload()));
+        }
+        else
+        {
+            mPlainText.setText(NdefUtils.getEnStringFromBytes(_record.getPayload()));
+        }
     }
 }

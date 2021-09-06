@@ -78,7 +78,14 @@ public class EditPlainTextFragment extends Fragment implements IEditFragment
             byte[] payload = _record.getPayload();
             if(payload != null)
             {
-                mEditText.setText(NdefUtils.getEnStringFromBytes(payload));
+                if(_record.getTnf() == 2)
+                {
+                    mEditText.setText(NdefUtils.getStringFromBytes(payload));
+                }
+                else
+                {
+                    mEditText.setText(NdefUtils.getEnStringFromBytes(payload));
+                }
             }
         }
         mEditLinear = view.findViewById(R.id.edit_plaintext_linear);
@@ -137,7 +144,14 @@ public class EditPlainTextFragment extends Fragment implements IEditFragment
     @Override
     public NdefRecord getNdefRecord()
     {
-        return NdefRecord.createMime("text/plain", mEditText.getText().toString().getBytes(StandardCharsets.UTF_8));
+        if(_record == null || _record.getTnf() == 2)
+        {
+            return NdefRecord.createMime("text/plain", mEditText.getText().toString().getBytes(StandardCharsets.UTF_8));
+        }
+        else
+        {
+            return NdefRecord.createTextRecord("en", mEditText.getText().toString());
+        }
     }
 
     @Override

@@ -3,9 +3,10 @@
     <CLASSES>
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/0ef13903a455839006e5d23a0893e9c8/jetified-ext-strikethrough-4.6.2/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/a8f5637da52d978d326fc8bab42aebc0/transformed/jetified-ext-strikethrough-4.6.2/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/2e10e20effb9e3941f4e8fc644058bde/transformed/jetified-ext-strikethrough-4.6.2/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/2e10e20effb9e3941f4e8fc644058bde/transformed/jetified-ext-strikethrough-4.6.2/AndroidManifest.xml" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/2e10e20effb9e3941f4e8fc644058bde/transformed/jetified-ext-strikethrough-4.6.2/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/cb630799906cb6b853d4286f76dc443f/transformed/jetified-ext-strikethrough-4.6.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/cb630799906cb6b853d4286f76dc443f/transformed/jetified-ext-strikethrough-4.6.2/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/cb630799906cb6b853d4286f76dc443f/transformed/jetified-ext-strikethrough-4.6.2/res" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.noties.markwon/ext-strikethrough/4.6.2/6967990fa7fd10fdcc771092493bfddd8577d5bf/ext-strikethrough-4.6.2-javadoc.jar!/" />
