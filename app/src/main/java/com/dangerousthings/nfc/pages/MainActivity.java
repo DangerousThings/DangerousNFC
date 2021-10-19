@@ -79,6 +79,22 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
         if(Objects.equals(intent.getAction(), NfcAdapter.ACTION_NDEF_DISCOVERED) || Objects.equals(intent.getAction(), NfcAdapter.ACTION_TECH_DISCOVERED) || Objects.equals(intent.getAction(), NfcAdapter.ACTION_TAG_DISCOVERED))
         {
             NdefMessage message = NdefUtils.getNdefMessage(intent);
+            ImplantDatabase database = ImplantDatabase.getInstance(this);
+            IImplantDAO implantDAO = database.implantDAO();
+            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            assert tag != null;
+            Implant updateImplant = implantDAO.getImplantByUID(HexUtils.bytesToHex(tag.getId()));
+            if(updateImplant != null)
+            {
+                updateImplant.setUID(HexUtils.bytesToHex(tag.getId()));
+                updateImplant.setTagFamily(FingerprintUtils.fingerprintNfcTag(tag));
+                updateImplant.setNdefCapacity(TagUtils.getNdefCapacity(tag));
+                if(message != null)
+                {
+                    updateImplant.setNdefMessage(message);
+                }
+                implantDAO.updateImplant(updateImplant);
+            }
             if(_actionBarState.equals(MainActionBarState.ReadNDEF))
             {
                 if (message != null)
@@ -91,12 +107,6 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
             }
             else if(_actionBarState.equals(MainActionBarState.Advanced))
             {
-                //make new implant and pull basic info
-                ImplantDatabase database = ImplantDatabase.getInstance(this);
-                IImplantDAO implantDAO = database.implantDAO();
-                Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-
-                assert tag != null;
                 if(implantDAO.getImplantByUID(HexUtils.bytesToHex(tag.getId())) == null)
                 {
                     Implant implant = new Implant();
