@@ -28,6 +28,7 @@
                 android:fontFamily="@font/proxima_nova_regular"
                 android:text="@string/no_record_text_detected"
                 android:textColor="?attr/colorPrimary"
+                android:textIsSelectable="true"
                 android:textSize="18sp" />
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.dangerousthings.nfc.pages;
 
+import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -30,7 +31,7 @@ public abstract class BaseActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         SharedPreferences preferences = this.getSharedPreferences(getString(R.string.shared_preference_key), Context.MODE_PRIVATE);
-        int defaultTheme = R.style.DT;
+        int defaultTheme = R.style.Zytel;
         int savedTheme = preferences.getInt(getString(R.string.saved_theme), defaultTheme);
         setTheme(savedTheme);
 
@@ -55,6 +56,7 @@ public abstract class BaseActivity extends AppCompatActivity
         overridePendingTransition(0, 0);
     }
 
+    @SuppressLint("UnspecifiedImmutableFlag")
     private void nfcPrimer()
     {
         _adapter = NfcAdapter.getDefaultAdapter(this);

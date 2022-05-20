@@ -76,6 +76,7 @@ public class MainActivity extends BaseActivity implements IMainMenuClickListener
     @Override
     public void handleActionDiscovered(Intent intent)
     {
+        String action = intent.getAction();
         if(Objects.equals(intent.getAction(), NfcAdapter.ACTION_NDEF_DISCOVERED) || Objects.equals(intent.getAction(), NfcAdapter.ACTION_TECH_DISCOVERED) || Objects.equals(intent.getAction(), NfcAdapter.ACTION_TAG_DISCOVERED))
         {
             NdefMessage message = NdefUtils.getNdefMessage(intent);
